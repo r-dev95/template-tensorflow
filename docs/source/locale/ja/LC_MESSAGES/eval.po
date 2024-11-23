@@ -1,0 +1,162 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2024, r-dev95
+# This file is distributed under the same license as the template-tensorflow
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: template-tensorflow \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-11-23 17:03+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../source/eval.rst:2
+msgid "eval.py"
+msgstr ""
+
+#: eval:1 of
+msgid "This is the module that evaluates the model."
+msgstr "モデルを評価するモジュール。"
+
+#: eval.check_params:1 of
+msgid "Checks the :class:`Evaluator` parameters."
+msgstr ":class:`Evaluator` のパラメータを確認する。"
+
+#: ../../source/eval.rst
+msgid "Parameters"
+msgstr "パラメータ"
+
+#: eval.Evaluator:3 eval.check_params:3 eval.main:5 of
+msgid "parameters."
+msgstr "パラメータ"
+
+#: eval.Evaluator:1 of
+msgid "Bases: :py:class:`object`"
+msgstr ""
+
+#: eval.Evaluator:1 of
+msgid "Evaluates the model."
+msgstr "モデルの評価を行う。"
+
+#: ../../docstring eval.Evaluator.classes:1 of
+msgid "class list"
+msgstr "クラスの一覧"
+
+#: ../../docstring eval.Evaluator.classes:3 of
+msgid "key=opt: optimizer method class"
+msgstr "key=opt: 最適化手法クラス"
+
+#: ../../docstring eval.Evaluator.classes:4 of
+msgid "key=loss: loss function class"
+msgstr "key=loss: 誤差関数クラス"
+
+#: ../../docstring eval.Evaluator.classes:5 of
+msgid "key=metrics: list of metrics classes"
+msgstr "key=metrics: メトリクスクラスのリスト"
+
+#: ../../docstring eval.Evaluator.callbacks eval.Evaluator.classes
+#: eval.Evaluator.model of
+msgid "type"
+msgstr "型"
+
+#: ../../docstring eval.Evaluator.classes:7 of
+msgid "ClassVar[dict[str, Any]]"
+msgstr ""
+
+#: ../../docstring eval.Evaluator.model:1 of
+msgid "model class"
+msgstr "モデルクラス"
+
+#: ../../docstring eval.Evaluator.model:3 of
+msgid "Callable"
+msgstr ""
+
+#: ../../docstring eval.Evaluator.callbacks:1 of
+msgid "list of callback classes"
+msgstr "コールバッククラスのリスト"
+
+#: ../../docstring eval.Evaluator.callbacks:3 of
+msgid "list[Callable]"
+msgstr ""
+
+#: eval.Evaluator.load_dataset:1 of
+msgid "Loads the evaluation data."
+msgstr "評価データを読み込む。"
+
+#: eval.Evaluator.setup:1 of
+msgid "Sets up the evaluation."
+msgstr "評価の設定を行う。"
+
+#: eval.Evaluator.setup:3 of
+msgid "Sets the loss function, model, metrics."
+msgstr "誤差関数、モデル、メトリクスを設定する。"
+
+#: eval.Evaluator.setup:4 of
+msgid "Set the model weights."
+msgstr "モデルの重みを設定する。"
+
+#: eval.Evaluator.setup:5 of
+msgid "Run ``.summary()``."
+msgstr "``.summary()`` を実行する。"
+
+#: eval.Evaluator.run:1 of
+msgid "Runs evaluation."
+msgstr "評価を実行する。"
+
+#: eval.Evaluator.run:3 of
+msgid "Run ``.compile()``."
+msgstr "``.compile()`` を実行する。"
+
+#: eval.Evaluator.run:4 of
+msgid "Customize the evaluation of your trained models."
+msgstr "学習済みモデルの評価をカスタマイズする。"
+
+#: eval.main:1 of
+msgid "main."
+msgstr ""
+
+#: eval.main:3 of
+msgid "This function is decorated by ``@save_params_log`` and ``@process_time``."
+msgstr "``@save_params_log`` と ``@process_time`` でデコレートされている。"
+
+#: eval.main eval.set_params of
+msgid "Returns"
+msgstr "戻り値"
+
+#: eval.main:8 eval.set_params:7 of
+msgid "**dict[str, Any]** -- parameters."
+msgstr "**dict[str, Any]** -- パラメータ"
+
+#: eval.set_params:1 of
+msgid "Sets the command line arguments and file parameters."
+msgstr "コマンドライン引数とファイルパラメータを設定する。"
+
+#: eval.set_params:3 of
+msgid "Set only common parameters as command line arguments."
+msgstr "共通なパラメータのみ、コマンドライン引数で設定する。"
+
+#: eval.set_params:4 of
+msgid "Other necessary parameters are set in the file parameters."
+msgstr "他に必要なパラメータは、ファイルパラメータで設定する。"
+
+#: eval.set_params:5 of
+msgid "Use a yaml file. (:func:`lib.common.file.load_yaml`)"
+msgstr "ファイルは、yamlファイルを使用する。(:func:`lib.common.file.load_yaml`)"
+
+#: eval.set_params:11 of
+msgid ""
+"Command line arguments are overridden by file parameters. This means that"
+" if you want to set everything using file parameters, you don't "
+"necessarily need to use command line arguments."
+msgstr "コマンドライン引数はファイルパラメータで上書きされる。つまり、ファイルパラメータですべて設定する場合、必ずしもコマンドライン引数を使用する必要はない。"
+

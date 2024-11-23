@@ -1,0 +1,457 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2024, r-dev95
+# This file is distributed under the same license as the template-tensorflow
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: template-tensorflow \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-11-23 15:50+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../source/lib.data.rst:2
+msgid "data package"
+msgstr ""
+
+#: ../../source/lib.data.rst:11
+msgid "base.py"
+msgstr ""
+
+#: lib.data.base:1 of
+msgid "This is the module load and write data."
+msgstr "データを読み書きするモジュール。"
+
+#: lib.data.base.check_params:1 of
+msgid "Checks the :class:`BaseLoadData` parameters."
+msgstr ":class:`BaseLoadData` のパラメータを確認する。"
+
+#: ../../source/lib.data.rst
+msgid "Parameters"
+msgstr "パラメータ"
+
+#: lib.data.base.BaseLoadData:5 lib.data.base.check_params:3
+#: lib.data.cifar.Cifar:3 lib.data.mnist.Mnist:3 lib.data.processor.Processor:8
+#: lib.data.processor.check_params:3 lib.data.setup.SetupData:7
+#: lib.data.setup.check_params:3 of
+msgid "parameters."
+msgstr "パラメータ"
+
+#: lib.data.base.BaseLoadData:1 lib.data.processor.Processor:1
+#: lib.data.setup.SetupData:1 of
+msgid "Bases: :py:class:`object`"
+msgstr ""
+
+#: lib.data.base.BaseLoadData:1 of
+msgid "Loads data."
+msgstr "データを読み込む。"
+
+#: lib.data.base.BaseLoadData:3 of
+msgid "Make a data pipeline to load a TFRecord data."
+msgstr "TFRecordデータを読み込むデータパイプラインを作成する。"
+
+#: lib.data.base.BaseLoadData:10 of
+msgid ""
+"Child classes that inherit this class must set the list of file paths to "
+"``params[K.FILES]`` before running ``super().__init__(params=params)``."
+msgstr "このクラスを継承する子クラスは、``super().__init__(params=params)`` を実行する前に"
+"ファイルパスのリストを ``params[K.FILES]`` に設定する必要がある。"
+
+#: ../../docstring lib.data.base.BaseLoadData.n_data:1
+#: lib.data.cifar.Cifar.n_data:1 lib.data.mnist.Mnist.n_data:1 of
+msgid "all number of data."
+msgstr "総データ数"
+
+#: ../../docstring lib.data.base.BaseLoadData.input_shape
+#: lib.data.base.BaseLoadData.input_shape_model
+#: lib.data.base.BaseLoadData.input_size lib.data.base.BaseLoadData.label_shape
+#: lib.data.base.BaseLoadData.label_shape_model
+#: lib.data.base.BaseLoadData.label_size lib.data.base.BaseLoadData.n_data
+#: lib.data.base.BaseLoadData.steps_per_epoch lib.data.cifar.Cifar.input_shape
+#: lib.data.cifar.Cifar.input_shape_model lib.data.cifar.Cifar.input_size
+#: lib.data.cifar.Cifar.label_shape lib.data.cifar.Cifar.label_shape_model
+#: lib.data.cifar.Cifar.label_size lib.data.cifar.Cifar.n_data
+#: lib.data.cifar.Cifar.size lib.data.cifar.Cifar.steps_per_epoch
+#: lib.data.mnist.Mnist.input_shape lib.data.mnist.Mnist.input_shape_model
+#: lib.data.mnist.Mnist.input_size lib.data.mnist.Mnist.label_shape
+#: lib.data.mnist.Mnist.label_shape_model lib.data.mnist.Mnist.label_size
+#: lib.data.mnist.Mnist.n_data lib.data.mnist.Mnist.size
+#: lib.data.mnist.Mnist.steps_per_epoch of
+msgid "type"
+msgstr "型"
+
+#: ../../docstring lib.data.base.BaseLoadData.input_size:3
+#: lib.data.base.BaseLoadData.label_size:3 lib.data.base.BaseLoadData.n_data:3
+#: lib.data.base.BaseLoadData.steps_per_epoch:3
+#: lib.data.cifar.Cifar.input_size:3 lib.data.cifar.Cifar.label_size:3
+#: lib.data.cifar.Cifar.n_data:3 lib.data.cifar.Cifar.steps_per_epoch:3
+#: lib.data.mnist.Mnist.input_size:3 lib.data.mnist.Mnist.label_size:3
+#: lib.data.mnist.Mnist.n_data:3 lib.data.mnist.Mnist.steps_per_epoch:3 of
+msgid "int"
+msgstr ""
+
+#: ../../docstring lib.data.base.BaseLoadData.input_size:1
+#: lib.data.cifar.Cifar.input_size:1 lib.data.mnist.Mnist.input_size:1 of
+msgid "input size. (elements per input)"
+msgstr "入力サイズ (入力ごとの要素数)"
+
+#: ../../docstring lib.data.base.BaseLoadData.label_size:1
+#: lib.data.cifar.Cifar.label_size:1 lib.data.mnist.Mnist.label_size:1 of
+msgid "label size. (elements per label)"
+msgstr "ラベルサイズ (ラベルごとの要素数)"
+
+#: ../../docstring lib.data.base.BaseLoadData.input_shape:1
+#: lib.data.cifar.Cifar.input_shape:1 lib.data.mnist.Mnist.input_shape:1 of
+msgid "input shape. (before preprocess)"
+msgstr "入力形状 (前処理前)"
+
+#: ../../docstring lib.data.base.BaseLoadData.input_shape:3
+#: lib.data.base.BaseLoadData.input_shape_model:3
+#: lib.data.base.BaseLoadData.label_shape:3
+#: lib.data.base.BaseLoadData.label_shape_model:3
+#: lib.data.cifar.Cifar.input_shape:3 lib.data.cifar.Cifar.input_shape_model:3
+#: lib.data.cifar.Cifar.label_shape:3 lib.data.cifar.Cifar.label_shape_model:3
+#: lib.data.cifar.Cifar.size:3 lib.data.mnist.Mnist.input_shape:3
+#: lib.data.mnist.Mnist.input_shape_model:3 lib.data.mnist.Mnist.label_shape:3
+#: lib.data.mnist.Mnist.label_shape_model:3 lib.data.mnist.Mnist.size:3 of
+msgid "ClassVar[list[int]]"
+msgstr ""
+
+#: ../../docstring lib.data.base.BaseLoadData.label_shape:1
+#: lib.data.cifar.Cifar.label_shape:1 lib.data.mnist.Mnist.label_shape:1 of
+msgid "label shape. (before preprocess)"
+msgstr "ラベル形状 (前処理前)"
+
+#: ../../docstring lib.data.base.BaseLoadData.input_shape_model:1
+#: lib.data.cifar.Cifar.input_shape_model:1
+#: lib.data.mnist.Mnist.input_shape_model:1 of
+msgid "input shape. (after preprocess)"
+msgstr "入力形状 (前処理後)"
+
+#: ../../docstring lib.data.base.BaseLoadData.label_shape_model:1
+#: lib.data.cifar.Cifar.label_shape_model:1
+#: lib.data.mnist.Mnist.label_shape_model:1 of
+msgid "label shape. (after preprocess)"
+msgstr "ラベル形状 (前処理後)"
+
+#: ../../docstring lib.data.base.BaseLoadData.steps_per_epoch:1
+#: lib.data.cifar.Cifar.steps_per_epoch:1
+#: lib.data.mnist.Mnist.steps_per_epoch:1 of
+msgid "steps per epoch."
+msgstr "1エポックごとのステップ数"
+
+#: lib.data.base.BaseLoadData.set_model_il_shape:1
+#: lib.data.cifar.Cifar.set_model_il_shape:1
+#: lib.data.mnist.Mnist.set_model_il_shape:1 of
+msgid "Sets the shape of the preprocessed inputs and labels."
+msgstr "前処理された入力とラベルの形状を設定する。"
+
+#: lib.data.base.BaseLoadData.preprocess:1 of
+msgid "Runs preprocess."
+msgstr "前処理を実行する。"
+
+#: lib.data.base.BaseLoadData.preprocess:3 of
+msgid "Run :meth:`lib.data.processor.Processor.run`."
+msgstr ":meth:`lib.data.processor.Processor.run` を実行する。"
+
+#: lib.data.base.BaseLoadData.preprocess:5 of
+msgid "input. (before preprocess)"
+msgstr "入力 (前処理前)"
+
+#: lib.data.base.BaseLoadData.preprocess:7 of
+msgid "label. (before preprocess)"
+msgstr "ラベル (前処理前)"
+
+#: lib.data.base.BaseLoadData.make_loader_example
+#: lib.data.base.BaseLoadData.parse_example
+#: lib.data.base.BaseLoadData.preprocess lib.data.base.feature_bytes_list
+#: lib.data.base.feature_float_list lib.data.base.feature_int64_list
+#: lib.data.base.serialize_example lib.data.processor.Processor.catencode
+#: lib.data.processor.Processor.rescale lib.data.processor.Processor.run
+#: lib.data.setup.SetupData.cifar lib.data.setup.SetupData.mnist
+#: lib.data.setup.SetupData.setup of
+msgid "Returns"
+msgstr "戻り値"
+
+#: lib.data.base.BaseLoadData.preprocess:10 of
+msgid "**tf.Tensor** -- input. (after preprocess)"
+msgstr "**tf.Tensor** -- 入力 (前処理後)"
+
+#: lib.data.base.BaseLoadData.preprocess:11 of
+msgid "**tf.Tensor** -- label. (after preprocess)"
+msgstr "**tf.Tensor** -- ラベル (前処理後)"
+
+#: lib.data.base.BaseLoadData.parse_example:1 of
+msgid "Parses one example from a TFRecord data."
+msgstr "TFRecordデータから1レコードをパースする。"
+
+#: lib.data.base.BaseLoadData.parse_example:3 of
+msgid ""
+"Set the parsing configuration according to the format in which the data "
+"was written. (``tf.io.parse_single_example()``)"
+msgstr "書き込まれたデータのフォーマットに応じて、パースの設定を行う。"
+
+#: lib.data.base.BaseLoadData.parse_example:5 of
+msgid ""
+"When writing TFRecord data, we make the elements one-dimensional, so we "
+"restore the shape."
+msgstr "TFRecordを書き込む際、要素を一次元化するため、形状を元に戻す。"
+
+#: lib.data.base.BaseLoadData.parse_example:7 of
+msgid "Run preprocess. (:meth:`preprocess`)"
+msgstr "前処理を実行する。 (:meth:`preprocess`)"
+
+#: lib.data.base.BaseLoadData.parse_example:9 of
+msgid "protocol massage."
+msgstr "プロトコルメッセージ"
+
+#: lib.data.base.BaseLoadData.parse_example:12 of
+msgid "**tf.Tensor** -- input."
+msgstr "**tf.Tensor** -- 入力"
+
+#: lib.data.base.BaseLoadData.parse_example:13 of
+msgid "**tf.Tensor** -- label."
+msgstr "**tf.Tensor** -- ラベル"
+
+#: lib.data.base.BaseLoadData.make_loader_example:1 of
+msgid "Makes data loader."
+msgstr "データローダーを作成する。"
+
+#: lib.data.base.BaseLoadData.make_loader_example:3 of
+msgid "Set the list of data file pathes. (``tf.data.Dataset.list_files()``)"
+msgstr "データファイルパスのリストを設定する。 (``tf.data.Dataset.list_files()``)"
+
+#: lib.data.base.BaseLoadData.make_loader_example:5 of
+msgid "Set the interleave configuration. (``tf.data.Dataset.interleave()``)"
+msgstr "インタリーブを設定する。 (``tf.data.Dataset.interleave()``)"
+
+#: lib.data.base.BaseLoadData.make_loader_example:7 of
+msgid ""
+"Set the function to parse one example from a TFRecord data. "
+"(``tf.data.Dataset.map()``)"
+msgstr "TFRecordデータから1レコードをパースする関数を設定する。 (``tf.data.Dataset.map()``)"
+
+#: lib.data.base.BaseLoadData.make_loader_example:9 of
+msgid "Set the shuffle configuration. (``tf.data.Dataset.shuffle()``)"
+msgstr "シャッフルを設定する。 (``tf.data.Dataset.shuffle()``)"
+
+#: lib.data.base.BaseLoadData.make_loader_example:11 of
+msgid "Set the batch configuration. (``tf.data.Dataset.batch()``)"
+msgstr "バッチを設定する (``tf.data.Dataset.batch()``)"
+
+#: lib.data.base.BaseLoadData.make_loader_example:13 of
+msgid "Set the prefetch configuration. (``tf.data.Dataset.prefetch()``)"
+msgstr "プリフェチを設定する。 (``tf.data.Dataset.prefetch()``)"
+
+#: lib.data.base.BaseLoadData.make_loader_example:15 of
+msgid "Set the repeat configuration. (``tf.data.Dataset.repeat()``)"
+msgstr "リピートを設定する。 (``tf.data.Dataset.repeat()``)"
+
+#: lib.data.base.BaseLoadData.make_loader_example:18 of
+msgid "random seed."
+msgstr "乱数シード"
+
+#: lib.data.base.BaseLoadData.make_loader_example:21 of
+msgid "**Callable** -- data pipeline. (``tf.data``)"
+msgstr "**Callable** -- データパイプライン (``tf.data``)"
+
+#: lib.data.base.feature_int64_list:1 of
+msgid "Converts ``tf.train.Feature`` type. (``tf.train.Int64List``)"
+msgstr "``tf.train.Feature`` 型に変換する。 (``tf.train.Int64List``)"
+
+#: lib.data.base.feature_int64_list:3 of
+msgid "one-dimensional list with elements of type ``int``."
+msgstr "``int`` 型の要素を持つ一次元化リスト。"
+
+#: lib.data.base.feature_bytes_list:6 lib.data.base.feature_float_list:6
+#: lib.data.base.feature_int64_list:6 of
+msgid "**tf.train.Feature** -- value of ``tf.train.Feature`` type."
+msgstr "**tf.train.Feature** -- ``tf.train.Feature`` 型の値"
+
+#: lib.data.base.feature_float_list:1 of
+msgid "Converts ``tf.train.Feature`` type. (``tf.train.FloatList``)"
+msgstr "``tf.train.Feature`` 型に変換する。 (``tf.train.FloatList``)"
+
+#: lib.data.base.feature_float_list:3 of
+msgid "one-dimensional list with elements of type ``float``."
+msgstr "``float`` 型の要素を持つ一次元化リスト。"
+
+#: lib.data.base.feature_bytes_list:1 of
+msgid "Converts ``tf.train.Feature`` type. (``tf.train.BytesList``)"
+msgstr "``tf.train.Feature`` 型に変換する。 (``tf.train.BytesList``)"
+
+#: lib.data.base.feature_bytes_list:3 of
+msgid "one-dimensional list with elements of type ``bytes``."
+msgstr "``bytes`` 型の要素を持つ一次元化リスト。"
+
+#: lib.data.base.serialize_example:1 of
+msgid "Converts ``tf.train.Example`` type."
+msgstr "``tf.train.Example`` 型に変換する。"
+
+#: lib.data.base.serialize_example:3 of
+msgid "a set of inputs and labels."
+msgstr "入力とラベルのセット。"
+
+#: lib.data.base.serialize_example:6 of
+msgid "**tf.train.Example** -- value of ``tf.train.Example`` type."
+msgstr "**tf.train.Example** -- ``tf.train.Example`` 型の値"
+
+#: lib.data.base.write_exmaple:1 of
+msgid "Writes TFRecord data."
+msgstr "TFRecordデータを書き込む。"
+
+#: lib.data.base.write_exmaple:3 of
+msgid "file path."
+msgstr "ファイルパス"
+
+#: lib.data.base.write_exmaple:5 of
+msgid "input."
+msgstr "入力"
+
+#: lib.data.base.write_exmaple:7 of
+msgid "label."
+msgstr "ラベル"
+
+#: ../../source/lib.data.rst:19
+msgid "cifar.py"
+msgstr ""
+
+#: lib.data.cifar:1 of
+msgid "This is the module that loads Cifar data."
+msgstr "Cifarデータを読み込むモジュール。"
+
+#: lib.data.cifar.Cifar:1 lib.data.mnist.Mnist:1 of
+msgid "Bases: :py:class:`~lib.data.base.BaseLoadData`"
+msgstr ""
+
+#: lib.data.cifar.Cifar:1 of
+msgid "Loads Cifar data."
+msgstr "Cifarデータを読み込む。"
+
+#: ../../docstring lib.data.cifar.Cifar.size:1 of
+msgid "image size. (vertical x horizontal x channel)"
+msgstr "画像サイズ (縦 × 横 × チャネル)"
+
+#: lib.data.cifar.Cifar.set_model_il_shape:3
+#: lib.data.mnist.Mnist.set_model_il_shape:3 of
+msgid "This method is decorated by ``@override``."
+msgstr "``@override`` でデコレートされている。"
+
+#: ../../source/lib.data.rst:27
+msgid "mnist.py"
+msgstr ""
+
+#: lib.data.mnist:1 of
+msgid "This is the module that loads Mnist data."
+msgstr "Mnistデータを読み込むモジュール。"
+
+#: lib.data.mnist.Mnist:1 of
+msgid "Loads Mnist data."
+msgstr "Mnistデータを読み込む。"
+
+#: ../../docstring lib.data.mnist.Mnist.size:1 of
+msgid "image size. (vertical x horizontal)"
+msgstr "画像サイズ (縦 × 横)"
+
+#: ../../source/lib.data.rst:35
+msgid "processor.py"
+msgstr ""
+
+#: lib.data.processor:1 of
+msgid "This is the module that process data."
+msgstr "データを処理するモジュール。"
+
+#: lib.data.processor.check_params:1 of
+msgid "Checks the :class:`Processor` parameters."
+msgstr ":class:`Processor` のパラメータを確認する。"
+
+#: lib.data.processor.check_params:5 lib.data.setup.check_params:5 of
+msgid "Class variables whose values are available methods."
+msgstr "使用可能なメソッドを値に持つクラス変数。"
+
+#: lib.data.processor.Processor:1 of
+msgid "Processes data."
+msgstr "データを処理する。"
+
+#: lib.data.processor.Processor:3 of
+msgid "Used to process data when making a ``tf.data`` data pipeline."
+msgstr "``tf.data`` データパイプラインを作成する際、データを処理するために使用する。"
+
+#: lib.data.processor.Processor:4 lib.data.setup.SetupData:3 of
+msgid ""
+"If you want to use some other settings, implement it as a method of this "
+"class. If you implemented, set the name as the ``func`` key in "
+"``__init__()`` and the method as the value."
+msgstr "他の設定を使用したい場合、このクラスのメソッドとして実装する。"
+"実装した場合、``__init__()`` の ``func`` のキーに名前を、値にメソッドを実装すること。"
+
+#: lib.data.processor.Processor.run:1 of
+msgid "Runs process."
+msgstr "処理を実行する。"
+
+#: lib.data.processor.Processor.catencode:3
+#: lib.data.processor.Processor.rescale:3 lib.data.processor.Processor.run:3 of
+msgid "input. (before process)"
+msgstr "入力 (処理前)"
+
+#: lib.data.processor.Processor.catencode:5
+#: lib.data.processor.Processor.rescale:5 lib.data.processor.Processor.run:5 of
+msgid "label. (before process)"
+msgstr "ラベル (処理前)"
+
+#: lib.data.processor.Processor.catencode:8
+#: lib.data.processor.Processor.rescale:8 lib.data.processor.Processor.run:8 of
+msgid "**tf.Tensor** -- input. (after process)"
+msgstr "**tf.Tensor** -- 入力 (処理後)"
+
+#: lib.data.processor.Processor.catencode:9
+#: lib.data.processor.Processor.rescale:9 lib.data.processor.Processor.run:9 of
+msgid "**tf.Tensor** -- label. (after process)"
+msgstr "**tf.Tensor** -- ラベル (処理後)"
+
+#: lib.data.processor.Processor.catencode:1 of
+msgid "Runs ``keras.layers.CategoryEncoding``."
+msgstr "``keras.layers.CategoryEncoding`` を実行する。"
+
+#: lib.data.processor.Processor.rescale:1 of
+msgid "Runs ``keras.layers.Rescaling``."
+msgstr "``keras.layers.Rescaling`` を実行する。"
+
+#: ../../source/lib.data.rst:43
+msgid "setup.py"
+msgstr ""
+
+#: lib.data.setup:1 of
+msgid "This is the module that sets up data."
+msgstr "データを設定するモジュール。"
+
+#: lib.data.setup.check_params:1 of
+msgid "Checks the :class:`SetupData` parameters."
+msgstr ":class:`SetupData` のパラメータを確認する。"
+
+#: lib.data.setup.SetupData:1 lib.data.setup.SetupData.setup:1 of
+msgid "Sets up data."
+msgstr "データを設定する。"
+
+#: lib.data.setup.SetupData.cifar:3 lib.data.setup.SetupData.mnist:3
+#: lib.data.setup.SetupData.setup:3 of
+msgid "**Callable** -- data class."
+msgstr "**Callable** -- データクラス"
+
+#: lib.data.setup.SetupData.mnist:1 of
+msgid "Sets :class:`lib.data.mnist.Mnist` (mnist or fashion mnist)."
+msgstr ":class:`lib.data.mnist.Mnist` を設定する。 (mnist または fashion mnist)"
+
+#: lib.data.setup.SetupData.cifar:1 of
+msgid "Sets :class:`lib.data.cifar.Cifar` (cifar10 or cifar100)."
+msgstr ":class:`lib.data.cifar.Cifar` を設定する。 (cifar10 または cifar100)"

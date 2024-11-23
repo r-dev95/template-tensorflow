@@ -1,0 +1,126 @@
+# -------------------------------------------------------------------
+# parameter file (test)
+#
+# Note:
+#   - Do not use '~/' in the path.
+#   - A list must be specified in list format even if it has only one element.
+# -------------------------------------------------------------------
+# -----------------------------------------------
+# Overwrite command line arguments.
+# -----------------------------------------------
+# log level (idx=0: stream handler, idx=1: file handler)
+# (DEBUG: 10, INFO: 20, WARNING: 30, ERROR: 40, CRITICAL: 50)
+# type: list[int, int]
+level: [10, 10]
+# flag (eager mode: true, graph mode: false)
+# type: boolean
+eager: false
+# random seed
+# type: int
+seed: 0
+# directory path (data save)
+# type: str
+result: result
+
+# directory path (evaluation data)
+# type: str
+eval: data/mnist/test
+# batch size (evaluation data)
+# type: int
+batch: 1000
+
+# -----------------------------------------------
+# Set non-command line arguments.
+# -----------------------------------------------
+# -------------------------------------
+# data
+# -------------------------------------
+data:
+  kind: mnist
+
+  # MNIST (mnist, fashion_mnist) (none arguments)
+  # Cifar (cifar10, cifa100) (none arguments)
+
+# -------------------------------------
+# data process
+# -------------------------------------
+process:
+  kind: [catencode, rescale]
+
+  # CategoryEncoding
+  catencode:
+    num_tokens: &num_classes 10               # Any | None = None
+    output_mode: one_hot                      # str = "multi_hot"
+    sparse: false                             # bool = False
+
+  # Rescaling
+  rescale:
+    scale: 0.00392156862745098                # Any
+    offset: 0                                 # float = 0
+
+# -------------------------------------
+# model
+# -------------------------------------
+model:
+  kind: simple
+
+# -------------------------------------
+# model layer
+# -------------------------------------
+layer:
+  kind: [flatten, dense_1, relu, dense_2]
+
+  flatten:
+    data_format: channels_last                # Any | None = None
+
+  DENSE: &DENSE
+    units: null                               # Any
+    activation: null                          # Any | None = None
+    use_bias: true                            # bool = True
+    kernel_initializer: glorot_uniform        # str = "glorot_uniform"
+    bias_initializer: zeros                   # str = "zeros"
+    kernel_regularizer: null                  # Any | None = None
+    bias_regularizer: null                    # Any | None = None
+    activity_regularizer: null                # Any | None = None
+    kernel_constraint: null                   # Any | None = None
+    bias_constraint: null                     # Any | None = None
+    lora_rank: null                           # Any | None = None
+  dense_1:
+    <<: *DENSE
+    units: 100
+  dense_2:
+    <<: *DENSE
+    units: *num_classes
+
+  relu:
+    max_value: null                           # Any | None = None
+    negative_slope: 0                         # float = 0
+    threshold: 0                              # float = 0
+
+# -------------------------------------
+# loss function
+# -------------------------------------
+loss:
+  kind: cce
+
+  cce:
+    from_logits: true                         # bool = False
+    label_smoothing: 0                        # float = 0
+    axis: -1                                  # int = -1
+    reduction: sum_over_batch_size            # str = "sum_over_batch_size"
+    name: categorical_crossentropy            # str = "categorical_crossentropy"
+    # dtype: null                               # Any | None = None
+
+# -------------------------------------
+# metrics
+# -------------------------------------
+metrics:
+  kind: [mse, cacc]
+
+  mse:
+    name: mean_squared_error                  # str = "mean_squared_error"
+    # dtype: null                               # Any | None = None
+
+  cacc:
+    name: categorical_accuracy                # str = "categorical_accuracy"
+    # dtype: null                               # Any | None = None

@@ -1,0 +1,404 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>lib.data.base &mdash; template-tensorflow 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            template-tensorflow
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../lib.html">lib package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../train.html">train.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../eval.html">eval.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../dataset.html">dataset.py</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">template-tensorflow</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">lib.data.base</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for lib.data.base</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;This is the module load and write data.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Callable</span>
+<span class="kn">from</span> <span class="nn">logging</span> <span class="kn">import</span> <span class="n">getLogger</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">ClassVar</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+
+<span class="kn">from</span> <span class="nn">lib.common.define</span> <span class="kn">import</span> <span class="n">ParamKey</span><span class="p">,</span> <span class="n">ParamLog</span>
+<span class="kn">from</span> <span class="nn">lib.data.processor</span> <span class="kn">import</span> <span class="n">Processor</span>
+
+<span class="n">K</span> <span class="o">=</span> <span class="n">ParamKey</span><span class="p">()</span>
+<span class="n">PARAM_LOG</span> <span class="o">=</span> <span class="n">ParamLog</span><span class="p">()</span>
+<span class="n">LOGGER</span> <span class="o">=</span> <span class="n">getLogger</span><span class="p">(</span><span class="n">PARAM_LOG</span><span class="o">.</span><span class="n">NAME</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="check_params">
+<a class="viewcode-back" href="../../../lib.data.html#lib.data.base.check_params">[docs]</a>
+<span class="k">def</span> <span class="nf">check_params</span><span class="p">(</span><span class="n">params</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Checks the :class:`BaseLoadData` parameters.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        params (dict[str, Any]): parameters.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">params</span><span class="p">[</span><span class="n">K</span><span class="o">.</span><span class="n">REPEAT</span><span class="p">]</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">EPOCHS</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">params</span><span class="p">[</span><span class="n">K</span><span class="o">.</span><span class="n">SHUFFLE</span><span class="p">]</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">SHUFFLE</span><span class="p">)</span>
+    <span class="n">params</span><span class="p">[</span><span class="n">K</span><span class="o">.</span><span class="n">PREFETCH</span><span class="p">]</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">PREFETCH</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="BaseLoadData">
+<a class="viewcode-back" href="../../../lib.data.html#lib.data.base.BaseLoadData">[docs]</a>
+<span class="k">class</span> <span class="nc">BaseLoadData</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Loads data.</span>
+
+<span class="sd">    *   Make a data pipeline to load a TFRecord data.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        params (dict[str, Any]): parameters.</span>
+
+<span class="sd">    .. attention::</span>
+
+<span class="sd">        Child classes that inherit this class must set the list of file paths to</span>
+<span class="sd">        ``params[K.FILES]`` before running ``super().__init__(params=params)``.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1">#: int: all number of data.</span>
+    <span class="n">n_data</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="c1">#: int: steps per epoch.</span>
+    <span class="n">steps_per_epoch</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="c1">#: int: input size. (elements per input)</span>
+    <span class="n">input_size</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="c1">#: int: label size. (elements per label)</span>
+    <span class="n">label_size</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="c1">#: ClassVar[list[int]]: input shape. (before preprocess)</span>
+    <span class="n">input_shape</span><span class="p">:</span> <span class="n">ClassVar</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span>
+    <span class="c1">#: ClassVar[list[int]]: label shape. (before preprocess)</span>
+    <span class="n">label_shape</span><span class="p">:</span> <span class="n">ClassVar</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span>
+    <span class="c1">#: ClassVar[list[int]]: input shape. (after preprocess)</span>
+    <span class="n">input_shape_model</span><span class="p">:</span> <span class="n">ClassVar</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span>
+    <span class="c1">#: ClassVar[list[int]]: label shape. (after preprocess)</span>
+    <span class="n">label_shape_model</span><span class="p">:</span> <span class="n">ClassVar</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="n">params</span>
+        <span class="n">check_params</span><span class="p">(</span><span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">Processor</span> <span class="o">=</span> <span class="n">Processor</span><span class="p">(</span><span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_model_il_shape</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">steps_per_epoch</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_data</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="n">params</span><span class="p">[</span><span class="n">K</span><span class="o">.</span><span class="n">BATCH</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
+
+<div class="viewcode-block" id="BaseLoadData.set_model_il_shape">
+<a class="viewcode-back" href="../../../lib.data.html#lib.data.base.BaseLoadData.set_model_il_shape">[docs]</a>
+    <span class="k">def</span> <span class="nf">set_model_il_shape</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Sets the shape of the preprocessed inputs and labels.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+
+<div class="viewcode-block" id="BaseLoadData.preprocess">
+<a class="viewcode-back" href="../../../lib.data.html#lib.data.base.BaseLoadData.preprocess">[docs]</a>
+    <span class="k">def</span> <span class="nf">preprocess</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Runs preprocess.</span>
+
+<span class="sd">        *   Run :meth:`lib.data.processor.Processor.run`.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            x (tf.Tensor): input. (before preprocess)</span>
+<span class="sd">            y (tf.Tensor): label. (before preprocess)</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            tf.Tensor: input. (after preprocess)</span>
+<span class="sd">            tf.Tensor: label. (after preprocess)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="n">K</span><span class="o">.</span><span class="n">PROCESS</span><span class="p">][</span><span class="n">K</span><span class="o">.</span><span class="n">KIND</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Processor</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
+        <span class="c1"># x = tf.reshape(x, self.input_shape_model)</span>
+        <span class="c1"># y = tf.reshape(y, self.label_shape_model)</span>
+        <span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span></div>
+
+
+<div class="viewcode-block" id="BaseLoadData.parse_example">
+<a class="viewcode-back" href="../../../lib.data.html#lib.data.base.BaseLoadData.parse_example">[docs]</a>
+    <span class="k">def</span> <span class="nf">parse_example</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">example_proto</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Parses one example from a TFRecord data.</span>
+
+<span class="sd">        #.  Set the parsing configuration according to the format in which the data was</span>
+<span class="sd">            written. (``tf.io.parse_single_example()``)</span>
+<span class="sd">        #.  When writing TFRecord data, we make the elements one-dimensional, so we</span>
+<span class="sd">            restore the shape.</span>
+<span class="sd">        #.  Run preprocess. (:meth:`preprocess`)</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            example_proto (tf.Tensor): protocol massage.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            tf.Tensor: input.</span>
+<span class="sd">            tf.Tensor: label.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">features</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;input&#39;</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">FixedLenFeature</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">input_size</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span>
+            <span class="s1">&#39;label&#39;</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">FixedLenFeature</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">label_size</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span>
+        <span class="p">}</span>
+        <span class="n">example</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">parse_single_example</span><span class="p">(</span>
+            <span class="n">serialized</span><span class="o">=</span><span class="n">example_proto</span><span class="p">,</span>
+            <span class="n">features</span><span class="o">=</span><span class="n">features</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">example</span><span class="p">[</span><span class="s1">&#39;input&#39;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_shape</span><span class="p">)</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">example</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">label_shape</span><span class="p">)</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">preprocess</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span></div>
+
+
+<div class="viewcode-block" id="BaseLoadData.make_loader_example">
+<a class="viewcode-back" href="../../../lib.data.html#lib.data.base.BaseLoadData.make_loader_example">[docs]</a>
+    <span class="k">def</span> <span class="nf">make_loader_example</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Makes data loader.</span>
+
+<span class="sd">        #.  Set the list of data file pathes.</span>
+<span class="sd">            (``tf.data.Dataset.list_files()``)</span>
+<span class="sd">        #.  Set the interleave configuration.</span>
+<span class="sd">            (``tf.data.Dataset.interleave()``)</span>
+<span class="sd">        #.  Set the function to parse one example from a TFRecord data.</span>
+<span class="sd">            (``tf.data.Dataset.map()``)</span>
+<span class="sd">        #.  Set the shuffle configuration.</span>
+<span class="sd">            (``tf.data.Dataset.shuffle()``)</span>
+<span class="sd">        #.  Set the batch configuration.</span>
+<span class="sd">            (``tf.data.Dataset.batch()``)</span>
+<span class="sd">        #.  Set the prefetch configuration.</span>
+<span class="sd">            (``tf.data.Dataset.prefetch()``)</span>
+<span class="sd">        #.  Set the repeat configuration.</span>
+<span class="sd">            (``tf.data.Dataset.repeat()``)</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            seed (int): random seed.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Callable: data pipeline. (``tf.data``)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dataset</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Dataset</span><span class="o">.</span><span class="n">list_files</span><span class="p">(</span><span class="n">file_pattern</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="n">K</span><span class="o">.</span><span class="n">FILES</span><span class="p">])</span>
+        <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">interleave</span><span class="p">(</span>
+            <span class="n">map_func</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">TFRecordDataset</span><span class="p">,</span>
+            <span class="n">num_parallel_calls</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">AUTOTUNE</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parse_example</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="n">K</span><span class="o">.</span><span class="n">SHUFFLE</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span>
+                <span class="n">buffer_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="n">K</span><span class="o">.</span><span class="n">SHUFFLE</span><span class="p">],</span>
+                <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">,</span>
+                <span class="n">reshuffle_each_iteration</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">batch</span><span class="p">(</span><span class="n">batch_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="n">K</span><span class="o">.</span><span class="n">BATCH</span><span class="p">])</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="n">K</span><span class="o">.</span><span class="n">PREFETCH</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">prefetch</span><span class="p">(</span><span class="n">buffer_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="n">K</span><span class="o">.</span><span class="n">PREFETCH</span><span class="p">])</span>
+        <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">count</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="n">K</span><span class="o">.</span><span class="n">REPEAT</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">dataset</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="feature_int64_list">
+<a class="viewcode-back" href="../../../lib.data.html#lib.data.base.feature_int64_list">[docs]</a>
+<span class="k">def</span> <span class="nf">feature_int64_list</span><span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">Feature</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Converts ``tf.train.Feature`` type. (``tf.train.Int64List``)</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        value (list[int]): one-dimensional list with elements of type ``int``.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        tf.train.Feature: value of ``tf.train.Feature`` type.</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        value = [1,2,3]</span>
+<span class="sd">        print(feature_int64_list(value=value))</span>
+
+<span class="sd">        # int64_list {</span>
+<span class="sd">        # value: 1</span>
+<span class="sd">        # value: 2</span>
+<span class="sd">        # value: 3</span>
+<span class="sd">        # }</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">Feature</span><span class="p">(</span><span class="n">int64_list</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">Int64List</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="feature_float_list">
+<a class="viewcode-back" href="../../../lib.data.html#lib.data.base.feature_float_list">[docs]</a>
+<span class="k">def</span> <span class="nf">feature_float_list</span><span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">Feature</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Converts ``tf.train.Feature`` type. (``tf.train.FloatList``)</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        value (list[float]): one-dimensional list with elements of type ``float``.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        tf.train.Feature: value of ``tf.train.Feature`` type.</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        value = [1.,2.,3.]</span>
+<span class="sd">        print(feature_float_list(value=value))</span>
+
+<span class="sd">        # float_list {</span>
+<span class="sd">        # value: 1</span>
+<span class="sd">        # value: 2</span>
+<span class="sd">        # value: 3</span>
+<span class="sd">        # }</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">Feature</span><span class="p">(</span><span class="n">float_list</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">FloatList</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="feature_bytes_list">
+<a class="viewcode-back" href="../../../lib.data.html#lib.data.base.feature_bytes_list">[docs]</a>
+<span class="k">def</span> <span class="nf">feature_bytes_list</span><span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">bytes</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">Feature</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Converts ``tf.train.Feature`` type. (``tf.train.BytesList``)</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        value (list[bytes]): one-dimensional list with elements of type ``bytes``.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        tf.train.Feature: value of ``tf.train.Feature`` type.</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        value = [b&quot;1&quot;, b&quot;test&quot;]</span>
+<span class="sd">        print(feature_bytes_list(value=value))</span>
+
+<span class="sd">        # bytes_list {</span>
+<span class="sd">        # value: &quot;1&quot;</span>
+<span class="sd">        # value: &quot;test&quot;</span>
+<span class="sd">        # }</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">Feature</span><span class="p">(</span><span class="n">bytes_list</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">BytesList</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="serialize_example">
+<a class="viewcode-back" href="../../../lib.data.html#lib.data.base.serialize_example">[docs]</a>
+<span class="k">def</span> <span class="nf">serialize_example</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">Example</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Converts ``tf.train.Example`` type.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        data (list[float]): a set of inputs and labels.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        tf.train.Example: value of ``tf.train.Example`` type.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">feature</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;input&#39;</span><span class="p">:</span> <span class="n">feature_float_list</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+        <span class="s1">&#39;label&#39;</span><span class="p">:</span> <span class="n">feature_float_list</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">Example</span><span class="p">(</span><span class="n">features</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">Features</span><span class="p">(</span><span class="n">feature</span><span class="o">=</span><span class="n">feature</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="write_exmaple">
+<a class="viewcode-back" href="../../../lib.data.html#lib.data.base.write_exmaple">[docs]</a>
+<span class="k">def</span> <span class="nf">write_exmaple</span><span class="p">(</span><span class="n">fpath</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">inputs</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">labels</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Writes TFRecord data.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        fpath (Path): file path.</span>
+<span class="sd">        inputs (np.ndarray): input.</span>
+<span class="sd">        labels (np.ndarray): label.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">inputs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+    <span class="n">labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span>
+
+    <span class="n">writer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">TFRecordWriter</span><span class="p">(</span><span class="n">fpath</span><span class="o">.</span><span class="n">as_posix</span><span class="p">())</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">labels</span><span class="p">)):</span>
+        <span class="n">example_proto</span> <span class="o">=</span> <span class="n">serialize_example</span><span class="p">([</span><span class="n">x</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span> <span class="p">[</span><span class="n">y</span><span class="p">]])</span>
+        <span class="n">writer</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">example_proto</span><span class="o">.</span><span class="n">SerializeToString</span><span class="p">())</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="se">\r</span><span class="s1">save progress: </span><span class="si">{</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">:</span><span class="s1">&gt;7</span><span class="si">}</span><span class="s1"> / </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">()</span>
+    <span class="n">writer</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, r-dev95.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

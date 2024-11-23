@@ -1,0 +1,82 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2024, r-dev95
+# This file is distributed under the same license as the template-tensorflow
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: template-tensorflow \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-11-22 20:41+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../source/dataset.rst:2
+msgid "dataset.py"
+msgstr ""
+
+#: dataset:1 of
+msgid "This is the module that makes TFRecord data."
+msgstr "TFRecordデータを作成するモジュール。"
+
+#: dataset.make_tfrecord:1 of
+msgid "Makes TFRecord data."
+msgstr "TFRecordデータを作成する。"
+
+#: dataset.make_tfrecord:3 of
+msgid "Make TFRecord data loading data from the following function."
+msgstr "次の関数からデータを読み込みTFRecordデータを作成する。"
+
+#: dataset.make_tfrecord:5 of
+msgid "``keras.datasets.mnist.load_data()``"
+msgstr ""
+
+#: dataset.make_tfrecord:6 of
+msgid "``keras.datasets.fashion_mnist.load_data``"
+msgstr ""
+
+#: dataset.make_tfrecord:7 of
+msgid "``keras.datasets.cifar10.load_data``"
+msgstr ""
+
+#: dataset.make_tfrecord:8 of
+msgid "``keras.datasets.cifar100.load_data``"
+msgstr ""
+
+#: ../../source/dataset.rst
+msgid "Parameters"
+msgstr "パラメータ"
+
+#: dataset.make_tfrecord:10 of
+msgid "keras's dataset loader and save directory path."
+msgstr "Kerasのデータローダーと保存ディレクトリパス。"
+
+#: dataset.main:1 of
+msgid "main."
+msgstr ""
+
+#: dataset.main:3 of
+msgid "parameters."
+msgstr "パラメータ"
+
+#: dataset.set_params:1 of
+msgid "Sets the command line arguments."
+msgstr "コマンドライン引数を設定する。"
+
+#: dataset.set_params of
+msgid "Returns"
+msgstr "戻り値"
+
+#: dataset.set_params:3 of
+msgid "**dict[str, Any]** -- parameters."
+msgstr "**dict[str, Any]** -- パラメータ"
+
