@@ -2,6 +2,8 @@
 """  # noqa: INP001
 
 import argparse
+import os
+import shutil
 from collections.abc import Callable
 from concurrent.futures import ProcessPoolExecutor
 from logging import getLogger
@@ -156,15 +158,17 @@ def make_tfrecord(args: list[Callable, str]) -> None:
     """
     load_data, dpath = args
 
-    fpath_train = Path(dpath, 'train', 'train.tfr')
-    fpath_test = Path(dpath, 'test', 'test.tfr')
     (x_train, y_train), (x_test, y_test) = load_data()
+
     # training data.
     LOGGER.info('train data:')
+    fpath_train = Path(dpath, 'train', 'train.tfr')
     fpath_train.parent.mkdir(parents=True, exist_ok=True)
     write_exmaple(fpath=fpath_train, inputs=x_train, labels=y_train)
+
     # test data.
     LOGGER.info('test data:')
+    fpath_test = Path(dpath, 'test', 'test.tfr')
     fpath_test.parent.mkdir(parents=True, exist_ok=True)
     write_exmaple(fpath=fpath_test, inputs=x_test, labels=y_test)
 
@@ -189,6 +193,9 @@ def main(params: dict[str, Any]) -> None:
     args = [[func[kind], Path(params[K.RESULT], kind)] for kind in params[K.DATA]]
     with ProcessPoolExecutor(max_workers=params['max_workers']) as executer:
         executer.map(make_tfrecord, args)
+
+    tmp_data_dpath = Path(os.environ['HOME'], '.keras/datasets')
+    shutil.rmtree(tmp_data_dpath)
 
 
 def set_params() -> dict[str, Any]:
