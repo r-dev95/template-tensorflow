@@ -4,7 +4,10 @@ target-version = "py312"
 line-length = 88
 preview = true
 show-fixes = true
-src = ["template_tensorflow"]
+src = [
+    "template_tensorflow",
+    "tests",
+]
 exclude = [
     ".git",
     ".ruff_cache",

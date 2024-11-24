@@ -2,7 +2,7 @@
 """
 
 import sys
-from logging import ERROR, INFO, WARNING, getLogger
+from logging import ERROR, getLogger
 
 import pytest
 from _pytest.logging import LogCaptureFixture

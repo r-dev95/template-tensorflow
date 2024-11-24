@@ -3,7 +3,7 @@
 
 import shutil
 import sys
-from logging import ERROR, INFO, WARNING, getLogger
+from logging import getLogger
 from pathlib import Path
 
 import pytest

@@ -2,7 +2,7 @@
 """
 
 import sys
-from logging import ERROR, INFO, WARNING, getLogger
+from logging import ERROR, getLogger
 
 import numpy as np
 import pytest

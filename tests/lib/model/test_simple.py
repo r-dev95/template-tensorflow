@@ -2,7 +2,7 @@
 """
 
 import sys
-from logging import ERROR, INFO, WARNING
+from logging import ERROR, INFO, getLogger
 
 import numpy as np
 import pytest
@@ -10,10 +10,12 @@ import tensorflow as tf
 from _pytest.logging import LogCaptureFixture
 
 sys.path.append('../template_tensorflow/')
-from template_tensorflow.lib.common.define import ParamKey
+from template_tensorflow.lib.common.define import ParamKey, ParamLog
 from template_tensorflow.lib.model import simple
 
 K = ParamKey()
+PARAM_LOG = ParamLog()
+LOGGER = getLogger(name=PARAM_LOG.NAME)
 
 
 DENSE = {
