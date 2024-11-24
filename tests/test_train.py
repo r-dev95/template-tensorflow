@@ -3,17 +3,22 @@
 
 import shutil
 import sys
-from logging import ERROR, INFO, WARNING
+from logging import ERROR, INFO, WARNING, getLogger
 from pathlib import Path
 
 import pytest
 from _pytest.logging import LogCaptureFixture
 
 sys.path.append('../template_tensorflow/')
-from template_tensorflow import dataset, train
-from template_tensorflow.lib.common.define import ParamKey
+from template_tensorflow import train
+from template_tensorflow.lib.common.define import ParamKey, ParamLog
+
+sys.path.append('../tests')
+from define import DATA_PARAMS_FPATH, DATA_PARENT_DPATH
 
 K = ParamKey()
+PARAM_LOG = ParamLog()
+LOGGER = getLogger(name=PARAM_LOG.NAME)
 
 
 class TestCheckParams:
@@ -22,7 +27,7 @@ class TestCheckParams:
     params = {
         K.EAGER: False,
         K.SEED: 0,
-        K.PARAM: 'data/params.yaml',
+        K.PARAM: DATA_PARAMS_FPATH,
         K.TRAIN: '.',
         K.VALID: '.',
         K.RESULT: '.',
@@ -43,10 +48,10 @@ class TestCheckParams:
     params_raise = {
         K.EAGER: 1,
         K.SEED: None,
-        K.PARAM: 'params_raise.yaml',
-        K.TRAIN: 'data_train',
-        K.VALID: 'data_valid',
-        K.RESULT: 'result',
+        K.PARAM: 'dummy.yaml',
+        K.TRAIN: 'dummy',
+        K.VALID: 'dummy',
+        K.RESULT: 'dummy',
         K.EPOCHS: 0,
         K.BATCH_TRAIN: 0,
         K.BATCH_VALID: None,
@@ -95,9 +100,9 @@ class TestTrain:
     params = {
         K.EAGER: False,
         K.SEED: 0,
-        K.PARAM: 'data/params.yaml',
-        K.TRAIN: 'data/mnist/train',
-        K.VALID: 'data/mnist/test',
+        K.PARAM: DATA_PARAMS_FPATH,
+        K.TRAIN: f'{DATA_PARENT_DPATH}/mnist/train',
+        K.VALID: f'{DATA_PARENT_DPATH}/mnist/test',
         K.RESULT: 'result',
         K.EPOCHS: 2,
         K.BATCH_TRAIN: 32,
@@ -208,12 +213,6 @@ class TestTrain:
 
     @pytest.fixture(scope='class')
     def proc(self):
-        params = {
-            K.RESULT: 'data',
-            K.DATA: ['mnist'],
-            'max_workers': 8,
-        }
-        dataset.main(params=params)
         dpath = Path(self.params[K.RESULT])
         dpath.mkdir(parents=True, exist_ok=True)
         yield

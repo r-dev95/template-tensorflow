@@ -2,9 +2,7 @@
 """
 
 import sys
-from logging import ERROR, INFO, WARNING, getLogger
-
-import pytest
+from logging import getLogger
 
 sys.path.append('../template_tensorflow/')
 from template_tensorflow.lib.common.define import ParamKey, ParamLog

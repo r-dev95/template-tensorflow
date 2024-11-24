@@ -3,7 +3,7 @@
 
 import shutil
 import sys
-from logging import ERROR, INFO, WARNING
+from logging import getLogger
 from pathlib import Path
 
 import pytest
@@ -14,7 +14,15 @@ from template_tensorflow import dataset
 from template_tensorflow.lib.common.define import ParamKey
 from template_tensorflow.lib.data import base
 
+sys.path.append('../template_tensorflow/')
+from template_tensorflow.lib.common.define import ParamLog
+
+sys.path.append('../tests')
+from define import DATA_PARENT_DPATH
+
 K = ParamKey()
+PARAM_LOG = ParamLog()
+LOGGER = getLogger(name=PARAM_LOG.NAME)
 
 
 class TestFeature:
@@ -109,17 +117,12 @@ class TestDataset:
     """Tests :mod:`dataset`.
     """
     params = {
-        K.RESULT: 'result',
+        K.RESULT: DATA_PARENT_DPATH,
         K.DATA: ['all'],
         'max_workers': 8,
     }
 
-    @pytest.fixture(scope='class')
-    def proc(self):
-        yield
-        shutil.rmtree(self.params[K.RESULT])
-
-    def test(self, proc):
+    def test(self):
         """Tests that no errors are raised.
         """
         dataset.main(params=self.params)

@@ -13,6 +13,9 @@ from template_tensorflow.lib.common import process
 from template_tensorflow.lib.common.define import ParamKey, ParamLog
 from template_tensorflow.lib.model.setup import SetupModel
 
+sys.path.append('../tests')
+from define import DATA_RESULT_DPATH
+
 K = ParamKey()
 PARAM_LOG = ParamLog()
 LOGGER = getLogger(name=PARAM_LOG.NAME)
@@ -57,7 +60,7 @@ class TestSetWeight:
     """
     params = {
         K.EAGER: False,
-        K.RESULT: 'data/result',
+        K.RESULT: DATA_RESULT_DPATH,
         K.MODEL: {
             K.KIND: 'simple',
         },
@@ -123,9 +126,9 @@ class TestSetWeight:
         for m, w_m in zip(model.layers, weighted_model.layers):
             if m.get_weights():
                 for m_weight, w_m_weight in zip(m.get_weights(), w_m.get_weights()):
-                    # print(np.where(m_weight != w_m_weight))
-                    # print(f'{m_weight=}')
-                    # print(f'{w_m_weight=}')
+                    print(np.where(m_weight != w_m_weight))
+                    print(f'{m_weight=}')
+                    print(f'{w_m_weight=}')
                     assert (m_weight != w_m_weight).any()
 
 

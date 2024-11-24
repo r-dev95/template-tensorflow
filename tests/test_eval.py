@@ -3,17 +3,22 @@
 
 import shutil
 import sys
-from logging import ERROR, INFO, WARNING
+from logging import ERROR, INFO, WARNING, getLogger
 from pathlib import Path
 
 import pytest
 from _pytest.logging import LogCaptureFixture
 
 sys.path.append('../template_tensorflow/')
-from template_tensorflow import dataset, eval  # noqa: A004
-from template_tensorflow.lib.common.define import ParamKey
+from template_tensorflow import eval  # noqa: A004
+from template_tensorflow.lib.common.define import ParamKey, ParamLog
+
+sys.path.append('../tests')
+from define import DATA_PARAMS_FPATH, DATA_PARENT_DPATH, DATA_RESULT_DPATH
 
 K = ParamKey()
+PARAM_LOG = ParamLog()
+LOGGER = getLogger(name=PARAM_LOG.NAME)
 
 
 class TestCheckParams:
@@ -22,7 +27,7 @@ class TestCheckParams:
     params = {
         K.EAGER: False,
         K.SEED: 0,
-        K.PARAM: 'data/params.yaml',
+        K.PARAM: DATA_PARAMS_FPATH,
         K.EVAL: '.',
         K.RESULT: '.',
         K.BATCH: 1000,
@@ -38,9 +43,9 @@ class TestCheckParams:
     params_raise = {
         K.EAGER: 1,
         K.SEED: None,
-        K.PARAM: 'params_raise.yaml',
-        K.EVAL: 'data_train',
-        K.RESULT: 'result',
+        K.PARAM: 'dummy.yaml',
+        K.EVAL: 'dummy',
+        K.RESULT: 'dummy',
         K.BATCH: 0,
     }
 
@@ -80,9 +85,9 @@ class TestEval:
     params = {
         K.EAGER: False,
         K.SEED: 0,
-        K.PARAM: 'data/params.yaml',
-        K.EVAL: 'data/mnist/test',
-        K.RESULT: 'data/result',
+        K.PARAM: DATA_PARAMS_FPATH,
+        K.EVAL: f'{DATA_PARENT_DPATH}/mnist/test',
+        K.RESULT: DATA_RESULT_DPATH,
         K.BATCH: 1000,
         K.DATA: {K.KIND: 'mnist'},
         K.PROCESS: {
@@ -149,18 +154,7 @@ class TestEval:
         },
     }
 
-    @pytest.fixture(scope='class')
-    def proc(self):
-        params = {
-            K.RESULT: 'data',
-            K.DATA: ['mnist'],
-            'max_workers': 8,
-        }
-        dataset.main(params=params)
-        yield
-        shutil.rmtree(Path(params[K.RESULT], 'mnist'))
-
-    def test(self, proc):
+    def test(self):
         """Tests that no errors are raised.
         """
         eval.main(params=self.params)
