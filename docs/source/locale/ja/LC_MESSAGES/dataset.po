@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: template-tensorflow \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-22 20:41+0900\n"
+"POT-Creation-Date: 2024-11-24 10:22+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -27,6 +27,72 @@ msgstr ""
 #: dataset:1 of
 msgid "This is the module that makes TFRecord data."
 msgstr "TFRecordデータを作成するモジュール。"
+
+#: dataset.feature_int64_list:1 of
+msgid "Converts ``tf.train.Feature`` type. (``tf.train.Int64List``)"
+msgstr "``tf.train.Feature`` 型に変換する。 (``tf.train.Int64List``)"
+
+#: ../../source/dataset.rst
+msgid "Parameters"
+msgstr "パラメータ"
+
+#: dataset.feature_int64_list:3 of
+msgid "one-dimensional list with elements of type ``int``."
+msgstr "``int`` 型の要素を持つ一次元化リスト。"
+
+#: dataset.feature_bytes_list dataset.feature_float_list
+#: dataset.feature_int64_list dataset.serialize_example dataset.set_params of
+msgid "Returns"
+msgstr "戻り値"
+
+#: dataset.feature_bytes_list:6 dataset.feature_float_list:6
+#: dataset.feature_int64_list:6 of
+msgid "**tf.train.Feature** -- value of ``tf.train.Feature`` type."
+msgstr "**tf.train.Feature** -- ``tf.train.Feature`` 型の値"
+
+#: dataset.feature_float_list:1 of
+msgid "Converts ``tf.train.Feature`` type. (``tf.train.FloatList``)"
+msgstr "``tf.train.Feature`` 型に変換する。 (``tf.train.FloatList``)"
+
+#: dataset.feature_float_list:3 of
+msgid "one-dimensional list with elements of type ``float``."
+msgstr "``float`` 型の要素を持つ一次元化リスト。"
+
+#: dataset.feature_bytes_list:1 of
+msgid "Converts ``tf.train.Feature`` type. (``tf.train.BytesList``)"
+msgstr "``tf.train.Feature`` 型に変換する。 (``tf.train.BytesList``)"
+
+#: dataset.feature_bytes_list:3 of
+msgid "one-dimensional list with elements of type ``bytes``."
+msgstr "``bytes`` 型の要素を持つ一次元化リスト。"
+
+#: dataset.serialize_example:1 of
+msgid "Converts ``tf.train.Example`` type."
+msgstr "``tf.train.Example`` 型に変換する。"
+
+#: dataset.serialize_example:3 of
+msgid "a set of inputs and labels."
+msgstr "入力とラベルのセット。"
+
+#: dataset.serialize_example:6 of
+msgid "**tf.train.Example** -- value of ``tf.train.Example`` type."
+msgstr "**tf.train.Example** -- ``tf.train.Example`` 型の値"
+
+#: dataset.write_exmaple:1 of
+msgid "Writes TFRecord data."
+msgstr "TFRecordデータを書き込む。"
+
+#: dataset.write_exmaple:3 of
+msgid "file path."
+msgstr "ファイルパス"
+
+#: dataset.write_exmaple:5 of
+msgid "input."
+msgstr "入力"
+
+#: dataset.write_exmaple:7 of
+msgid "label."
+msgstr "ラベル"
 
 #: dataset.make_tfrecord:1 of
 msgid "Makes TFRecord data."
@@ -52,10 +118,6 @@ msgstr ""
 msgid "``keras.datasets.cifar100.load_data``"
 msgstr ""
 
-#: ../../source/dataset.rst
-msgid "Parameters"
-msgstr "パラメータ"
-
 #: dataset.make_tfrecord:10 of
 msgid "keras's dataset loader and save directory path."
 msgstr "Kerasのデータローダーと保存ディレクトリパス。"
@@ -71,10 +133,6 @@ msgstr "パラメータ"
 #: dataset.set_params:1 of
 msgid "Sets the command line arguments."
 msgstr "コマンドライン引数を設定する。"
-
-#: dataset.set_params of
-msgid "Returns"
-msgstr "戻り値"
 
 #: dataset.set_params:3 of
 msgid "**dict[str, Any]** -- parameters."

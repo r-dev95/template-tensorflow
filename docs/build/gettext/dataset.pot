@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: template-tensorflow \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-22 20:41+0900\n"
+"POT-Creation-Date: 2024-11-24 10:22+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,6 +22,76 @@ msgstr ""
 
 #: ../../../template_tensorflow/dataset.py:docstring of dataset:1
 msgid "This is the module that makes TFRecord data."
+msgstr ""
+
+#: ../../../template_tensorflow/dataset.py:docstring of dataset.feature_int64_list:1
+msgid "Converts ``tf.train.Feature`` type. (``tf.train.Int64List``)"
+msgstr ""
+
+#: ../../source/dataset.rst:0
+msgid "Parameters"
+msgstr ""
+
+#: ../../../template_tensorflow/dataset.py:docstring of dataset.feature_int64_list:3
+msgid "one-dimensional list with elements of type ``int``."
+msgstr ""
+
+#: ../../../template_tensorflow/dataset.py:docstring of dataset.feature_bytes_list:0
+#: ../../../template_tensorflow/dataset.py:docstring of dataset.feature_float_list:0
+#: ../../../template_tensorflow/dataset.py:docstring of dataset.feature_int64_list:0
+#: ../../../template_tensorflow/dataset.py:docstring of dataset.serialize_example:0
+#: ../../../template_tensorflow/dataset.py:docstring of dataset.set_params:0
+msgid "Returns"
+msgstr ""
+
+#: ../../../template_tensorflow/dataset.py:docstring of dataset.feature_bytes_list:6
+#: ../../../template_tensorflow/dataset.py:docstring of dataset.feature_float_list:6
+#: ../../../template_tensorflow/dataset.py:docstring of dataset.feature_int64_list:6
+msgid "**tf.train.Feature** -- value of ``tf.train.Feature`` type."
+msgstr ""
+
+#: ../../../template_tensorflow/dataset.py:docstring of dataset.feature_float_list:1
+msgid "Converts ``tf.train.Feature`` type. (``tf.train.FloatList``)"
+msgstr ""
+
+#: ../../../template_tensorflow/dataset.py:docstring of dataset.feature_float_list:3
+msgid "one-dimensional list with elements of type ``float``."
+msgstr ""
+
+#: ../../../template_tensorflow/dataset.py:docstring of dataset.feature_bytes_list:1
+msgid "Converts ``tf.train.Feature`` type. (``tf.train.BytesList``)"
+msgstr ""
+
+#: ../../../template_tensorflow/dataset.py:docstring of dataset.feature_bytes_list:3
+msgid "one-dimensional list with elements of type ``bytes``."
+msgstr ""
+
+#: ../../../template_tensorflow/dataset.py:docstring of dataset.serialize_example:1
+msgid "Converts ``tf.train.Example`` type."
+msgstr ""
+
+#: ../../../template_tensorflow/dataset.py:docstring of dataset.serialize_example:3
+msgid "a set of inputs and labels."
+msgstr ""
+
+#: ../../../template_tensorflow/dataset.py:docstring of dataset.serialize_example:6
+msgid "**tf.train.Example** -- value of ``tf.train.Example`` type."
+msgstr ""
+
+#: ../../../template_tensorflow/dataset.py:docstring of dataset.write_exmaple:1
+msgid "Writes TFRecord data."
+msgstr ""
+
+#: ../../../template_tensorflow/dataset.py:docstring of dataset.write_exmaple:3
+msgid "file path."
+msgstr ""
+
+#: ../../../template_tensorflow/dataset.py:docstring of dataset.write_exmaple:5
+msgid "input."
+msgstr ""
+
+#: ../../../template_tensorflow/dataset.py:docstring of dataset.write_exmaple:7
+msgid "label."
 msgstr ""
 
 #: ../../../template_tensorflow/dataset.py:docstring of dataset.make_tfrecord:1
@@ -48,10 +118,6 @@ msgstr ""
 msgid "``keras.datasets.cifar100.load_data``"
 msgstr ""
 
-#: ../../source/dataset.rst:0
-msgid "Parameters"
-msgstr ""
-
 #: ../../../template_tensorflow/dataset.py:docstring of dataset.make_tfrecord:10
 msgid "keras's dataset loader and save directory path."
 msgstr ""
@@ -66,10 +132,6 @@ msgstr ""
 
 #: ../../../template_tensorflow/dataset.py:docstring of dataset.set_params:1
 msgid "Sets the command line arguments."
-msgstr ""
-
-#: ../../../template_tensorflow/dataset.py:docstring of dataset.set_params:0
-msgid "Returns"
 msgstr ""
 
 #: ../../../template_tensorflow/dataset.py:docstring of dataset.set_params:3

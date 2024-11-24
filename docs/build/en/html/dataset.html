@@ -47,6 +47,11 @@
 <li class="toctree-l1"><a class="reference internal" href="train.html">train.py</a></li>
 <li class="toctree-l1"><a class="reference internal" href="eval.html">eval.py</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">dataset.py</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#dataset.feature_int64_list"><code class="docutils literal notranslate"><span class="pre">feature_int64_list()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dataset.feature_float_list"><code class="docutils literal notranslate"><span class="pre">feature_float_list()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dataset.feature_bytes_list"><code class="docutils literal notranslate"><span class="pre">feature_bytes_list()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dataset.serialize_example"><code class="docutils literal notranslate"><span class="pre">serialize_example()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dataset.write_exmaple"><code class="docutils literal notranslate"><span class="pre">write_exmaple()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#dataset.make_tfrecord"><code class="docutils literal notranslate"><span class="pre">make_tfrecord()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#dataset.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#dataset.set_params"><code class="docutils literal notranslate"><span class="pre">set_params()</span></code></a></li>
@@ -81,6 +86,106 @@
   <section id="module-dataset">
 <span id="dataset-py"></span><h1>dataset.py<a class="headerlink" href="#module-dataset" title="Link to this heading"></a></h1>
 <p>This is the module that makes TFRecord data.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="dataset.feature_int64_list">
+<span class="sig-name descname"><span class="pre">feature_int64_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dataset.html#feature_int64_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dataset.feature_int64_list" title="Link to this definition"></a></dt>
+<dd><p>Converts <code class="docutils literal notranslate"><span class="pre">tf.train.Feature</span></code> type. (<code class="docutils literal notranslate"><span class="pre">tf.train.Int64List</span></code>)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>value</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – one-dimensional list with elements of type <code class="docutils literal notranslate"><span class="pre">int</span></code>.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>tf.train.Feature</strong> – value of <code class="docutils literal notranslate"><span class="pre">tf.train.Feature</span></code> type.</p>
+</dd>
+</dl>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">value</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">feature_int64_list</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">))</span>
+
+<span class="c1"># int64_list {</span>
+<span class="c1"># value: 1</span>
+<span class="c1"># value: 2</span>
+<span class="c1"># value: 3</span>
+<span class="c1"># }</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dataset.feature_float_list">
+<span class="sig-name descname"><span class="pre">feature_float_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dataset.html#feature_float_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dataset.feature_float_list" title="Link to this definition"></a></dt>
+<dd><p>Converts <code class="docutils literal notranslate"><span class="pre">tf.train.Feature</span></code> type. (<code class="docutils literal notranslate"><span class="pre">tf.train.FloatList</span></code>)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>value</strong> (<em>list</em><em>[</em><em>float</em><em>]</em>) – one-dimensional list with elements of type <code class="docutils literal notranslate"><span class="pre">float</span></code>.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>tf.train.Feature</strong> – value of <code class="docutils literal notranslate"><span class="pre">tf.train.Feature</span></code> type.</p>
+</dd>
+</dl>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">value</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1.</span><span class="p">,</span><span class="mf">2.</span><span class="p">,</span><span class="mf">3.</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">feature_float_list</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">))</span>
+
+<span class="c1"># float_list {</span>
+<span class="c1"># value: 1</span>
+<span class="c1"># value: 2</span>
+<span class="c1"># value: 3</span>
+<span class="c1"># }</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dataset.feature_bytes_list">
+<span class="sig-name descname"><span class="pre">feature_bytes_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dataset.html#feature_bytes_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dataset.feature_bytes_list" title="Link to this definition"></a></dt>
+<dd><p>Converts <code class="docutils literal notranslate"><span class="pre">tf.train.Feature</span></code> type. (<code class="docutils literal notranslate"><span class="pre">tf.train.BytesList</span></code>)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>value</strong> (<em>list</em><em>[</em><em>bytes</em><em>]</em>) – one-dimensional list with elements of type <code class="docutils literal notranslate"><span class="pre">bytes</span></code>.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>tf.train.Feature</strong> – value of <code class="docutils literal notranslate"><span class="pre">tf.train.Feature</span></code> type.</p>
+</dd>
+</dl>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">value</span> <span class="o">=</span> <span class="p">[</span><span class="sa">b</span><span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;test&quot;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">feature_bytes_list</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">))</span>
+
+<span class="c1"># bytes_list {</span>
+<span class="c1"># value: &quot;1&quot;</span>
+<span class="c1"># value: &quot;test&quot;</span>
+<span class="c1"># }</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dataset.serialize_example">
+<span class="sig-name descname"><span class="pre">serialize_example</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dataset.html#serialize_example"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dataset.serialize_example" title="Link to this definition"></a></dt>
+<dd><p>Converts <code class="docutils literal notranslate"><span class="pre">tf.train.Example</span></code> type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>list</em><em>[</em><em>float</em><em>]</em>) – a set of inputs and labels.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>tf.train.Example</strong> – value of <code class="docutils literal notranslate"><span class="pre">tf.train.Example</span></code> type.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dataset.write_exmaple">
+<span class="sig-name descname"><span class="pre">write_exmaple</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fpath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dataset.html#write_exmaple"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dataset.write_exmaple" title="Link to this definition"></a></dt>
+<dd><p>Writes TFRecord data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fpath</strong> (<em>Path</em>) – file path.</p></li>
+<li><p><strong>inputs</strong> (<em>np.ndarray</em>) – input.</p></li>
+<li><p><strong>labels</strong> (<em>np.ndarray</em>) – label.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py function">
 <dt class="sig sig-object py" id="dataset.make_tfrecord">
 <span class="sig-name descname"><span class="pre">make_tfrecord</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dataset.html#make_tfrecord"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dataset.make_tfrecord" title="Link to this definition"></a></dt>

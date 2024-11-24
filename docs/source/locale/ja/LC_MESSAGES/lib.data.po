@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: template-tensorflow \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-23 15:50+0900\n"
+"POT-Creation-Date: 2024-11-24 10:22+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -64,7 +64,8 @@ msgstr "TFRecordデータを読み込むデータパイプラインを作成す�
 msgid ""
 "Child classes that inherit this class must set the list of file paths to "
 "``params[K.FILES]`` before running ``super().__init__(params=params)``."
-msgstr "このクラスを継承する子クラスは、``super().__init__(params=params)`` を実行する前に"
+msgstr ""
+"このクラスを継承する子クラスは、``super().__init__(params=params)`` を実行する前に"
 "ファイルパスのリストを ``params[K.FILES]`` に設定する必要がある。"
 
 #: ../../docstring lib.data.base.BaseLoadData.n_data:1
@@ -174,9 +175,7 @@ msgstr "ラベル (前処理前)"
 
 #: lib.data.base.BaseLoadData.make_loader_example
 #: lib.data.base.BaseLoadData.parse_example
-#: lib.data.base.BaseLoadData.preprocess lib.data.base.feature_bytes_list
-#: lib.data.base.feature_float_list lib.data.base.feature_int64_list
-#: lib.data.base.serialize_example lib.data.processor.Processor.catencode
+#: lib.data.base.BaseLoadData.preprocess lib.data.processor.Processor.catencode
 #: lib.data.processor.Processor.rescale lib.data.processor.Processor.run
 #: lib.data.setup.SetupData.cifar lib.data.setup.SetupData.mnist
 #: lib.data.setup.SetupData.setup of
@@ -265,63 +264,6 @@ msgstr "乱数シード"
 msgid "**Callable** -- data pipeline. (``tf.data``)"
 msgstr "**Callable** -- データパイプライン (``tf.data``)"
 
-#: lib.data.base.feature_int64_list:1 of
-msgid "Converts ``tf.train.Feature`` type. (``tf.train.Int64List``)"
-msgstr "``tf.train.Feature`` 型に変換する。 (``tf.train.Int64List``)"
-
-#: lib.data.base.feature_int64_list:3 of
-msgid "one-dimensional list with elements of type ``int``."
-msgstr "``int`` 型の要素を持つ一次元化リスト。"
-
-#: lib.data.base.feature_bytes_list:6 lib.data.base.feature_float_list:6
-#: lib.data.base.feature_int64_list:6 of
-msgid "**tf.train.Feature** -- value of ``tf.train.Feature`` type."
-msgstr "**tf.train.Feature** -- ``tf.train.Feature`` 型の値"
-
-#: lib.data.base.feature_float_list:1 of
-msgid "Converts ``tf.train.Feature`` type. (``tf.train.FloatList``)"
-msgstr "``tf.train.Feature`` 型に変換する。 (``tf.train.FloatList``)"
-
-#: lib.data.base.feature_float_list:3 of
-msgid "one-dimensional list with elements of type ``float``."
-msgstr "``float`` 型の要素を持つ一次元化リスト。"
-
-#: lib.data.base.feature_bytes_list:1 of
-msgid "Converts ``tf.train.Feature`` type. (``tf.train.BytesList``)"
-msgstr "``tf.train.Feature`` 型に変換する。 (``tf.train.BytesList``)"
-
-#: lib.data.base.feature_bytes_list:3 of
-msgid "one-dimensional list with elements of type ``bytes``."
-msgstr "``bytes`` 型の要素を持つ一次元化リスト。"
-
-#: lib.data.base.serialize_example:1 of
-msgid "Converts ``tf.train.Example`` type."
-msgstr "``tf.train.Example`` 型に変換する。"
-
-#: lib.data.base.serialize_example:3 of
-msgid "a set of inputs and labels."
-msgstr "入力とラベルのセット。"
-
-#: lib.data.base.serialize_example:6 of
-msgid "**tf.train.Example** -- value of ``tf.train.Example`` type."
-msgstr "**tf.train.Example** -- ``tf.train.Example`` 型の値"
-
-#: lib.data.base.write_exmaple:1 of
-msgid "Writes TFRecord data."
-msgstr "TFRecordデータを書き込む。"
-
-#: lib.data.base.write_exmaple:3 of
-msgid "file path."
-msgstr "ファイルパス"
-
-#: lib.data.base.write_exmaple:5 of
-msgid "input."
-msgstr "入力"
-
-#: lib.data.base.write_exmaple:7 of
-msgid "label."
-msgstr "ラベル"
-
 #: ../../source/lib.data.rst:19
 msgid "cifar.py"
 msgstr ""
@@ -392,7 +334,8 @@ msgid ""
 "If you want to use some other settings, implement it as a method of this "
 "class. If you implemented, set the name as the ``func`` key in "
 "``__init__()`` and the method as the value."
-msgstr "他の設定を使用したい場合、このクラスのメソッドとして実装する。"
+msgstr ""
+"他の設定を使用したい場合、このクラスのメソッドとして実装する。"
 "実装した場合、``__init__()`` の ``func`` のキーに名前を、値にメソッドを実装すること。"
 
 #: lib.data.processor.Processor.run:1 of

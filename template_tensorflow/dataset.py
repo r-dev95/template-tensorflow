@@ -9,15 +9,120 @@ from pathlib import Path
 from typing import Any
 
 import keras
+import numpy as np
+import tensorflow as tf
 
 from lib.common.decorator import process_time
 from lib.common.define import ParamKey, ParamLog
 from lib.common.log import SetLogging
-from lib.data.base import write_exmaple
 
 K = ParamKey()
 PARAM_LOG = ParamLog()
 LOGGER = getLogger(PARAM_LOG.NAME)
+
+
+def feature_int64_list(value: list[int]) -> tf.train.Feature:
+    """Converts ``tf.train.Feature`` type. (``tf.train.Int64List``)
+
+    Args:
+        value (list[int]): one-dimensional list with elements of type ``int``.
+
+    Returns:
+        tf.train.Feature: value of ``tf.train.Feature`` type.
+
+    .. code-block:: python
+
+        value = [1,2,3]
+        print(feature_int64_list(value=value))
+
+        # int64_list {
+        # value: 1
+        # value: 2
+        # value: 3
+        # }
+    """
+    return tf.train.Feature(int64_list=tf.train.Int64List(value=value))
+
+
+def feature_float_list(value: list[float]) -> tf.train.Feature:
+    """Converts ``tf.train.Feature`` type. (``tf.train.FloatList``)
+
+    Args:
+        value (list[float]): one-dimensional list with elements of type ``float``.
+
+    Returns:
+        tf.train.Feature: value of ``tf.train.Feature`` type.
+
+    .. code-block:: python
+
+        value = [1.,2.,3.]
+        print(feature_float_list(value=value))
+
+        # float_list {
+        # value: 1
+        # value: 2
+        # value: 3
+        # }
+    """
+    return tf.train.Feature(float_list=tf.train.FloatList(value=value))
+
+
+def feature_bytes_list(value: list[bytes]) -> tf.train.Feature:
+    """Converts ``tf.train.Feature`` type. (``tf.train.BytesList``)
+
+    Args:
+        value (list[bytes]): one-dimensional list with elements of type ``bytes``.
+
+    Returns:
+        tf.train.Feature: value of ``tf.train.Feature`` type.
+
+    .. code-block:: python
+
+        value = [b"1", b"test"]
+        print(feature_bytes_list(value=value))
+
+        # bytes_list {
+        # value: "1"
+        # value: "test"
+        # }
+    """
+    return tf.train.Feature(bytes_list=tf.train.BytesList(value=value))
+
+
+def serialize_example(data: list[list[float]]) -> tf.train.Example:
+    """Converts ``tf.train.Example`` type.
+
+    Args:
+        data (list[float]): a set of inputs and labels.
+
+    Returns:
+        tf.train.Example: value of ``tf.train.Example`` type.
+    """
+    feature = {
+        'input': feature_float_list(data[0]),
+        'label': feature_float_list(data[1]),
+    }
+    return tf.train.Example(features=tf.train.Features(feature=feature))
+
+
+def write_exmaple(fpath: Path, inputs: np.ndarray, labels: np.ndarray) -> None:
+    """Writes TFRecord data.
+
+    Args:
+        fpath (Path): file path.
+        inputs (np.ndarray): input.
+        labels (np.ndarray): label.
+    """
+    inputs = np.squeeze(inputs)
+    labels = np.squeeze(labels)
+
+    writer = tf.io.TFRecordWriter(fpath.as_posix())
+    for i, (x, y) in enumerate(zip(inputs, labels)):
+        example_proto = serialize_example([x.flatten(), [y]])
+        writer.write(example_proto.SerializeToString())
+        print(f'\rsave progress: {i + 1:>7} / {len(inputs)}', end='')
+    print()
+    writer.close()
 
 
 def make_tfrecord(args: list[Callable, str]) -> None:

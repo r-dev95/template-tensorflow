@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: template-tensorflow \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-23 15:50+0900\n"
+"POT-Creation-Date: 2024-11-24 10:22+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -199,10 +199,6 @@ msgstr ""
 #: ../../../template_tensorflow/lib/data/base.py:docstring of lib.data.base.BaseLoadData.make_loader_example:0
 #: ../../../template_tensorflow/lib/data/base.py:docstring of lib.data.base.BaseLoadData.parse_example:0
 #: ../../../template_tensorflow/lib/data/base.py:docstring of lib.data.base.BaseLoadData.preprocess:0
-#: ../../../template_tensorflow/lib/data/base.py:docstring of lib.data.base.feature_bytes_list:0
-#: ../../../template_tensorflow/lib/data/base.py:docstring of lib.data.base.feature_float_list:0
-#: ../../../template_tensorflow/lib/data/base.py:docstring of lib.data.base.feature_int64_list:0
-#: ../../../template_tensorflow/lib/data/base.py:docstring of lib.data.base.serialize_example:0
 #: ../../../template_tensorflow/lib/data/processor.py:docstring of lib.data.processor.Processor.catencode:0
 #: ../../../template_tensorflow/lib/data/processor.py:docstring of lib.data.processor.Processor.rescale:0
 #: ../../../template_tensorflow/lib/data/processor.py:docstring of lib.data.processor.Processor.run:0
@@ -286,64 +282,6 @@ msgstr ""
 
 #: ../../../template_tensorflow/lib/data/base.py:docstring of lib.data.base.BaseLoadData.make_loader_example:21
 msgid "**Callable** -- data pipeline. (``tf.data``)"
-msgstr ""
-
-#: ../../../template_tensorflow/lib/data/base.py:docstring of lib.data.base.feature_int64_list:1
-msgid "Converts ``tf.train.Feature`` type. (``tf.train.Int64List``)"
-msgstr ""
-
-#: ../../../template_tensorflow/lib/data/base.py:docstring of lib.data.base.feature_int64_list:3
-msgid "one-dimensional list with elements of type ``int``."
-msgstr ""
-
-#: ../../../template_tensorflow/lib/data/base.py:docstring of lib.data.base.feature_bytes_list:6
-#: ../../../template_tensorflow/lib/data/base.py:docstring of lib.data.base.feature_float_list:6
-#: ../../../template_tensorflow/lib/data/base.py:docstring of lib.data.base.feature_int64_list:6
-msgid "**tf.train.Feature** -- value of ``tf.train.Feature`` type."
-msgstr ""
-
-#: ../../../template_tensorflow/lib/data/base.py:docstring of lib.data.base.feature_float_list:1
-msgid "Converts ``tf.train.Feature`` type. (``tf.train.FloatList``)"
-msgstr ""
-
-#: ../../../template_tensorflow/lib/data/base.py:docstring of lib.data.base.feature_float_list:3
-msgid "one-dimensional list with elements of type ``float``."
-msgstr ""
-
-#: ../../../template_tensorflow/lib/data/base.py:docstring of lib.data.base.feature_bytes_list:1
-msgid "Converts ``tf.train.Feature`` type. (``tf.train.BytesList``)"
-msgstr ""
-
-#: ../../../template_tensorflow/lib/data/base.py:docstring of lib.data.base.feature_bytes_list:3
-msgid "one-dimensional list with elements of type ``bytes``."
-msgstr ""
-
-#: ../../../template_tensorflow/lib/data/base.py:docstring of lib.data.base.serialize_example:1
-msgid "Converts ``tf.train.Example`` type."
-msgstr ""
-
-#: ../../../template_tensorflow/lib/data/base.py:docstring of lib.data.base.serialize_example:3
-msgid "a set of inputs and labels."
-msgstr ""
-
-#: ../../../template_tensorflow/lib/data/base.py:docstring of lib.data.base.serialize_example:6
-msgid "**tf.train.Example** -- value of ``tf.train.Example`` type."
-msgstr ""
-
-#: ../../../template_tensorflow/lib/data/base.py:docstring of lib.data.base.write_exmaple:1
-msgid "Writes TFRecord data."
-msgstr ""
-
-#: ../../../template_tensorflow/lib/data/base.py:docstring of lib.data.base.write_exmaple:3
-msgid "file path."
-msgstr ""
-
-#: ../../../template_tensorflow/lib/data/base.py:docstring of lib.data.base.write_exmaple:5
-msgid "input."
-msgstr ""
-
-#: ../../../template_tensorflow/lib/data/base.py:docstring of lib.data.base.write_exmaple:7
-msgid "label."
 msgstr ""
 
 #: ../../source/lib.data.rst:19
