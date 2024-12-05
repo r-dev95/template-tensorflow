@@ -62,6 +62,9 @@ ignore = [
     # eradicate
     "ERA001",   # Found commented-out code
 
+    # pandas-vet
+    "PD901",    # Avoid using the generic variable name df for DataFrames
+
     # Pylint
     "PLR6201",  # Use a set literal when testing for membership
 
