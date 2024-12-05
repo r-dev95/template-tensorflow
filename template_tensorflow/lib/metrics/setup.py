@@ -40,7 +40,7 @@ class SetupMetrics:
     """Sets up metrics.
 
     *   If you want to use some other settings, implement it as a method of this class.
-        If you implemented, set the name as the ``func`` key in ``__init__()`` and the
+        If you implemented, set the name as the ``func`` key in ``__init__`` and the
         method as the value.
 
     Args:
@@ -56,11 +56,11 @@ class SetupMetrics:
         }
         check_params(params=params, func=self.func)
 
-    def setup(self) -> Callable:
+    def setup(self) -> list[Callable]:
         """Sets up metrics.
 
         Returns:
-            Callable: metrics class.
+            list[Callable]: list of metrics classes.
         """
         metrics = [keras.metrics.Mean(name='loss')]
         for kind in self.params[K.METRICS][K.KIND]:

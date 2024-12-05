@@ -13,9 +13,11 @@ from lib.common.define import ParamKey, ParamLog
 from lib.common.file import load_yaml
 from lib.common.log import SetLogging
 from lib.common.process import fix_random_seed
+from lib.data.base import BaseLoadData
 from lib.data.setup import SetupData
 from lib.loss.setup import SetupLoss
 from lib.metrics.setup import SetupMetrics
+from lib.model.base import BaseModel
 from lib.model.setup import SetupModel
 from lib.optimizer.setup import SetupOpt
 
@@ -37,21 +39,15 @@ def check_params(params: dict[str, Any]) -> None:  # noqa: C901, PLR0912
     if not isinstance(params[K.SEED], int):
         LOGGER.warning(f'params["{K.SEED}"] must be integer.')
         LOGGER.warning(f'The random number seed is not fixed.')
-    if (params[K.PARAM] is None) or (not Path(params[K.PARAM]).exists()):
+    if (params[K.RESULT] is None) or (not Path(params[K.RESULT]).exists()):
         error = True
-        LOGGER.error(f'params["{K.PARAM}"] is None or the file does not exists.')
+        LOGGER.error(f'params["{K.RESULT}"] is None or the directory does not exists.')
     if (params[K.TRAIN] is None) or (not Path(params[K.TRAIN]).exists()):
         error = True
         LOGGER.error(f'params["{K.TRAIN}"] is None or the directory does not exists.')
     if (params[K.VALID] is None) or (not Path(params[K.VALID]).exists()):
         LOGGER.warning(f'params["{K.VALID}"] is None or the directory does not exists.')
         LOGGER.warning(f'Run without validation data.')
-    if (params[K.RESULT] is None) or (not Path(params[K.RESULT]).exists()):
-        error = True
-        LOGGER.error(f'params["{K.RESULT}"] is None or the directory does not exists.')
-    if (params[K.EPOCHS] is None) or (params[K.EPOCHS] <= 0):
-        error = True
-        LOGGER.error(f'params["{K.EPOCHS}"] must be greater than zero.')
     if (params[K.BATCH_TRAIN] is None) or (params[K.BATCH_TRAIN] <= 0):
         error = True
         LOGGER.error(f'params["{K.BATCH_TRAIN}"] must be greater than zero.')
@@ -60,6 +56,9 @@ def check_params(params: dict[str, Any]) -> None:  # noqa: C901, PLR0912
     if params[K.SHUFFLE] is None:
         LOGGER.warning(f'params["{K.SHUFFLE}"] is None.')
         LOGGER.warning(f'The data is not shuffled.')
+    if (params[K.EPOCHS] is None) or (params[K.EPOCHS] <= 0):
+        error = True
+        LOGGER.error(f'params["{K.EPOCHS}"] must be greater than zero.')
 
     keys = [K.DATA, K.PROCESS, K.MODEL, K.LAYER, K.OPT, K.LOSS, K.METRICS, K.CB]
     for key in keys:
@@ -96,14 +95,18 @@ class Trainer:
     Args:
         params (dict[str, Any]): parameters.
     """
+    #: BaseLoadData: data class (train)
+    train_data: BaseLoadData
+    #: BaseLoadData: data class (valid)
+    valid_data: BaseLoadData
     #: ClassVar[dict[str, Any]]: class list
     #:
     #: *    key=opt: optimizer method class
     #: *    key=loss: loss function class
     #: *    key=metrics: list of metrics classes
     classes: ClassVar[dict[str, Any]] = {}
-    #: Callable: model class
-    model: Callable
+    #: BaseModel: model class
+    model: BaseModel
     #: list[Callable]: list of callback classes
     callbacks: list[Callable]
 
@@ -122,24 +125,22 @@ class Trainer:
             necessarily have to be loaded.
         """
         # training data
-        self.params[K.FPATH] = self.params[K.TRAIN]
+        self.params[K.DPATH] = self.params[K.TRAIN]
         self.params[K.BATCH] = self.params[K.BATCH_TRAIN]
+        self.params[K.REPEAT] = self.params[K.EPOCHS]
         self.train_data = SetupData(params=self.params).setup()
-        self.train_loader = self.train_data.make_loader_example()
-        self.train_steps_per_epoch = self.train_data.steps_per_epoch
         # validation data
-        self.params[K.FPATH] = self.params[K.VALID]
+        self.params[K.DPATH] = self.params[K.VALID]
         self.params[K.BATCH] = self.params[K.BATCH_VALID]
         self.params[K.SHUFFLE] = None
+        self.params[K.REPEAT] = self.params[K.EPOCHS]
         self.valid_data = SetupData(params=self.params).setup()
-        self.valid_loader = self.valid_data.make_loader_example()
-        self.valid_steps_per_epoch = self.valid_data.steps_per_epoch
 
     def setup(self) -> None:
         """Sets up the training.
 
         *   Sets the optimizer method, loss function, model, metrics, and callbacks.
-        *   Run ``.summary()``.
+        *   Run ``.summary``.
         """
         self.classes[K.OPT] = SetupOpt(params=self.params).setup()
         self.classes[K.LOSS] = SetupLoss(params=self.params).setup()
@@ -153,16 +154,16 @@ class Trainer:
     def run(self) -> None:
         """Runs training and validation.
 
-        *   Run ``.compile()`` and ``.fit()``.
+        *   Run ``.compile`` and ``.fit``.
         """
         self.model.compile(
             run_eagerly=self.params[K.EAGER],
         )
         self.model.fit(
-            x=self.train_loader,
-            steps_per_epoch=self.train_steps_per_epoch,
-            validation_data=self.valid_loader,
-            validation_steps=self.valid_steps_per_epoch,
+            x=self.train_data.make_loader_example(),
+            steps_per_epoch=self.train_data.steps_per_epoch,
+            validation_data=self.valid_data.make_loader_example(),
+            validation_steps=self.valid_data.steps_per_epoch,
             epochs=self.params[K.EPOCHS],
             callbacks=self.callbacks,
             verbose=1,
@@ -221,14 +222,14 @@ def set_params() -> dict[str, Any]:
     parser.add_argument('--train', default='', type=str)
     # directory path (validation data)
     parser.add_argument('--valid', default='', type=str)
-    # Number of epochs
-    parser.add_argument('--epochs', default=10, type=int)
     # batch size (training data)
     parser.add_argument('--batch_train', default=32, type=int)
     # batch size (validation data)
     parser.add_argument('--batch_valid', default=1000, type=int)
     # shuffle size
     parser.add_argument('--shuffle', default=None, type=int)
+    # Number of epochs
+    parser.add_argument('--epochs', default=10, type=int)
 
     params = vars(parser.parse_args())
 

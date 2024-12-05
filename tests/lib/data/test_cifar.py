@@ -26,6 +26,8 @@ class TestCifar:
             K.KIND: [],
         },
         K.BATCH: 1000,
+        K.SHUFFLE: None,
+        K.REPEAT: 1,
     }
 
     def test(self):
@@ -36,12 +38,12 @@ class TestCifar:
 
         def _func(kind: str):
             self.params[K.DATA] = {K.KIND: kind}
-            self.params[K.FPATH] = Path(self.params[K.RESULT], kind, 'train')
+            self.params[K.DPATH] = Path(self.params[K.RESULT], kind, 'train')
             data = cifar.Cifar(params=self.params)
             loader = data.make_loader_example()
             for inputs, labels in loader:
                 print(f'\r{kind}-train: {inputs.numpy().shape=}, {labels.numpy().shape=}')
-            self.params[K.FPATH] = Path(self.params[K.RESULT], kind, 'test')
+            self.params[K.DPATH] = Path(self.params[K.RESULT], kind, 'test')
             data = cifar.Cifar(params=self.params)
             loader = data.make_loader_example()
             for inputs, labels in loader:

@@ -14,7 +14,7 @@ from template_tensorflow import train
 from template_tensorflow.lib.common.define import ParamKey, ParamLog
 
 sys.path.append('../tests')
-from define import DATA_PARAMS_FPATH, DATA_PARENT_DPATH
+from define import DATA_PARENT_DPATH
 
 K = ParamKey()
 PARAM_LOG = ParamLog()
@@ -27,14 +27,13 @@ class TestCheckParams:
     params = {
         K.EAGER: False,
         K.SEED: 0,
-        K.PARAM: DATA_PARAMS_FPATH,
+        K.RESULT: '.',
         K.TRAIN: '.',
         K.VALID: '.',
-        K.RESULT: '.',
-        K.EPOCHS: 10,
         K.BATCH_TRAIN: 32,
         K.BATCH_VALID: 1000,
         K.SHUFFLE: 1000,
+        K.EPOCHS: 10,
         K.DATA: '',
         K.PROCESS: '',
         K.MODEL: '',
@@ -48,14 +47,13 @@ class TestCheckParams:
     params_raise = {
         K.EAGER: 1,
         K.SEED: None,
-        K.PARAM: 'dummy.yaml',
+        K.RESULT: 'dummy',
         K.TRAIN: 'dummy',
         K.VALID: 'dummy',
-        K.RESULT: 'dummy',
-        K.EPOCHS: 0,
         K.BATCH_TRAIN: 0,
         K.BATCH_VALID: None,
         K.SHUFFLE: None,
+        K.EPOCHS: 0,
     }
 
     def test(self):
@@ -76,16 +74,15 @@ class TestCheckParams:
             ('main', ERROR  , f'params["{K.EAGER}"] must be boolean.'),
             ('main', WARNING, f'params["{K.SEED}"] must be integer.'),
             ('main', WARNING, f'The random number seed is not fixed.'),
-            ('main', ERROR  , f'params["{K.PARAM}"] is None or the file does not exists.'),
+            ('main', ERROR  , f'params["{K.RESULT}"] is None or the directory does not exists.'),
             ('main', ERROR  , f'params["{K.TRAIN}"] is None or the directory does not exists.'),
             ('main', WARNING, f'params["{K.VALID}"] is None or the directory does not exists.'),
             ('main', WARNING, f'Run without validation data.'),
-            ('main', ERROR  , f'params["{K.RESULT}"] is None or the directory does not exists.'),
-            ('main', ERROR  , f'params["{K.EPOCHS}"] must be greater than zero.'),
             ('main', ERROR  , f'params["{K.BATCH_TRAIN}"] must be greater than zero.'),
             ('main', WARNING, f'params["{K.BATCH_VALID}"] must be greater than zero or None.'),
             ('main', WARNING, f'params["{K.SHUFFLE}"] is None.'),
             ('main', WARNING, f'The data is not shuffled.'),
+            ('main', ERROR  , f'params["{K.EPOCHS}"] must be greater than zero.'),
         ]
         keys = [K.DATA, K.PROCESS, K.MODEL, K.LAYER, K.OPT, K.LOSS, K.METRICS, K.CB]
         for key in keys:
@@ -100,14 +97,13 @@ class TestTrain:
     params = {
         K.EAGER: False,
         K.SEED: 0,
-        K.PARAM: DATA_PARAMS_FPATH,
+        K.RESULT: 'result',
         K.TRAIN: f'{DATA_PARENT_DPATH}/mnist/train',
         K.VALID: f'{DATA_PARENT_DPATH}/mnist/test',
-        K.RESULT: 'result',
-        K.EPOCHS: 2,
         K.BATCH_TRAIN: 32,
         K.BATCH_VALID: 1000,
         K.SHUFFLE: None,
+        K.EPOCHS: 2,
         K.DATA: {K.KIND: 'mnist'},
         K.PROCESS: {
             K.KIND: ['catencode', 'rescale'],

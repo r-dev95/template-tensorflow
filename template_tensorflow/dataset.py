@@ -23,6 +23,18 @@ PARAM_LOG = ParamLog()
 LOGGER = getLogger(PARAM_LOG.NAME)
 
 
+#: str: temporary path name
+TMP_DPATH: str = '.keras/datasets'
+
+#: dict[str, Callable]: data loader
+LOADER = {
+    'mnist': keras.datasets.mnist.load_data,
+    'fashion_mnist': keras.datasets.fashion_mnist.load_data,
+    'cifar10': keras.datasets.cifar10.load_data,
+    'cifar100': keras.datasets.cifar100.load_data,
+}
+
+
 def feature_int64_list(value: list[int]) -> tf.train.Feature:
     """Converts ``tf.train.Feature`` type. (``tf.train.Int64List``)
 
@@ -132,7 +144,7 @@ def make_tfrecord(args: list[Callable, str]) -> None:
 
     *   Make TFRecord data loading data from the following function.
 
-        *   ``keras.datasets.mnist.load_data()``
+        *   ``keras.datasets.mnist.load_data``
         *   ``keras.datasets.fashion_mnist.load_data``
         *   ``keras.datasets.cifar10.load_data``
         *   ``keras.datasets.cifar100.load_data``
@@ -180,21 +192,14 @@ def main(params: dict[str, Any]) -> None:
     Args:
         params (dict[str, Any]): parameters.
     """
-    func = {
-        'mnist': keras.datasets.mnist.load_data,
-        'fashion_mnist': keras.datasets.fashion_mnist.load_data,
-        'cifar10': keras.datasets.cifar10.load_data,
-        'cifar100': keras.datasets.cifar100.load_data,
-    }
-
     if 'all' in params[K.DATA]:
-        params[K.DATA] = ['mnist', 'fashion_mnist', 'cifar10', 'cifar100']
+        params[K.DATA] = list(LOADER.keys())
 
-    args = [[func[kind], Path(params[K.RESULT], kind)] for kind in params[K.DATA]]
+    args = [[LOADER[kind], Path(params[K.RESULT], kind)] for kind in params[K.DATA]]
     with ProcessPoolExecutor(max_workers=params['max_workers']) as executer:
         executer.map(make_tfrecord, args)
 
-    tmp_data_dpath = Path(os.environ['HOME'], '.keras/datasets')
+    tmp_data_dpath = Path(os.environ['HOME'], TMP_DPATH)
     shutil.rmtree(tmp_data_dpath)
 
 
@@ -213,7 +218,8 @@ def set_params() -> dict[str, Any]:
     # directory path (data save)
     parser.add_argument('--result', default='', type=str)
     # data
-    choices = ['all', 'mnist', 'fashion_mnist', 'cifar10', 'cifar100']
+    choices = ['all']
+    choices.extend(list(LOADER.keys()))
     parser.add_argument('--data', default='', type=str, nargs='+', choices=choices)
     # max workers
     parser.add_argument('--max_workers', default=8, type=int)

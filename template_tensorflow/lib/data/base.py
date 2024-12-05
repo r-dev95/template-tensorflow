@@ -1,4 +1,4 @@
-"""This is the module load and write data.
+"""This is the module load data.
 """
 
 from collections.abc import Callable
@@ -21,8 +21,14 @@ def check_params(params: dict[str, Any]) -> None:
     Args:
         params (dict[str, Any]): parameters.
     """
-    params[K.REPEAT] = params.get(K.EPOCHS, 1)
-    params[K.SHUFFLE] = params.get(K.SHUFFLE)
+    error = False # error: True
+    keys = [K.FILE_PATTERN, K.BATCH, K.SHUFFLE, K.REPEAT]
+    for key in keys:
+        if key not in params:
+            error = True
+            LOGGER.error(f'The key "{key}" for variable "params" is missing.')
+    if error:
+        raise ValueError
 
 
 class BaseLoadData:
@@ -35,8 +41,8 @@ class BaseLoadData:
 
     .. attention::
 
-        Child classes that inherit this class must set the list of file paths to
-        ``params[K.FILES]`` before running ``super().__init__(params=params)``.
+        Child classes that inherit this class must set the pattern of file paths to
+        ``params[K.FILE_PATTERN]`` before running ``super().__init__(params=params)``.
     """
     #: int: all number of data.
     n_data: int
@@ -69,18 +75,18 @@ class BaseLoadData:
         """
         raise NotImplementedError
 
-    def preprocess(self, x: tf.Tensor, y: tf.Tensor) -> tuple[tf.Tensor, tf.Tensor]:
-        """Runs preprocess.
+    def process(self, x: tf.Tensor, y: tf.Tensor) -> tuple[tf.Tensor, tf.Tensor]:
+        """Runs process data.
 
         *   Run :meth:`lib.data.processor.Processor.run`.
 
         Args:
-            x (tf.Tensor): input. (before preprocess)
-            y (tf.Tensor): label. (before preprocess)
+            x (tf.Tensor): input. (before process)
+            y (tf.Tensor): label. (before process)
 
         Returns:
-            tf.Tensor: input. (after preprocess)
-            tf.Tensor: label. (after preprocess)
+            tf.Tensor: input. (after process)
+            tf.Tensor: label. (after process)
         """
         if self.params[K.PROCESS][K.KIND] is not None:
             x, y = self.Processor.run(x=x, y=y)
@@ -92,10 +98,10 @@ class BaseLoadData:
         """Parses one example from a TFRecord data.
 
         #.  Set the parsing configuration according to the format in which the data was
-            written. (``tf.io.parse_single_example()``)
+            written. (``tf.io.parse_single_example``)
         #.  When writing TFRecord data, we make the elements one-dimensional, so we
             restore the shape.
-        #.  Run preprocess. (:meth:`preprocess`)
+        #.  Run :meth:`process`.
 
         Args:
             example_proto (tf.Tensor): protocol massage.
@@ -114,26 +120,26 @@ class BaseLoadData:
         )
         x = tf.reshape(example['input'], self.input_shape)
         y = tf.reshape(example['label'], self.label_shape)
-        x, y = self.preprocess(x=x, y=y)
+        x, y = self.process(x=x, y=y)
         return x, y
 
     def make_loader_example(self, seed: int = 0) -> Callable:
         """Makes data loader.
 
-        #.  Set the list of data file pathes.
-            (``tf.data.Dataset.list_files()``)
+        #.  Set the file path pattern.
+            (``tf.data.Dataset.list_files``)
         #.  Set the interleave configuration.
-            (``tf.data.Dataset.interleave()``)
+            (``tf.data.Dataset.interleave``)
         #.  Set the function to parse one example from a TFRecord data.
-            (``tf.data.Dataset.map()``)
+            (``tf.data.Dataset.map``)
         #.  Set the shuffle configuration.
-            (``tf.data.Dataset.shuffle()``)
+            (``tf.data.Dataset.shuffle``)
         #.  Set the batch configuration.
-            (``tf.data.Dataset.batch()``)
+            (``tf.data.Dataset.batch``)
         #.  Set the prefetch configuration.
-            (``tf.data.Dataset.prefetch()``)
+            (``tf.data.Dataset.prefetch``)
         #.  Set the repeat configuration.
-            (``tf.data.Dataset.repeat()``)
+            (``tf.data.Dataset.repeat``)
 
         Args:
             seed (int): random seed.
@@ -141,7 +147,7 @@ class BaseLoadData:
         Returns:
             Callable: data pipeline. (``tf.data``)
         """
-        dataset = tf.data.Dataset.list_files(file_pattern=self.params[K.FILES])
+        dataset = tf.data.Dataset.list_files(file_pattern=self.params[K.FILE_PATTERN])
         dataset = dataset.interleave(
             map_func=tf.data.TFRecordDataset,
             num_parallel_calls=tf.data.AUTOTUNE,

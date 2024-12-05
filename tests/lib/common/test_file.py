@@ -23,9 +23,8 @@ class TestJson:
     params = {
         K.EAGER: False,
         K.SEED: 0,
-        K.PARAM: 'data/params.yaml',
-        K.TRAIN: None,
         K.RESULT: 'result',
+        K.TRAIN: None,
         K.CB: {
             K.KIND: ['mcp'],
             'mcp': {
@@ -65,9 +64,8 @@ class TestYaml:
     params = {
         K.EAGER: False,
         K.SEED: 0,
-        K.PARAM: 'data/params.yaml',
-        K.TRAIN: None,
         K.RESULT: 'result',
+        K.TRAIN: None,
         K.CB: {
             K.KIND: ['mcp'],
             'mcp': {
@@ -107,9 +105,8 @@ class TestToml:
     params = {
         K.EAGER: False,
         K.SEED: 0,
-        K.PARAM: 'data/params.yaml',
-        K.TRAIN: None,
         K.RESULT: 'result',
+        K.TRAIN: None,
         K.CB: {
             K.KIND: ['mcp'],
             'mcp': {

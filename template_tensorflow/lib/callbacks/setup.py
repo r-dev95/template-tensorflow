@@ -42,7 +42,7 @@ class SetupCallbacks:
     """Sets up callbacks.
 
     *   If you want to use some other settings, implement it as a method of this class.
-        If you implemented, set the name as the ``func`` key in ``__init__()`` and the
+        If you implemented, set the name as the ``func`` key in ``__init__`` and the
         method as the value.
 
     Args:

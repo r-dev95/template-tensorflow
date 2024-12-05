@@ -28,9 +28,6 @@ train: data/mnist/train
 # directory path (validation data)
 # type: str | None
 valid: data/mnist/test
-# Number of epochs
-# type: int
-epochs: 2
 # batch size (training data)
 # type: int
 train_batch: 32
@@ -40,6 +37,9 @@ valid_batch: 1000
 # shuffle size
 # type: int | None
 shuffle: null
+# Number of epochs
+# type: int
+epochs: 2
 
 # -----------------------------------------------
 # Set non-command line arguments.

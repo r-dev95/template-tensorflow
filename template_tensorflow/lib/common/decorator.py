@@ -1,7 +1,6 @@
 """This is the module that defines the decorator.
 """
 
-import csv
 import datetime
 import functools
 import time
@@ -24,7 +23,7 @@ def process_time(print_func: Callable = print) -> Callable:
     Args:
         print_func (Callable): standard output function.
 
-            ``print()`` or logging (``.debug``, ``.info``, ... ) etc...
+            ``print`` or logging (``.debug``, ``.info``, ... ) etc...
 
     Returns:
         Callable: ``_process_time`` function in this function.

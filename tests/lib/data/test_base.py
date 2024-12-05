@@ -2,7 +2,10 @@
 """
 
 import sys
-from logging import getLogger
+from logging import ERROR, INFO, getLogger
+
+import pytest
+from _pytest.logging import LogCaptureFixture
 
 sys.path.append('../template_tensorflow/')
 from template_tensorflow.lib.common.define import ParamKey, ParamLog
@@ -16,17 +19,37 @@ LOGGER = getLogger(name=PARAM_LOG.NAME)
 class TestCheckParams:
     """Tests :func:`base.check_params`.
     """
+    params = {
+        K.FILE_PATTERN: ['result/tests.tfr'],
+        K.BATCH: 1000,
+        K.SHUFFLE: None,
+        K.REPEAT: 1,
+    }
+
+    params_raise = {}
 
     def test(self):
         """Tests that no errors are raised.
 
         *   Certain parameters are set.
         """
-        params = {}
-        base.check_params(params=params)
+        base.check_params(params=self.params)
 
-        assert K.REPEAT in params
-        assert K.SHUFFLE in params
+    def test_raise(self, caplog: LogCaptureFixture):
+        """Tests that an error is raised.
+
+        *   The log output is correct.
+        """
+        caplog.set_level(INFO)
+        with pytest.raises(ValueError):
+            base.check_params(params=self.params_raise)
+
+        all_log = []
+        keys = [K.FILE_PATTERN, K.BATCH, K.SHUFFLE, K.REPEAT]
+        for key in keys:
+            all_log.append(('main', ERROR  , f'The key "{key}" for variable "params" is missing.'))
+
+        assert caplog.record_tuples == all_log
 
 
 class TestBaseLoadData:

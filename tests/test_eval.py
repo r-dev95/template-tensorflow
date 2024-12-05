@@ -1,7 +1,6 @@
 """This is the module that tests eval.py.
 """
 
-import shutil
 import sys
 from logging import ERROR, INFO, WARNING, getLogger
 from pathlib import Path
@@ -14,7 +13,7 @@ from template_tensorflow import eval  # noqa: A004
 from template_tensorflow.lib.common.define import ParamKey, ParamLog
 
 sys.path.append('../tests')
-from define import DATA_PARAMS_FPATH, DATA_PARENT_DPATH, DATA_RESULT_DPATH
+from define import DATA_PARENT_DPATH, DATA_RESULT_DPATH
 
 K = ParamKey()
 PARAM_LOG = ParamLog()
@@ -27,9 +26,8 @@ class TestCheckParams:
     params = {
         K.EAGER: False,
         K.SEED: 0,
-        K.PARAM: DATA_PARAMS_FPATH,
-        K.EVAL: '.',
         K.RESULT: '.',
+        K.EVAL: '.',
         K.BATCH: 1000,
         K.DATA: '',
         K.PROCESS: '',
@@ -43,9 +41,8 @@ class TestCheckParams:
     params_raise = {
         K.EAGER: 1,
         K.SEED: None,
-        K.PARAM: 'dummy.yaml',
-        K.EVAL: 'dummy',
         K.RESULT: 'dummy',
+        K.EVAL: 'dummy',
         K.BATCH: 0,
     }
 
@@ -67,9 +64,8 @@ class TestCheckParams:
             ('main', ERROR  , f'params["{K.EAGER}"] must be boolean.'),
             ('main', WARNING, f'params["{K.SEED}"] must be integer.'),
             ('main', WARNING, f'The random number seed is not fixed.'),
-            ('main', ERROR  , f'params["{K.PARAM}"] is None or the file does not exists.'),
-            ('main', ERROR  , f'params["{K.EVAL}"] is None or the directory does not exists.'),
             ('main', ERROR  , f'params["{K.RESULT}"] is None or the directory does not exists.'),
+            ('main', ERROR  , f'params["{K.EVAL}"] is None or the directory does not exists.'),
             ('main', ERROR  , f'params["{K.BATCH}"] must be greater than zero.'),
         ]
         keys = [K.DATA, K.PROCESS, K.MODEL, K.LAYER, K.LOSS, K.METRICS]
@@ -85,9 +81,8 @@ class TestEval:
     params = {
         K.EAGER: False,
         K.SEED: 0,
-        K.PARAM: DATA_PARAMS_FPATH,
-        K.EVAL: f'{DATA_PARENT_DPATH}/mnist/test',
         K.RESULT: DATA_RESULT_DPATH,
+        K.EVAL: f'{DATA_PARENT_DPATH}/mnist/test',
         K.BATCH: 1000,
         K.DATA: {K.KIND: 'mnist'},
         K.PROCESS: {

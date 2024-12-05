@@ -22,9 +22,11 @@ CIFAR10       = {K.DATA: {K.KIND: 'cifar10'}}
 CIFAR100      = {K.DATA: {K.KIND: 'cifar100'}}
 _params = [MNIST, FASHION_MNIST, CIFAR10, CIFAR100]
 for _param in _params:
-    _param[K.FPATH] = 'train'
+    _param[K.DPATH] = 'train'
     _param[K.PROCESS] = {K.KIND: []}
     _param[K.BATCH] = 10
+    _param[K.SHUFFLE] = None
+    _param[K.REPEAT] = 1
 
 
 class TestSetupData:

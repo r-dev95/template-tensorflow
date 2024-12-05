@@ -78,7 +78,9 @@ class TestWriteExmaple:
             K.KIND: [],
         },
         K.BATCH: 1,
-        K.FILES: ['result/tests.tfr'],
+        K.FILE_PATTERN: ['result/tests.tfr'],
+        K.SHUFFLE: None,
+        K.REPEAT: 1,
     }
 
     @pytest.fixture(scope='class')
@@ -89,7 +91,7 @@ class TestWriteExmaple:
         base.BaseLoadData.input_shape = [2]
         base.BaseLoadData.label_shape = [1]
 
-        fpath = Path(self.params[K.FILES][0])
+        fpath = Path(self.params[K.FILE_PATTERN][0])
         fpath.parent.mkdir(parents=True, exist_ok=True)
         inputs = [[1., 2.], [3., 4.]]
         labels = [0., 1.]

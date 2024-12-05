@@ -7,6 +7,7 @@ from logging import getLogger
 from pathlib import Path
 from typing import Any, ClassVar
 
+import keras
 import numpy as np
 
 from lib.common.decorator import process_time, save_params_log
@@ -14,9 +15,11 @@ from lib.common.define import ParamKey, ParamLog
 from lib.common.file import load_yaml
 from lib.common.log import SetLogging
 from lib.common.process import fix_random_seed, set_weight
+from lib.data.base import BaseLoadData
 from lib.data.setup import SetupData
 from lib.loss.setup import SetupLoss
 from lib.metrics.setup import SetupMetrics
+from lib.model.base import BaseModel
 from lib.model.setup import SetupModel
 
 K = ParamKey()
@@ -37,15 +40,12 @@ def check_params(params: dict[str, Any]) -> None:  # noqa: C901
     if not isinstance(params[K.SEED], int):
         LOGGER.warning(f'params["{K.SEED}"] must be integer.')
         LOGGER.warning(f'The random number seed is not fixed.')
-    if (params[K.PARAM] is None) or (not Path(params[K.PARAM]).exists()):
-        error = True
-        LOGGER.error(f'params["{K.PARAM}"] is None or the file does not exists.')
-    if (params[K.EVAL] is None) or (not Path(params[K.EVAL]).exists()):
-        error = True
-        LOGGER.error(f'params["{K.EVAL}"] is None or the directory does not exists.')
     if (params[K.RESULT] is None) or (not Path(params[K.RESULT]).exists()):
         error = True
         LOGGER.error(f'params["{K.RESULT}"] is None or the directory does not exists.')
+    if (params[K.EVAL] is None) or (not Path(params[K.EVAL]).exists()):
+        error = True
+        LOGGER.error(f'params["{K.EVAL}"] is None or the directory does not exists.')
     if (params[K.BATCH] is None) or (params[K.BATCH] <= 0):
         error = True
         LOGGER.error(f'params["{K.BATCH}"] must be greater than zero.')
@@ -65,14 +65,16 @@ class Evaluator:
     Args:
         params (dict[str, Any]): parameters.
     """
+    #: BaseLoadData: data class (evaluate)
+    eval_data: BaseLoadData
     #: ClassVar[dict[str, Any]]: class list
     #:
     #: *    key=opt: optimizer method class
     #: *    key=loss: loss function class
     #: *    key=metrics: list of metrics classes
     classes: ClassVar[dict[str, Any]] = {}
-    #: Callable: model class
-    model: Callable
+    #: BaseModel: model class
+    model: BaseModel
     #: list[Callable]: list of callback classes
     callbacks: list[Callable]
 
@@ -88,17 +90,17 @@ class Evaluator:
         """Loads the evaluation data.
         """
         # evaluation data
-        self.params[K.FPATH] = self.params[K.EVAL]
+        self.params[K.DPATH] = self.params[K.EVAL]
+        self.params[K.SHUFFLE] = None
+        self.params[K.REPEAT] = 1
         self.eval_data = SetupData(params=self.params).setup()
-        self.eval_loader = self.eval_data.make_loader_example()
-        self.eval_steps_per_epoch = self.eval_data.steps_per_epoch
 
     def setup(self) -> None:
         """Sets up the evaluation.
 
         *   Sets the loss function, model, metrics.
         *   Set the model weights.
-        *   Run ``.summary()``.
+        *   Run ``.summary``.
         """
         self.classes[K.OPT] = None
         self.classes[K.LOSS] = SetupLoss(params=self.params).setup()
@@ -109,32 +111,50 @@ class Evaluator:
         self.model = set_weight(params=self.params, model=self.model)
         self.model.summary()
 
+    def eval_step(self) -> dict[str, Any]:
+        """Evaluations the model.
+
+        *   Customize the evaluation of your trained models.
+
+        Returns:
+            dict[str, Any]: evaluate results.
+        """
+        i_data = 0
+        n_data = self.eval_data.n_data
+        for inputs, labels in self.eval_data.make_loader_example():
+            i_data += len(inputs)
+            preds = self.model(inputs)
+            losses = self.classes[K.LOSS](labels, preds)
+
+            res = self.model.update_metrics(data=(labels, preds, losses, None))
+
+            msg = f'\r[{K.EVAL}][{i_data:>8} / {n_data:>8}] - '
+            for key, val in res.items():
+                msg += f'{key}={val:>.5}, '
+            print(msg, end='')
+        print()
+
+        res = {}
+        for m in self.classes[K.METRICS]:
+            res[m.name] = m.result()
+        return res
+
     def run(self) -> None:
         """Runs evaluation.
 
-        *   Run ``.compile()``.
+        *   Run ``.compile``.
         *   Customize the evaluation of your trained models.
         """
         self.model.compile(
             run_eagerly=self.params[K.EAGER],
         )
 
-        i_data = 0
-        n_data = self.eval_data.n_data
-        losses = []
-        for inputs, labels in self.eval_loader:
-            i_data += len(inputs)
+        res = self.eval_step()
 
-            preds = self.model(inputs, training=False)
-
-            loss = self.classes[K.LOSS](y_true=labels, y_pred=preds).numpy()
-            losses.append(loss)
-
-            print(
-                f'\rprogress: {i_data:>5} / {n_data:>5}, {loss=}, {np.mean(losses)=}',
-                end='',
-            )
-        print()
+        msg = ''
+        for key, val in res.items():
+            msg += f'{key}={val:>.5}, '
+        LOGGER.info(msg)
 
 
 @save_params_log(fname=f'log_params_{Path(__file__).stem}.yaml')

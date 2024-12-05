@@ -41,7 +41,7 @@ class SetupLayer:
     """Sets up the model layer.
 
     *   If you want to use some other settings, implement it as a method of this class.
-        If you implemented, set the name as the ``func`` key in ``__init__()`` and the
+        If you implemented, set the name as the ``func`` key in ``__init__`` and the
         method as the value.
 
     Args:
@@ -86,7 +86,7 @@ class SetupLayer:
         """Sets ``keras.layers.Dense``.
 
         Returns:
-            Callable: ``keras.layers.Dense`` class.
+            Callable: model layer class.
         """
         layer = keras.layers.Dense(
             units=self._params['units'],

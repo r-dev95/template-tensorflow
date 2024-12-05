@@ -44,9 +44,9 @@ class SimpleModel(BaseModel):
     .. attention::
 
         Since the structure of a class-based model is not defined until input is given,
-        ``.summary()`` cannot be used.
+        ``.summary`` cannot be used.
         For the same reason, trained weights cannot be applied,
-        so dummy data is input in ``__init__()``.
+        so dummy data is input in ``__init__``.
     """
     def __init__(self, params: dict[str, Any]) -> None:
         check_params(params=params)

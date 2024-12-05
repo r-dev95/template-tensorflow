@@ -1,14 +1,12 @@
 """This is the module that defines the common process.
 """
-
-import csv
 from collections.abc import Callable
 from logging import getLogger
 from pathlib import Path
 from typing import Any
 
 import keras
-import numpy as np
+import pandas as pd
 import tensorflow as tf
 
 from lib.common.define import ParamFileName, ParamKey, ParamLog
@@ -29,24 +27,22 @@ def fix_random_seed(seed: int) -> None:
     tf.config.experimental.enable_op_determinism()
 
 
-def set_weight(params: dict[str, Any], model: Callable) -> Callable:
+def set_weight(params: dict[str, Any], model: keras.models.Model) -> keras.models.Model:
     """Sets the model weight.
 
     Args:
         params (dict[str, Any]): parameters.
-        model (Callable): model class.
+        model (keras.models.Model): model class.
 
     Returns:
-        Callable: weighted model class.
+        keras.models.Model: weighted model class.
     """
     fpath = Path(params[K.RESULT], PARAM_FILE_NAME.LOSS)
-    with fpath.open(mode='r') as f:
-        reader = csv.reader(f, delimiter=',')
-        data = list(reader)
-    val_loss = np.array(data[1:], dtype=float)[:, data[0].index('val_loss')]
-    idx_min = np.argmin(val_loss)
-    fpath = list(Path(params[K.RESULT]).glob('*.weights.h5'))[idx_min]
+    df = pd.read_csv(fpath)
+    idx_min = int(df['val_loss'].argmin())
+    idx_min = int(df.loc[idx_min]['epoch'])
 
+    fpath = list(Path(params[K.RESULT]).glob('*.weights.h5'))[idx_min]
     model.load_weights(fpath)
     return model
 

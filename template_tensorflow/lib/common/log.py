@@ -33,7 +33,7 @@ class SetLogging:
     def set_level(self) -> None:
         """Sets the log level.
 
-        *   Run ``logging.Logger.setLevel()``.
+        *   Run ``logging.Logger.setLevel``.
         """
         self.logger.setLevel(self.param.LEVEL[self.param.SH])
 
@@ -41,11 +41,11 @@ class SetLogging:
         """Sets the stream handler configuration.
 
         *   Set the log level.
-            (``logging.StreamHandler.setLevel()``)
+            (``logging.StreamHandler.setLevel``)
         *   Set the log format.
-            (``logging.StreamHandler.setFormatter()``)
+            (``logging.StreamHandler.setFormatter``)
         *   Add the handler.
-            (``logging.Logger.addHandler()``)
+            (``logging.Logger.addHandler``)
         """
         sh = StreamHandler()
         sh.setLevel(level=self.param.LEVEL[self.param.SH])
@@ -58,11 +58,11 @@ class SetLogging:
         *   Set the file path, size, and number.
             (``logging.RotatingFileHandler``)
         *   Set the log level.
-            (``logging.RotatingFileHandler.setLevel()``)
+            (``logging.RotatingFileHandler.setLevel``)
         *   Set the log format.
-            (``logging.RotatingFileHandler.setFormatter()``)
+            (``logging.RotatingFileHandler.setFormatter``)
         *   Add the handler.
-            (``logging.Logger.addHandler()``)
+            (``logging.Logger.addHandler``)
         """
         fh = RotatingFileHandler(
             filename=self.param.FPATH,

@@ -39,14 +39,16 @@ class Mnist(BaseLoadData):
     label_shape_model: ClassVar[list[int]] = [10]
 
     def __init__(self, params: dict[str, Any]) -> None:
-        fpath = Path(params[K.FPATH])
-        params[K.FILES] = [p.as_posix() for p in fpath.glob('*.tfr')]
-        if fpath.stem == 'train':
+        dpath = Path(params[K.DPATH])
+        params[K.FILE_PATTERN] = Path(dpath, '*.tfr').as_posix()
+        if dpath.stem == 'train':
             self.n_data = 60000
-        elif fpath.stem == 'test':
+        elif dpath.stem == 'test':
             self.n_data = 10000
         else:
-            LOGGER.error(f'the dataset name must be "train.tfr" or "test.tfr".')
+            LOGGER.error(
+                f'the dataset path must be "train/*.tar" or "test/*.tar".',
+            )
             raise ValueError
         super().__init__(params=params)
 

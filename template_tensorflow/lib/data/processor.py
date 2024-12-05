@@ -42,7 +42,7 @@ class Processor:
 
     *   Used to process data when making a ``tf.data`` data pipeline.
     *   If you want to use some other settings, implement it as a method of this class.
-        If you implemented, set the name as the ``func`` key in ``__init__()`` and the
+        If you implemented, set the name as the ``func`` key in ``__init__`` and the
         method as the value.
 
     Args:
@@ -58,7 +58,7 @@ class Processor:
         check_params(params=params, func=self.func)
 
     def run(self, x: tf.Tensor, y: tf.Tensor) -> tuple[tf.Tensor, tf.Tensor]:
-        """Runs process.
+        """Runs process data.
 
         Args:
             x (tf.Tensor): input. (before process)

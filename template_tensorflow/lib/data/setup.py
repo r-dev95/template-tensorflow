@@ -6,6 +6,7 @@ from logging import getLogger
 from typing import Any
 
 from lib.common.define import ParamKey, ParamLog
+from lib.data.base import BaseLoadData
 from lib.data.cifar import Cifar
 from lib.data.mnist import Mnist
 
@@ -39,7 +40,7 @@ class SetupData:
     """Sets up data.
 
     *   If you want to use some other settings, implement it as a method of this class.
-        If you implemented, set the name as the ``func`` key in ``__init__()`` and the
+        If you implemented, set the name as the ``func`` key in ``__init__`` and the
         method as the value.
 
     Args:
@@ -56,30 +57,30 @@ class SetupData:
         }
         check_params(params=params, func=self.func)
 
-    def setup(self) -> Callable:
+    def setup(self) -> BaseLoadData:
         """Sets up data.
 
         Returns:
-            Callable: data class.
+            BaseLoadData: data class.
         """
         kind = self.params[K.DATA][K.KIND]
         data = self.func[kind]()
         return data
 
-    def mnist(self) -> Callable:
+    def mnist(self) -> Mnist:
         """Sets :class:`lib.data.mnist.Mnist` (mnist or fashion mnist).
 
         Returns:
-            Callable: data class.
+            Mnist: data class.
         """
         data = Mnist(params=self.params)
         return data
 
-    def cifar(self) -> Callable:
+    def cifar(self) -> Cifar:
         """Sets :class:`lib.data.cifar.Cifar` (cifar10 or cifar100).
 
         Returns:
-            Callable: data class.
+            Cifar: data class.
         """
         data = Cifar(params=self.params)
         return data
