@@ -14,7 +14,7 @@ from template_tensorflow.lib.common.define import ParamKey, ParamLog
 from template_tensorflow.lib.model.setup import SetupModel
 
 sys.path.append('../tests')
-from define import DATA_RESULT_DPATH
+from define import DATA_RESULT_DPATH, Layer
 
 K = ParamKey()
 PARAM_LOG = ParamLog()
@@ -61,51 +61,20 @@ class TestSetWeight:
     params = {
         K.EAGER: False,
         K.RESULT: DATA_RESULT_DPATH,
-        K.MODEL: {
-            K.KIND: 'simple',
-        },
+        K.MODEL: {K.KIND: 'simple'},
         K.LAYER: {
             K.KIND: ['flatten', 'dense_1', 'relu', 'dense_2'],
-            'flatten': {
-                'data_format': 'channels_last',
-            },
-            'dense_1': {
-                'units': 100,
-                'activation': None,
-                'use_bias': True,
-                'kernel_initializer': 'glorot_uniform',
-                'bias_initializer': 'zeros',
-                'kernel_regularizer': None,
-                'bias_regularizer': None,
-                'activity_regularizer': None,
-                'kernel_constraint': None,
-                'bias_constraint': None,
-                'lora_rank': None,
-            },
-            'dense_2': {
-                'units': 10,
-                'activation': None,
-                'use_bias': True,
-                'kernel_initializer': 'glorot_uniform',
-                'bias_initializer': 'zeros',
-                'kernel_regularizer': None,
-                'bias_regularizer': None,
-                'activity_regularizer': None,
-                'kernel_constraint': None,
-                'bias_constraint': None,
-                'lora_rank': None,
-            },
-            'relu': {
-                'max_value': None,
-                'negative_slope': 0,
-                'threshold': 0,
-            },
+            'flatten': Layer.FLATTEN,
+            'dense_1': Layer.DENSE_1,
+            'dense_2': Layer.DENSE_2,
+            'relu': Layer.RELU,
         },
-    }
-    classes = {
-        K.OPT: '',
-        K.LOSS: '',
-        K.METRICS: [''],
+        K.CLASSES: {
+            K.OPT: '',
+            K.LOSS: '',
+            K.METRICS: [''],
+        },
+        K.INPUT_SHAPE: [28, 28, 1],
     }
 
     def test(self):
@@ -113,9 +82,6 @@ class TestSetWeight:
 
         *   The initialization weights are replaced by the trained weights.
         """
-        self.params[K.CLASSES] = self.classes
-        self.params[K.INPUT_SHAPE] = [28, 28, 1]
-
         process.fix_random_seed(seed=0)
         model = SetupModel(params=self.params).setup()
 

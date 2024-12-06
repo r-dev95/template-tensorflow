@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: template-tensorflow \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-23 15:36+0900\n"
+"POT-Creation-Date: 2024-12-06 21:46+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -53,33 +53,46 @@ msgid "Defines the base model."
 msgstr "ベースモデルを定義する。"
 
 #: lib.model.base.BaseModel:3 of
-msgid ""
-"You can customize :meth:`train_step` and :meth:`test_step` using "
-"``.fit()``."
-msgstr "``.fit()`` を使用しつつ、:meth:`train_step` と :meth:`test_step` をカスタマイズできる。"
+msgid "You can customize :meth:`train_step` and :meth:`test_step` using ``.fit``."
+msgstr "``.fit`` を使用しつつ、:meth:`train_step` と :meth:`test_step` をカスタマイズできる。"
 
 #: lib.model.base.BaseModel:4 of
 msgid ""
-"In eager mode, you can output calculation results using ``print()`` or "
-"logging in :meth:`train_step`, :meth:`test_step`, or ``.call()`` of "
-"class-form models."
+"In eager mode, you can output calculation results using ``print`` or "
+"logging in :meth:`train_step`, :meth:`test_step`, or ``.call`` of class-"
+"form models."
 msgstr ""
-"eagerモードの際、:meth:`train_step` や :meth:`test_step`、クラス形式のモデルの ``.call()`` "
-"内で ``print()`` やlogging機能を使用して、計算結果を出力できる。"
+"eagerモードの際、:meth:`train_step` や :meth:`test_step`、クラス形式のモデルの ``.call`` "
+"内で ``print`` やlogging機能を使用して、計算結果を出力できる。"
 
 #: lib.model.base.BaseModel:6 of
 msgid ""
 "In graph mode, you can output too. But you will need to implement a "
-"custom layer that ``tf.print()`` the input."
-msgstr "graphモードでも出力できるが、入力を ``tf.print()`` するようなカスタムレイヤーを実装するなど工夫が必要である。"
+"custom layer that ``tf.print`` the input."
+msgstr "graphモードでも出力できるが、入力を ``tf.print`` するようなカスタムレイヤーを実装するなど工夫が必要である。"
 
 #: lib.model.base.BaseModel.update_metrics:1 of
 msgid "Updates metrics."
 msgstr "メトリクスを更新する。"
 
 #: lib.model.base.BaseModel.update_metrics:3 of
-msgid "tuple of labels, preds, loss, and sample_weight."
+msgid "tuple of labels, preds, losses, and sample_weight."
 msgstr "ラベルと予測、誤差、入力ごとの重みのタプル。"
+
+#: lib.model.base.BaseModel.metrics lib.model.base.BaseModel.test_step
+#: lib.model.base.BaseModel.train_step lib.model.base.BaseModel.update_metrics
+#: lib.model.layer.SetupLayer.conv2d lib.model.layer.SetupLayer.dense
+#: lib.model.layer.SetupLayer.flatten lib.model.layer.SetupLayer.maxpool2d
+#: lib.model.layer.SetupLayer.relu lib.model.layer.SetupLayer.setup
+#: lib.model.setup.SetupModel.setup lib.model.setup.SetupModel.simple
+#: lib.model.simple.SimpleModel.call of
+msgid "Returns"
+msgstr "戻り値"
+
+#: lib.model.base.BaseModel.test_step:12 lib.model.base.BaseModel.train_step:13
+#: lib.model.base.BaseModel.update_metrics:6 of
+msgid "**dict[str, float]** -- all metrics results."
+msgstr "**dict[str, float]** -- すべてのメトリクスの結果"
 
 #: lib.model.base.BaseModel.metrics:1 of
 msgid "Returns list of metrics classes."
@@ -91,23 +104,14 @@ msgstr "``@override`` と ``@property`` でデコレートされている。"
 
 #: lib.model.base.BaseModel.metrics:5 of
 msgid ""
-"When using ``.fit()`` or ``.evaluate()``, Metrics must be run "
-"``.reset_state()`` at the start of an epoch. By setting the return value "
-"of this method to a list of all metrics, it will automatically run "
-"``.reset_state()``."
+"When using ``.fit`` or ``.evaluate``, Metrics must be run "
+"``.reset_state`` at the start of an epoch. By setting the return value of"
+" this method to a list of all metrics, it will automatically run "
+"``.reset_state``."
 msgstr ""
-"``.fit()`` や ``.evaluate()`` を使用する際、エポックの開始時にメトリクスは ``.reset_state()`` "
-"を実行しなければならない。本メソッドの戻り値にすべてのメトリクスのリストを設定することで自動で ``.reset_state()`` "
+"``.fit`` や ``.evaluate`` を使用する際、エポックの開始時にメトリクスは ``.reset_state`` "
+"を実行しなければならない。本メソッドの戻り値にすべてのメトリクスのリストを設定することで自動で ``.reset_state`` "
 "が実行される。"
-
-#: lib.model.base.BaseModel.metrics lib.model.base.BaseModel.test_step
-#: lib.model.base.BaseModel.train_step lib.model.layer.SetupLayer.conv2d
-#: lib.model.layer.SetupLayer.dense lib.model.layer.SetupLayer.flatten
-#: lib.model.layer.SetupLayer.maxpool2d lib.model.layer.SetupLayer.relu
-#: lib.model.layer.SetupLayer.setup lib.model.setup.SetupModel.setup
-#: lib.model.setup.SetupModel.simple lib.model.simple.SimpleModel.call of
-msgid "Returns"
-msgstr "戻り値"
 
 #: lib.model.base.BaseModel.metrics:10 of
 msgid "**list[Callable]** -- list of metrics classes."
@@ -145,11 +149,6 @@ msgstr "メトリクスを更新する。"
 #: of
 msgid "tuple of inputs and labels (and weights for each input)."
 msgstr "入力とラベル(と入力ごとの重み)のタプル"
-
-#: lib.model.base.BaseModel.test_step:12 lib.model.base.BaseModel.train_step:13
-#: of
-msgid "**dict[str, float]** -- all metrics results."
-msgstr "**dict[str, float]** -- すべてのメトリクスの結果"
 
 #: lib.model.base.BaseModel.test_step:1 of
 msgid "Validations the model one step at a time."
@@ -189,9 +188,10 @@ msgstr "モデルレイヤーを設定する。"
 msgid ""
 "If you want to use some other settings, implement it as a method of this "
 "class. If you implemented, set the name as the ``func`` key in "
-"``__init__()`` and the method as the value."
-msgstr "他の設定を使用したい場合、このクラスのメソッドとして実装する。"
-"実装した場合、``__init__()`` の ``func`` のキーに名前を、値にメソッドを実装すること。"
+"``__init__`` and the method as the value."
+msgstr ""
+"他の設定を使用したい場合、このクラスのメソッドとして実装する。実装した場合、``__init__`` の ``func`` "
+"のキーに名前を、値にメソッドを実装すること。"
 
 #: lib.model.layer.SetupLayer.setup:1 of
 msgid "Sets up model layers."
@@ -205,18 +205,15 @@ msgstr "**list[Callable]** -- モデルレイヤークラスのリスト"
 msgid "Sets ``keras.layers.Flatten``."
 msgstr "``keras.layers.Flatten`` を設定する。"
 
-#: lib.model.layer.SetupLayer.conv2d:3 lib.model.layer.SetupLayer.flatten:3
-#: lib.model.layer.SetupLayer.maxpool2d:3 lib.model.layer.SetupLayer.relu:3 of
+#: lib.model.layer.SetupLayer.conv2d:3 lib.model.layer.SetupLayer.dense:3
+#: lib.model.layer.SetupLayer.flatten:3 lib.model.layer.SetupLayer.maxpool2d:3
+#: lib.model.layer.SetupLayer.relu:3 of
 msgid "**Callable** -- model layer class."
 msgstr "**Callable** -- モデルレイヤークラス"
 
 #: lib.model.layer.SetupLayer.dense:1 of
 msgid "Sets ``keras.layers.Dense``."
 msgstr "``keras.layers.Dense`` を設定する。"
-
-#: lib.model.layer.SetupLayer.dense:3 of
-msgid "**Callable** -- ``keras.layers.Dense`` class."
-msgstr "**Callable** -- ``keras.layers.Dense`` クラス"
 
 #: lib.model.layer.SetupLayer.conv2d:1 of
 msgid "Sets ``keras.layers.Conv2D``."
@@ -285,11 +282,11 @@ msgstr "畳み込みニューラルネットワーク (CNN: Convolutional Neural
 #: lib.model.simple.SimpleModel:11 of
 msgid ""
 "Since the structure of a class-based model is not defined until input is "
-"given, ``.summary()`` cannot be used. For the same reason, trained "
-"weights cannot be applied, so dummy data is input in ``__init__()``."
+"given, ``.summary`` cannot be used. For the same reason, trained weights "
+"cannot be applied, so dummy data is input in ``__init__``."
 msgstr ""
-"クラス形式モデルの構造は入力が与えられるまで定義されないため、``.summary()`` "
-"が使用できない。同様に学習した重みを適用することができないため、``__init__()`` でダミーデータを与える。"
+"クラス形式モデルの構造は入力が与えられるまで定義されないため、``.summary`` "
+"が使用できない。同様に学習した重みを適用することができないため、``__init__`` でダミーデータを与える。"
 
 #: lib.model.simple.SimpleModel.call:1 of
 msgid "Outputs the model predictions."

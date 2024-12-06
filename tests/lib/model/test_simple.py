@@ -13,24 +13,12 @@ sys.path.append('../template_tensorflow/')
 from template_tensorflow.lib.common.define import ParamKey, ParamLog
 from template_tensorflow.lib.model import simple
 
+sys.path.append('../tests')
+from define import Layer
+
 K = ParamKey()
 PARAM_LOG = ParamLog()
 LOGGER = getLogger(name=PARAM_LOG.NAME)
-
-
-DENSE = {
-    'units': None,
-    'activation': None,
-    'use_bias': True,
-    'kernel_initializer': 'glorot_uniform',
-    'bias_initializer': 'zeros',
-    'kernel_regularizer': None,
-    'bias_regularizer': None,
-    'activity_regularizer': None,
-    'kernel_constraint': None,
-    'bias_constraint': None,
-    'lora_rank': None,
-}
 
 
 class TestCheckParams:
@@ -40,8 +28,11 @@ class TestCheckParams:
         K.CLASSES: '',
         K.INPUT_SHAPE: '',
     }
-
     params_raise = {}
+
+    all_log = []
+    for key in [K.CLASSES, K.INPUT_SHAPE]:
+        all_log.append(('main', ERROR  , f'The key "{key}" for variable "params" is missing.'))
 
     def test(self):
         """Tests that no errors are raised.
@@ -57,12 +48,7 @@ class TestCheckParams:
         with pytest.raises(ValueError):
             simple.check_params(params=self.params_raise)
 
-        all_log = []
-        keys = [K.CLASSES, K.INPUT_SHAPE]
-        for key in keys:
-            all_log.append(('main', ERROR  , f'The key "{key}" for variable "params" is missing.'))
-
-        assert caplog.record_tuples == all_log
+        assert caplog.record_tuples == self.all_log
 
 
 class TestSimpleModel:
@@ -71,7 +57,7 @@ class TestSimpleModel:
     params = {
         K.LAYER: {
             K.KIND: ['dense'],
-            'dense': DENSE,
+            'dense': Layer.DENSE_0,
         },
         K.CLASSES: {
             K.OPT: '',
@@ -80,7 +66,6 @@ class TestSimpleModel:
         },
         K.INPUT_SHAPE: [1],
     }
-    params[K.LAYER]['dense']['units'] = 1
 
     def test(self):
         """Tests that no errors are raised.

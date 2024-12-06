@@ -115,7 +115,7 @@
 <span id="data-package"></span><h1>data package<a class="headerlink" href="#module-lib.data" title="Link to this heading"></a></h1>
 <section id="module-lib.data.base">
 <span id="base-py"></span><h2>base.py<a class="headerlink" href="#module-lib.data.base" title="Link to this heading"></a></h2>
-<p>データを読み書きするモジュール。</p>
+<p>データを読み込むモジュール。</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="lib.data.base.check_params">
 <span class="sig-name descname"><span class="pre">check_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lib/data/base.html#check_params"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#lib.data.base.check_params" title="Link to this definition"></a></dt>
@@ -142,7 +142,7 @@
 </dl>
 <div class="admonition attention">
 <p class="admonition-title">注意</p>
-<p>このクラスを継承する子クラスは、<code class="docutils literal notranslate"><span class="pre">super().__init__(params=params)</span></code> を実行する前にファイルパスのリストを <code class="docutils literal notranslate"><span class="pre">params[K.FILES]</span></code> に設定する必要がある。</p>
+<p>このクラスを継承する子クラスは、<code class="docutils literal notranslate"><span class="pre">super().__init__(params=params)</span></code> を実行する前にファイルパスのリストを <code class="docutils literal notranslate"><span class="pre">params[K.FILE_PATTERN]</span></code> に設定する必要がある。</p>
 </div>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="lib.data.base.BaseLoadData.n_data">
@@ -239,23 +239,23 @@
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="lib.data.base.BaseLoadData.preprocess">
-<span class="sig-name descname"><span class="pre">preprocess</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lib/data/base.html#BaseLoadData.preprocess"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#lib.data.base.BaseLoadData.preprocess" title="Link to this definition"></a></dt>
-<dd><p>前処理を実行する。</p>
+<dt class="sig sig-object py" id="lib.data.base.BaseLoadData.process">
+<span class="sig-name descname"><span class="pre">process</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lib/data/base.html#BaseLoadData.process"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#lib.data.base.BaseLoadData.process" title="Link to this definition"></a></dt>
+<dd><p>データ処理を実行する。</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="#lib.data.processor.Processor.run" title="lib.data.processor.Processor.run"><code class="xref py py-meth docutils literal notranslate"><span class="pre">lib.data.processor.Processor.run()</span></code></a> を実行する。</p></li>
 </ul>
 <dl class="field-list simple">
 <dt class="field-odd">パラメータ<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>x</strong> (<em>tf.Tensor</em>) -- 入力 (前処理前)</p></li>
-<li><p><strong>y</strong> (<em>tf.Tensor</em>) -- ラベル (前処理前)</p></li>
+<li><p><strong>x</strong> (<em>tf.Tensor</em>) -- 入力 (処理前)</p></li>
+<li><p><strong>y</strong> (<em>tf.Tensor</em>) -- ラベル (処理前)</p></li>
 </ul>
 </dd>
 <dt class="field-even">戻り値<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>tf.Tensor</strong> -- 入力 (前処理後)</p></li>
-<li><p><strong>tf.Tensor</strong> -- ラベル (前処理後)</p></li>
+<li><p><strong>tf.Tensor</strong> -- 入力 (処理後)</p></li>
+<li><p><strong>tf.Tensor</strong> -- ラベル (処理後)</p></li>
 </ul>
 </dd>
 </dl>
@@ -266,9 +266,9 @@
 <span class="sig-name descname"><span class="pre">parse_example</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">example_proto</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lib/data/base.html#BaseLoadData.parse_example"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#lib.data.base.BaseLoadData.parse_example" title="Link to this definition"></a></dt>
 <dd><p>TFRecordデータから1レコードをパースする。</p>
 <ol class="arabic simple">
-<li><p>書き込まれたデータのフォーマットに応じて、パースの設定を行う。</p></li>
+<li><p>書き込まれたデータのフォーマットに応じて、パースの設定を行う。 (<code class="docutils literal notranslate"><span class="pre">tf.io.parse_single_example</span></code>)</p></li>
 <li><p>TFRecordを書き込む際、要素を一次元化するため、形状を元に戻す。</p></li>
-<li><p>前処理を実行する。 (<a class="reference internal" href="#lib.data.base.BaseLoadData.preprocess" title="lib.data.base.BaseLoadData.preprocess"><code class="xref py py-meth docutils literal notranslate"><span class="pre">preprocess()</span></code></a>)</p></li>
+<li><p><a class="reference internal" href="#lib.data.base.BaseLoadData.process" title="lib.data.base.BaseLoadData.process"><code class="xref py py-meth docutils literal notranslate"><span class="pre">process()</span></code></a> を実行する。</p></li>
 </ol>
 <dl class="field-list simple">
 <dt class="field-odd">パラメータ<span class="colon">:</span></dt>
@@ -288,13 +288,13 @@
 <span class="sig-name descname"><span class="pre">make_loader_example</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lib/data/base.html#BaseLoadData.make_loader_example"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#lib.data.base.BaseLoadData.make_loader_example" title="Link to this definition"></a></dt>
 <dd><p>データローダーを作成する。</p>
 <ol class="arabic simple">
-<li><p>データファイルパスのリストを設定する。 (<code class="docutils literal notranslate"><span class="pre">tf.data.Dataset.list_files()</span></code>)</p></li>
-<li><p>インタリーブを設定する。 (<code class="docutils literal notranslate"><span class="pre">tf.data.Dataset.interleave()</span></code>)</p></li>
-<li><p>TFRecordデータから1レコードをパースする関数を設定する。 (<code class="docutils literal notranslate"><span class="pre">tf.data.Dataset.map()</span></code>)</p></li>
-<li><p>シャッフルを設定する。 (<code class="docutils literal notranslate"><span class="pre">tf.data.Dataset.shuffle()</span></code>)</p></li>
-<li><p>バッチを設定する (<code class="docutils literal notranslate"><span class="pre">tf.data.Dataset.batch()</span></code>)</p></li>
-<li><p>プリフェチを設定する。 (<code class="docutils literal notranslate"><span class="pre">tf.data.Dataset.prefetch()</span></code>)</p></li>
-<li><p>リピートを設定する。 (<code class="docutils literal notranslate"><span class="pre">tf.data.Dataset.repeat()</span></code>)</p></li>
+<li><p>データファイルパスのパターンを設定する。 (<code class="docutils literal notranslate"><span class="pre">tf.data.Dataset.list_files</span></code>)</p></li>
+<li><p>インタリーブを設定する。 (<code class="docutils literal notranslate"><span class="pre">tf.data.Dataset.interleave</span></code>)</p></li>
+<li><p>TFRecordデータから1レコードをパースする関数を設定する。 (<code class="docutils literal notranslate"><span class="pre">tf.data.Dataset.map</span></code>)</p></li>
+<li><p>シャッフルを設定する。 (<code class="docutils literal notranslate"><span class="pre">tf.data.Dataset.shuffle</span></code>)</p></li>
+<li><p>バッチを設定する (<code class="docutils literal notranslate"><span class="pre">tf.data.Dataset.batch</span></code>)</p></li>
+<li><p>プリフェチを設定する。 (<code class="docutils literal notranslate"><span class="pre">tf.data.Dataset.prefetch</span></code>)</p></li>
+<li><p>リピートを設定する。 (<code class="docutils literal notranslate"><span class="pre">tf.data.Dataset.repeat</span></code>)</p></li>
 </ol>
 <dl class="field-list simple">
 <dt class="field-odd">パラメータ<span class="colon">:</span></dt>
@@ -577,7 +577,7 @@
 <p>データを処理する。</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">tf.data</span></code> データパイプラインを作成する際、データを処理するために使用する。</p></li>
-<li><p>他の設定を使用したい場合、このクラスのメソッドとして実装する。実装した場合、<code class="docutils literal notranslate"><span class="pre">__init__()</span></code> の <code class="docutils literal notranslate"><span class="pre">func</span></code> のキーに名前を、値にメソッドを実装すること。</p></li>
+<li><p>他の設定を使用したい場合、このクラスのメソッドとして実装する。実装した場合、<code class="docutils literal notranslate"><span class="pre">__init__</span></code> の <code class="docutils literal notranslate"><span class="pre">func</span></code> のキーに名前を、値にメソッドを実装すること。</p></li>
 </ul>
 <dl class="field-list simple">
 <dt class="field-odd">パラメータ<span class="colon">:</span></dt>
@@ -587,7 +587,7 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="lib.data.processor.Processor.run">
 <span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lib/data/processor.html#Processor.run"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#lib.data.processor.Processor.run" title="Link to this definition"></a></dt>
-<dd><p>処理を実行する。</p>
+<dd><p>データ処理を実行する。</p>
 <dl class="field-list simple">
 <dt class="field-odd">パラメータ<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -670,7 +670,7 @@
 <dd><p>ベースクラス: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>データを設定する。</p>
 <ul class="simple">
-<li><p>他の設定を使用したい場合、このクラスのメソッドとして実装する。実装した場合、<code class="docutils literal notranslate"><span class="pre">__init__()</span></code> の <code class="docutils literal notranslate"><span class="pre">func</span></code> のキーに名前を、値にメソッドを実装すること。</p></li>
+<li><p>他の設定を使用したい場合、このクラスのメソッドとして実装する。実装した場合、<code class="docutils literal notranslate"><span class="pre">__init__</span></code> の <code class="docutils literal notranslate"><span class="pre">func</span></code> のキーに名前を、値にメソッドを実装すること。</p></li>
 </ul>
 <dl class="field-list simple">
 <dt class="field-odd">パラメータ<span class="colon">:</span></dt>
@@ -683,7 +683,7 @@
 <dd><p>データを設定する。</p>
 <dl class="field-list simple">
 <dt class="field-odd">戻り値<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>Callable</strong> -- データクラス</p>
+<dd class="field-odd"><p><strong>BaseLoadData</strong> -- データクラス</p>
 </dd>
 </dl>
 </dd></dl>
@@ -694,7 +694,7 @@
 <dd><p><a class="reference internal" href="#lib.data.mnist.Mnist" title="lib.data.mnist.Mnist"><code class="xref py py-class docutils literal notranslate"><span class="pre">lib.data.mnist.Mnist</span></code></a> を設定する。 (mnist または fashion mnist)</p>
 <dl class="field-list simple">
 <dt class="field-odd">戻り値<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>Callable</strong> -- データクラス</p>
+<dd class="field-odd"><p><strong>Mnist</strong> -- データクラス</p>
 </dd>
 </dl>
 </dd></dl>
@@ -705,7 +705,7 @@
 <dd><p><a class="reference internal" href="#lib.data.cifar.Cifar" title="lib.data.cifar.Cifar"><code class="xref py py-class docutils literal notranslate"><span class="pre">lib.data.cifar.Cifar</span></code></a> を設定する。 (cifar10 または cifar100)</p>
 <dl class="field-list simple">
 <dt class="field-odd">戻り値<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>Callable</strong> -- データクラス</p>
+<dd class="field-odd"><p><strong>Cifar</strong> -- データクラス</p>
 </dd>
 </dl>
 </dd></dl>

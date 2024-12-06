@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: template-tensorflow \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-23 15:36+0900\n"
+"POT-Creation-Date: 2024-12-06 21:46+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -60,9 +60,10 @@ msgstr "最適化手法を設定する。"
 msgid ""
 "If you want to use some other settings, implement it as a method of this "
 "class. If you implemented, set the name as the ``func`` key in "
-"``__init__()`` and the method as the value."
-msgstr "他の設定を使用したい場合、このクラスのメソッドとして実装する。"
-"実装した場合、``__init__()`` の ``func`` のキーに名前を、値にメソッドを実装すること。"
+"``__init__`` and the method as the value."
+msgstr ""
+"他の設定を使用したい場合、このクラスのメソッドとして実装する。実装した場合、``__init__`` の ``func`` "
+"のキーに名前を、値にメソッドを実装すること。"
 
 #: lib.optimizer.setup.SetupOpt.adam lib.optimizer.setup.SetupOpt.setup
 #: lib.optimizer.setup.SetupOpt.sgd of
@@ -81,3 +82,4 @@ msgstr "``keras.optimizers.SGD`` を設定する。"
 #: lib.optimizer.setup.SetupOpt.adam:1 of
 msgid "Sets ``keras.optimizers.Adam``."
 msgstr "``keras.optimizers.Adam`` を設定する。"
+

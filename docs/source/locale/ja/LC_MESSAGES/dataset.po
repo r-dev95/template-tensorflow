@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: template-tensorflow \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-24 10:22+0900\n"
+"POT-Creation-Date: 2024-12-06 21:46+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -27,6 +27,34 @@ msgstr ""
 #: dataset:1 of
 msgid "This is the module that makes TFRecord data."
 msgstr "TFRecordデータを作成するモジュール。"
+
+#: ../../docstring dataset.TMP_DPATH:1 of
+msgid "temporary path name"
+msgstr "一時的なパス名"
+
+#: ../../docstring dataset.LOADER dataset.TMP_DPATH of
+msgid "type"
+msgstr "型"
+
+#: ../../docstring dataset.TMP_DPATH:3 of
+msgid "str"
+msgstr ""
+
+#: ../../docstring dataset.LOADER:1 of
+msgid "data loader"
+msgstr "データローダー"
+
+#: ../../docstring dataset.LOADER:3 of
+msgid "dict[str, Callable]"
+msgstr ""
+
+#: dataset.ParamDataset:1 of
+msgid "Bases: :py:class:`object`"
+msgstr ""
+
+#: dataset.ParamDataset:1 of
+msgid "Defines the parameters."
+msgstr "パラメータを定義する。"
 
 #: dataset.feature_int64_list:1 of
 msgid "Converts ``tf.train.Feature`` type. (``tf.train.Int64List``)"
@@ -82,53 +110,37 @@ msgstr "**tf.train.Example** -- ``tf.train.Example`` 型の値"
 msgid "Writes TFRecord data."
 msgstr "TFRecordデータを書き込む。"
 
-#: dataset.write_exmaple:3 of
-msgid "file path."
-msgstr "ファイルパス"
+#: dataset.main:3 dataset.worker:10 dataset.write_exmaple:3 of
+msgid "parameters."
+msgstr "パラメータ"
 
-#: dataset.write_exmaple:5 of
-msgid "input."
-msgstr "入力"
-
-#: dataset.write_exmaple:7 of
-msgid "label."
-msgstr "ラベル"
-
-#: dataset.make_tfrecord:1 of
+#: dataset.worker:1 of
 msgid "Makes TFRecord data."
 msgstr "TFRecordデータを作成する。"
 
-#: dataset.make_tfrecord:3 of
+#: dataset.worker:3 of
 msgid "Make TFRecord data loading data from the following function."
 msgstr "次の関数からデータを読み込みTFRecordデータを作成する。"
 
-#: dataset.make_tfrecord:5 of
-msgid "``keras.datasets.mnist.load_data()``"
+#: dataset.worker:5 of
+msgid "``keras.datasets.mnist.load_data``"
 msgstr ""
 
-#: dataset.make_tfrecord:6 of
+#: dataset.worker:6 of
 msgid "``keras.datasets.fashion_mnist.load_data``"
 msgstr ""
 
-#: dataset.make_tfrecord:7 of
+#: dataset.worker:7 of
 msgid "``keras.datasets.cifar10.load_data``"
 msgstr ""
 
-#: dataset.make_tfrecord:8 of
+#: dataset.worker:8 of
 msgid "``keras.datasets.cifar100.load_data``"
 msgstr ""
-
-#: dataset.make_tfrecord:10 of
-msgid "keras's dataset loader and save directory path."
-msgstr "Kerasのデータローダーと保存ディレクトリパス。"
 
 #: dataset.main:1 of
 msgid "main."
 msgstr ""
-
-#: dataset.main:3 of
-msgid "parameters."
-msgstr "パラメータ"
 
 #: dataset.set_params:1 of
 msgid "Sets the command line arguments."
@@ -137,4 +149,3 @@ msgstr "コマンドライン引数を設定する。"
 #: dataset.set_params:3 of
 msgid "**dict[str, Any]** -- parameters."
 msgstr "**dict[str, Any]** -- パラメータ"
-

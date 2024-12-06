@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: template-tensorflow \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-22 20:41+0900\n"
+"POT-Creation-Date: 2024-12-06 21:46+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -111,6 +111,23 @@ msgstr "モデル"
 msgid ":class:`lib.model.setup.SetupModel`"
 msgstr ""
 
+#: ../../docstring of train.Trainer.train_data:1
+msgid "data class (train)"
+msgstr "データクラス (学習)"
+
+#: ../../docstring of train.Trainer.callbacks train.Trainer.classes
+#: train.Trainer.model train.Trainer.train_data train.Trainer.valid_data
+msgid "type"
+msgstr "型"
+
+#: ../../docstring of train.Trainer.train_data:3 train.Trainer.valid_data:3
+msgid "BaseLoadData"
+msgstr ""
+
+#: ../../docstring of train.Trainer.valid_data:1
+msgid "data class (valid)"
+msgstr "データクラス (検証)"
+
 #: ../../docstring of train.Trainer.classes:1
 msgid "class list"
 msgstr "クラスの一覧"
@@ -127,11 +144,6 @@ msgstr "key=loss: 誤差関数クラス"
 msgid "key=metrics: list of metrics classes"
 msgstr "key=metrics: メトリクスクラスのリスト"
 
-#: ../../docstring of train.Trainer.callbacks train.Trainer.classes
-#: train.Trainer.model
-msgid "type"
-msgstr "型"
-
 #: ../../docstring of train.Trainer.classes:7
 msgid "ClassVar[dict[str, Any]]"
 msgstr ""
@@ -141,7 +153,7 @@ msgid "model class"
 msgstr "モデルクラス"
 
 #: ../../docstring of train.Trainer.model:3
-msgid "Callable"
+msgid "BaseModel"
 msgstr ""
 
 #: ../../docstring of train.Trainer.callbacks:1
@@ -171,16 +183,16 @@ msgid "Sets the optimizer method, loss function, model, metrics, and callbacks."
 msgstr "最適化手法、誤差関数、モデル、メトリクス、コールバックを設定する。"
 
 #: of train.Trainer.setup:4
-msgid "Run ``.summary()``."
-msgstr "``.summary()`` を実行する。"
+msgid "Run ``.summary``."
+msgstr "``.summary`` を実行する。"
 
 #: of train.Trainer.run:1
 msgid "Runs training and validation."
 msgstr "学習と検証を実行する。"
 
 #: of train.Trainer.run:3
-msgid "Run ``.compile()`` and ``.fit()``."
-msgstr "``.compile()`` と ``.fit()`` を実行する。"
+msgid "Run ``.compile`` and ``.fit``."
+msgstr "``.compile`` と ``.fit`` を実行する。"
 
 #: of train.main:1
 msgid "main."

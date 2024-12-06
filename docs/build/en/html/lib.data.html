@@ -114,7 +114,7 @@
 <span id="data-package"></span><h1>data package<a class="headerlink" href="#module-lib.data" title="Link to this heading"></a></h1>
 <section id="module-lib.data.base">
 <span id="base-py"></span><h2>base.py<a class="headerlink" href="#module-lib.data.base" title="Link to this heading"></a></h2>
-<p>This is the module load and write data.</p>
+<p>This is the module load data.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="lib.data.base.check_params">
 <span class="sig-name descname"><span class="pre">check_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lib/data/base.html#check_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.data.base.check_params" title="Link to this definition"></a></dt>
@@ -141,8 +141,8 @@
 </dl>
 <div class="admonition attention">
 <p class="admonition-title">Attention</p>
-<p>Child classes that inherit this class must set the list of file paths to
-<code class="docutils literal notranslate"><span class="pre">params[K.FILES]</span></code> before running <code class="docutils literal notranslate"><span class="pre">super().__init__(params=params)</span></code>.</p>
+<p>Child classes that inherit this class must set the pattern of file paths to
+<code class="docutils literal notranslate"><span class="pre">params[K.FILE_PATTERN]</span></code> before running <code class="docutils literal notranslate"><span class="pre">super().__init__(params=params)</span></code>.</p>
 </div>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="lib.data.base.BaseLoadData.n_data">
@@ -239,23 +239,23 @@
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="lib.data.base.BaseLoadData.preprocess">
-<span class="sig-name descname"><span class="pre">preprocess</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lib/data/base.html#BaseLoadData.preprocess"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.data.base.BaseLoadData.preprocess" title="Link to this definition"></a></dt>
-<dd><p>Runs preprocess.</p>
+<dt class="sig sig-object py" id="lib.data.base.BaseLoadData.process">
+<span class="sig-name descname"><span class="pre">process</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lib/data/base.html#BaseLoadData.process"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.data.base.BaseLoadData.process" title="Link to this definition"></a></dt>
+<dd><p>Runs process data.</p>
 <ul class="simple">
 <li><p>Run <a class="reference internal" href="#lib.data.processor.Processor.run" title="lib.data.processor.Processor.run"><code class="xref py py-meth docutils literal notranslate"><span class="pre">lib.data.processor.Processor.run()</span></code></a>.</p></li>
 </ul>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>x</strong> (<em>tf.Tensor</em>) – input. (before preprocess)</p></li>
-<li><p><strong>y</strong> (<em>tf.Tensor</em>) – label. (before preprocess)</p></li>
+<li><p><strong>x</strong> (<em>tf.Tensor</em>) – input. (before process)</p></li>
+<li><p><strong>y</strong> (<em>tf.Tensor</em>) – label. (before process)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>tf.Tensor</strong> – input. (after preprocess)</p></li>
-<li><p><strong>tf.Tensor</strong> – label. (after preprocess)</p></li>
+<li><p><strong>tf.Tensor</strong> – input. (after process)</p></li>
+<li><p><strong>tf.Tensor</strong> – label. (after process)</p></li>
 </ul>
 </dd>
 </dl>
@@ -267,10 +267,10 @@
 <dd><p>Parses one example from a TFRecord data.</p>
 <ol class="arabic simple">
 <li><p>Set the parsing configuration according to the format in which the data was
-written. (<code class="docutils literal notranslate"><span class="pre">tf.io.parse_single_example()</span></code>)</p></li>
+written. (<code class="docutils literal notranslate"><span class="pre">tf.io.parse_single_example</span></code>)</p></li>
 <li><p>When writing TFRecord data, we make the elements one-dimensional, so we
 restore the shape.</p></li>
-<li><p>Run preprocess. (<a class="reference internal" href="#lib.data.base.BaseLoadData.preprocess" title="lib.data.base.BaseLoadData.preprocess"><code class="xref py py-meth docutils literal notranslate"><span class="pre">preprocess()</span></code></a>)</p></li>
+<li><p>Run <a class="reference internal" href="#lib.data.base.BaseLoadData.process" title="lib.data.base.BaseLoadData.process"><code class="xref py py-meth docutils literal notranslate"><span class="pre">process()</span></code></a>.</p></li>
 </ol>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -290,20 +290,20 @@ restore the shape.</p></li>
 <span class="sig-name descname"><span class="pre">make_loader_example</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lib/data/base.html#BaseLoadData.make_loader_example"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.data.base.BaseLoadData.make_loader_example" title="Link to this definition"></a></dt>
 <dd><p>Makes data loader.</p>
 <ol class="arabic simple">
-<li><p>Set the list of data file pathes.
-(<code class="docutils literal notranslate"><span class="pre">tf.data.Dataset.list_files()</span></code>)</p></li>
+<li><p>Set the file path pattern.
+(<code class="docutils literal notranslate"><span class="pre">tf.data.Dataset.list_files</span></code>)</p></li>
 <li><p>Set the interleave configuration.
-(<code class="docutils literal notranslate"><span class="pre">tf.data.Dataset.interleave()</span></code>)</p></li>
+(<code class="docutils literal notranslate"><span class="pre">tf.data.Dataset.interleave</span></code>)</p></li>
 <li><p>Set the function to parse one example from a TFRecord data.
-(<code class="docutils literal notranslate"><span class="pre">tf.data.Dataset.map()</span></code>)</p></li>
+(<code class="docutils literal notranslate"><span class="pre">tf.data.Dataset.map</span></code>)</p></li>
 <li><p>Set the shuffle configuration.
-(<code class="docutils literal notranslate"><span class="pre">tf.data.Dataset.shuffle()</span></code>)</p></li>
+(<code class="docutils literal notranslate"><span class="pre">tf.data.Dataset.shuffle</span></code>)</p></li>
 <li><p>Set the batch configuration.
-(<code class="docutils literal notranslate"><span class="pre">tf.data.Dataset.batch()</span></code>)</p></li>
+(<code class="docutils literal notranslate"><span class="pre">tf.data.Dataset.batch</span></code>)</p></li>
 <li><p>Set the prefetch configuration.
-(<code class="docutils literal notranslate"><span class="pre">tf.data.Dataset.prefetch()</span></code>)</p></li>
+(<code class="docutils literal notranslate"><span class="pre">tf.data.Dataset.prefetch</span></code>)</p></li>
 <li><p>Set the repeat configuration.
-(<code class="docutils literal notranslate"><span class="pre">tf.data.Dataset.repeat()</span></code>)</p></li>
+(<code class="docutils literal notranslate"><span class="pre">tf.data.Dataset.repeat</span></code>)</p></li>
 </ol>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -587,7 +587,7 @@ restore the shape.</p></li>
 <ul class="simple">
 <li><p>Used to process data when making a <code class="docutils literal notranslate"><span class="pre">tf.data</span></code> data pipeline.</p></li>
 <li><p>If you want to use some other settings, implement it as a method of this class.
-If you implemented, set the name as the <code class="docutils literal notranslate"><span class="pre">func</span></code> key in <code class="docutils literal notranslate"><span class="pre">__init__()</span></code> and the
+If you implemented, set the name as the <code class="docutils literal notranslate"><span class="pre">func</span></code> key in <code class="docutils literal notranslate"><span class="pre">__init__</span></code> and the
 method as the value.</p></li>
 </ul>
 <dl class="field-list simple">
@@ -598,7 +598,7 @@ method as the value.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="lib.data.processor.Processor.run">
 <span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lib/data/processor.html#Processor.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.data.processor.Processor.run" title="Link to this definition"></a></dt>
-<dd><p>Runs process.</p>
+<dd><p>Runs process data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -682,7 +682,7 @@ method as the value.</p></li>
 <p>Sets up data.</p>
 <ul class="simple">
 <li><p>If you want to use some other settings, implement it as a method of this class.
-If you implemented, set the name as the <code class="docutils literal notranslate"><span class="pre">func</span></code> key in <code class="docutils literal notranslate"><span class="pre">__init__()</span></code> and the
+If you implemented, set the name as the <code class="docutils literal notranslate"><span class="pre">func</span></code> key in <code class="docutils literal notranslate"><span class="pre">__init__</span></code> and the
 method as the value.</p></li>
 </ul>
 <dl class="field-list simple">
@@ -696,7 +696,7 @@ method as the value.</p></li>
 <dd><p>Sets up data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>Callable</strong> – data class.</p>
+<dd class="field-odd"><p><strong>BaseLoadData</strong> – data class.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -707,7 +707,7 @@ method as the value.</p></li>
 <dd><p>Sets <a class="reference internal" href="#lib.data.mnist.Mnist" title="lib.data.mnist.Mnist"><code class="xref py py-class docutils literal notranslate"><span class="pre">lib.data.mnist.Mnist</span></code></a> (mnist or fashion mnist).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>Callable</strong> – data class.</p>
+<dd class="field-odd"><p><strong>Mnist</strong> – data class.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -718,7 +718,7 @@ method as the value.</p></li>
 <dd><p>Sets <a class="reference internal" href="#lib.data.cifar.Cifar" title="lib.data.cifar.Cifar"><code class="xref py py-class docutils literal notranslate"><span class="pre">lib.data.cifar.Cifar</span></code></a> (cifar10 or cifar100).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>Callable</strong> – data class.</p>
+<dd class="field-odd"><p><strong>Cifar</strong> – data class.</p>
 </dd>
 </dl>
 </dd></dl>

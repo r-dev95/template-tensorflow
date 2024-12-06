@@ -49,11 +49,13 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">eval.py</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#eval.check_params"><code class="docutils literal notranslate"><span class="pre">check_params()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#eval.Evaluator"><code class="docutils literal notranslate"><span class="pre">Evaluator</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#eval.Evaluator.eval_data"><code class="docutils literal notranslate"><span class="pre">eval_data</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#eval.Evaluator.classes"><code class="docutils literal notranslate"><span class="pre">classes</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#eval.Evaluator.model"><code class="docutils literal notranslate"><span class="pre">model</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#eval.Evaluator.callbacks"><code class="docutils literal notranslate"><span class="pre">callbacks</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#eval.Evaluator.load_dataset"><code class="docutils literal notranslate"><span class="pre">load_dataset()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#eval.Evaluator.setup"><code class="docutils literal notranslate"><span class="pre">setup()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#eval.Evaluator.eval_step"><code class="docutils literal notranslate"><span class="pre">eval_step()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#eval.Evaluator.run"><code class="docutils literal notranslate"><span class="pre">run()</span></code></a></li>
 </ul>
 </li>
@@ -113,6 +115,17 @@
 </dd>
 </dl>
 <dl class="py attribute">
+<dt class="sig sig-object py" id="eval.Evaluator.eval_data">
+<span class="sig-name descname"><span class="pre">eval_data</span></span><a class="headerlink" href="#eval.Evaluator.eval_data" title="Link to this definition"></a></dt>
+<dd><p>data class (evaluate)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="lib.data.html#lib.data.base.BaseLoadData" title="lib.data.base.BaseLoadData">BaseLoadData</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="eval.Evaluator.classes">
 <span class="sig-name descname"><span class="pre">classes</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#eval.Evaluator.classes" title="Link to this definition"></a></dt>
 <dd><p>class list</p>
@@ -134,7 +147,7 @@
 <dd><p>model class</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Callable</p>
+<dd class="field-odd"><p><a class="reference internal" href="lib.model.html#lib.model.base.BaseModel" title="lib.model.base.BaseModel">BaseModel</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -163,8 +176,22 @@
 <ul class="simple">
 <li><p>Sets the loss function, model, metrics.</p></li>
 <li><p>Set the model weights.</p></li>
-<li><p>Run <code class="docutils literal notranslate"><span class="pre">.summary()</span></code>.</p></li>
+<li><p>Run <code class="docutils literal notranslate"><span class="pre">.summary</span></code>.</p></li>
 </ul>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eval.Evaluator.eval_step">
+<span class="sig-name descname"><span class="pre">eval_step</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/eval.html#Evaluator.eval_step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eval.Evaluator.eval_step" title="Link to this definition"></a></dt>
+<dd><p>Evaluations the model.</p>
+<ul class="simple">
+<li><p>Customize the evaluation of your trained models.</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dict[str, Any]</strong> – evaluate results.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -172,7 +199,7 @@
 <span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/eval.html#Evaluator.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eval.Evaluator.run" title="Link to this definition"></a></dt>
 <dd><p>Runs evaluation.</p>
 <ul class="simple">
-<li><p>Run <code class="docutils literal notranslate"><span class="pre">.compile()</span></code>.</p></li>
+<li><p>Run <code class="docutils literal notranslate"><span class="pre">.compile</span></code>.</p></li>
 <li><p>Customize the evaluation of your trained models.</p></li>
 </ul>
 </dd></dl>

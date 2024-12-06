@@ -30,25 +30,22 @@ class TestMnist:
         K.REPEAT: 1,
     }
 
+    def _func(self, kind: str, phase: str):
+        self.params[K.DATA] = {K.KIND: kind}
+        self.params[K.DPATH] = Path(self.params[K.RESULT], kind, phase)
+        data = mnist.Mnist(params=self.params)
+        loader = data.make_loader_example()
+        for inputs, labels in loader:
+            print(f'\r{kind}-{phase}: {inputs.numpy().shape=}, {labels.numpy().shape=}')
+
     def test(self):
         """Tests that no errors are raised.
 
         *   Data can load correctly. (mnist, fashion_mnist)
         """
-        def _func(kind: str):
-            self.params[K.DATA] = {K.KIND: kind}
-            self.params[K.DPATH] = Path(self.params[K.RESULT], kind, 'train')
-            data = mnist.Mnist(params=self.params)
-            loader = data.make_loader_example()
-            for inputs, labels in loader:
-                print(f'\r{kind}-train: {inputs.numpy().shape=}, {labels.numpy().shape=}')
-            self.params[K.DPATH] = Path(self.params[K.RESULT], kind, 'test')
-            data = mnist.Mnist(params=self.params)
-            loader = data.make_loader_example()
-            for inputs, labels in loader:
-                print(f'\r{kind}-test: {inputs.numpy().shape=}, {labels.numpy().shape=}')
-
         # mnist
-        _func(kind='mnist')
+        self._func(kind='mnist', phase='train')
+        self._func(kind='mnist', phase='test')
         # fashion_mnist
-        _func(kind='fashion_mnist')
+        self._func(kind='fashion_mnist', phase='train')
+        self._func(kind='fashion_mnist', phase='test')

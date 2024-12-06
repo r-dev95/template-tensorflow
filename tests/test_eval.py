@@ -13,7 +13,7 @@ from template_tensorflow import eval  # noqa: A004
 from template_tensorflow.lib.common.define import ParamKey, ParamLog
 
 sys.path.append('../tests')
-from define import DATA_PARENT_DPATH, DATA_RESULT_DPATH
+from define import DATA_RESULT_DPATH, DATA_PARENT_DPATH, Layer, Loss, Metrics, Proc
 
 K = ParamKey()
 PARAM_LOG = ParamLog()
@@ -37,7 +37,6 @@ class TestCheckParams:
         K.METRICS: '',
         K.CB: '',
     }
-
     params_raise = {
         K.EAGER: 1,
         K.SEED: None,
@@ -45,6 +44,17 @@ class TestCheckParams:
         K.EVAL: 'dummy',
         K.BATCH: 0,
     }
+
+    all_log = [
+        ('main', ERROR  , f'params["{K.EAGER}"] must be boolean.'),
+        ('main', WARNING, f'params["{K.SEED}"] must be integer.'),
+        ('main', WARNING, f'The random number seed is not fixed.'),
+        ('main', ERROR  , f'params["{K.RESULT}"] is None or the directory does not exists.'),
+        ('main', ERROR  , f'params["{K.EVAL}"] is None or the directory does not exists.'),
+        ('main', ERROR  , f'params["{K.BATCH}"] must be greater than zero.'),
+    ]
+    for key in [K.DATA, K.PROCESS, K.MODEL, K.LAYER, K.LOSS, K.METRICS]:
+        all_log.append(('main', ERROR  , f'The key "{key}" for variable "params" is missing.'))
 
     def test(self):
         """Tests that no errors are raised.
@@ -60,19 +70,7 @@ class TestCheckParams:
         with pytest.raises(ValueError):
             eval.check_params(params=self.params_raise)
 
-        all_log = [
-            ('main', ERROR  , f'params["{K.EAGER}"] must be boolean.'),
-            ('main', WARNING, f'params["{K.SEED}"] must be integer.'),
-            ('main', WARNING, f'The random number seed is not fixed.'),
-            ('main', ERROR  , f'params["{K.RESULT}"] is None or the directory does not exists.'),
-            ('main', ERROR  , f'params["{K.EVAL}"] is None or the directory does not exists.'),
-            ('main', ERROR  , f'params["{K.BATCH}"] must be greater than zero.'),
-        ]
-        keys = [K.DATA, K.PROCESS, K.MODEL, K.LAYER, K.LOSS, K.METRICS]
-        for key in keys:
-            all_log.append(('main', ERROR  , f'The key "{key}" for variable "params" is missing.'))
-
-        assert caplog.record_tuples == all_log
+        assert caplog.record_tuples == self.all_log
 
 
 class TestEval:
@@ -87,71 +85,33 @@ class TestEval:
         K.DATA: {K.KIND: 'mnist'},
         K.PROCESS: {
             K.KIND: ['catencode', 'rescale'],
-            'catencode': {
-                'num_tokens': 10,
-                'output_mode': 'one_hot',
-                'sparse': False,
-            },
-            'rescale': {
-                'scale': 0.00392156862745098,
-                'offset': 0,
-            },
+            'catencode': Proc.CATENCODE,
+            'rescale': Proc.RESCALE,
         },
         K.MODEL: {K.KIND: 'simple'},
         K.LAYER: {
             K.KIND: ['flatten', 'dense_1', 'relu', 'dense_2'],
-            'flatten': {'data_format': 'channels_last'},
-            'dense_1': {
-                'units': 100,
-                'activation': None,
-                'use_bias': True,
-                'kernel_initializer': 'glorot_uniform',
-                'bias_initializer': 'zeros',
-                'kernel_regularizer': None,
-                'bias_regularizer': None,
-                'activity_regularizer': None,
-                'kernel_constraint': None,
-                'bias_constraint': None,
-                'lora_rank': None,
-            },
-            'dense_2': {
-                'units': 10,
-                'activation': None,
-                'use_bias': True,
-                'kernel_initializer': 'glorot_uniform',
-                'bias_initializer': 'zeros',
-                'kernel_regularizer': None,
-                'bias_regularizer': None,
-                'activity_regularizer': None,
-                'kernel_constraint': None,
-                'bias_constraint': None,
-                'lora_rank': None,
-            },
-            'relu': {
-                'max_value': None,
-                'negative_slope': 0,
-                'threshold': 0,
-            },
+            'flatten': Layer.FLATTEN,
+            'dense_1': Layer.DENSE_1,
+            'dense_2': Layer.DENSE_2,
+            'relu': Layer.RELU,
         },
         K.LOSS: {
             K.KIND: 'cce',
-            'cce': {
-                'from_logits': True,
-                'label_smoothing': 0,
-                'axis': -1,
-                'reduction': 'sum_over_batch_size',
-                'name': 'categorical_crossentropy',
-            },
+            'cce': Loss.CCE,
         },
         K.METRICS: {
             K.KIND: ['mse'],
-            'mse': {'name': 'mean_squared_error'},
+            'mse': Metrics.MSE,
         },
     }
 
-    def test(self):
+    @pytest.fixture(scope='class')
+    def proc(self):
+        yield
+        Path(self.params[K.RESULT], 'log_params_eval.yaml').unlink()
+
+    def test(self, proc):
         """Tests that no errors are raised.
         """
         eval.main(params=self.params)
-
-        Path(self.params[K.RESULT], 'log_params_eval.yaml').unlink()

@@ -11,42 +11,45 @@ sys.path.append('../template_tensorflow/')
 from template_tensorflow.lib.common.define import ParamKey, ParamLog
 from template_tensorflow.lib.metrics import setup
 
+sys.path.append('../tests')
+from define import Metrics
+
 K = ParamKey()
 PARAM_LOG = ParamLog()
 LOGGER = getLogger(name=PARAM_LOG.NAME)
 
 
-MSE = {
-    'name': 'mean_squared_error',
-}
-CCE = {
-    'name': 'categorical_crossentropy',
-    'from_logits': True,
-    'label_smoothing': 0,
-    'axis': -1,
-}
-CACC = {
-    'name': 'categorical_accuracy',
-}
-
-
 class TestSetupMetrics:
     """Tests :class:`setup.SetupMetrics`.
     """
+    kinds = ['mse', 'cce', 'cacc']
     params = {
         K.METRICS: {
-            K.KIND: ['mse', 'cce', 'cacc'],
-            'mse': MSE,
-            'cce': CCE,
-            'cacc': CACC,
+            K.KIND: kinds,
+            kinds[0]: Metrics.MSE,
+            kinds[1]: Metrics.CCE,
+            kinds[2]: Metrics.CACC,
         },
     }
+    params_raise = {
+        K.METRICS: {
+            K.KIND: [''],
+            '': {},
+        },
+    }
+
     labels = [
         "<class 'keras.src.metrics.reduction_metrics.Mean'>",
         "<class 'keras.src.metrics.regression_metrics.MeanSquaredError'>",
         "<class 'keras.src.metrics.probabilistic_metrics.CategoricalCrossentropy'>",
         "<class 'keras.src.metrics.accuracy_metrics.CategoricalAccuracy'>",
     ]
+    all_log = [
+        ('main', ERROR, f'SetupMetrics class does not have a method "{params_raise[K.METRICS][K.KIND][0]}" that sets the metrics.'),
+        ('main', ERROR, f'The available metrics are:'),
+    ]
+    for key in setup.SetupMetrics(params=params).func:
+        all_log.append(('main', ERROR, f'{key=}'))
 
     def test(self):
         """Tests that no errors are raised.
@@ -63,22 +66,7 @@ class TestSetupMetrics:
 
         *   The log output is correct.
         """
-        params = {
-            K.METRICS: {
-                K.KIND: [''],
-                '': {},
-            },
-        }
         with pytest.raises(ValueError):
-            setup.SetupMetrics(params=params).setup()
+            setup.SetupMetrics(params=self.params_raise).setup()
 
-        all_log = [
-            ('main', ERROR, f'SetupMetrics class does not have a method "{params[K.METRICS][K.KIND][0]}" that sets the metrics.'),
-            ('main', ERROR, f'The available metrics are:'),
-        ]
-        func = setup.SetupMetrics(params=self.params).func
-        print(f'{func=}')
-        for key in func:
-            all_log.append(('main', ERROR, f'{key=}'))
-
-        assert caplog.record_tuples == all_log
+        assert caplog.record_tuples == self.all_log

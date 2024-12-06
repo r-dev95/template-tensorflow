@@ -129,11 +129,11 @@
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></p>
 <p>Defines the base model.</p>
 <ul class="simple">
-<li><p>You can customize <a class="reference internal" href="#lib.model.base.BaseModel.train_step" title="lib.model.base.BaseModel.train_step"><code class="xref py py-meth docutils literal notranslate"><span class="pre">train_step()</span></code></a> and <a class="reference internal" href="#lib.model.base.BaseModel.test_step" title="lib.model.base.BaseModel.test_step"><code class="xref py py-meth docutils literal notranslate"><span class="pre">test_step()</span></code></a> using <code class="docutils literal notranslate"><span class="pre">.fit()</span></code>.</p></li>
-<li><p>In eager mode, you can output calculation results using <code class="docutils literal notranslate"><span class="pre">print()</span></code> or logging
-in <a class="reference internal" href="#lib.model.base.BaseModel.train_step" title="lib.model.base.BaseModel.train_step"><code class="xref py py-meth docutils literal notranslate"><span class="pre">train_step()</span></code></a>, <a class="reference internal" href="#lib.model.base.BaseModel.test_step" title="lib.model.base.BaseModel.test_step"><code class="xref py py-meth docutils literal notranslate"><span class="pre">test_step()</span></code></a>, or <code class="docutils literal notranslate"><span class="pre">.call()</span></code> of class-form models.</p></li>
+<li><p>You can customize <a class="reference internal" href="#lib.model.base.BaseModel.train_step" title="lib.model.base.BaseModel.train_step"><code class="xref py py-meth docutils literal notranslate"><span class="pre">train_step()</span></code></a> and <a class="reference internal" href="#lib.model.base.BaseModel.test_step" title="lib.model.base.BaseModel.test_step"><code class="xref py py-meth docutils literal notranslate"><span class="pre">test_step()</span></code></a> using <code class="docutils literal notranslate"><span class="pre">.fit</span></code>.</p></li>
+<li><p>In eager mode, you can output calculation results using <code class="docutils literal notranslate"><span class="pre">print</span></code> or logging
+in <a class="reference internal" href="#lib.model.base.BaseModel.train_step" title="lib.model.base.BaseModel.train_step"><code class="xref py py-meth docutils literal notranslate"><span class="pre">train_step()</span></code></a>, <a class="reference internal" href="#lib.model.base.BaseModel.test_step" title="lib.model.base.BaseModel.test_step"><code class="xref py py-meth docutils literal notranslate"><span class="pre">test_step()</span></code></a>, or <code class="docutils literal notranslate"><span class="pre">.call</span></code> of class-form models.</p></li>
 <li><p>In graph mode, you can output too.
-But you will need to implement a custom layer that <code class="docutils literal notranslate"><span class="pre">tf.print()</span></code> the input.</p></li>
+But you will need to implement a custom layer that <code class="docutils literal notranslate"><span class="pre">tf.print</span></code> the input.</p></li>
 </ul>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -146,7 +146,10 @@ But you will need to implement a custom layer that <code class="docutils literal
 <dd><p>Updates metrics.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>data</strong> (<em>tuple</em><em>[</em><em>tf.Tensor</em><em>]</em>) – tuple of labels, preds, loss, and sample_weight.</p>
+<dd class="field-odd"><p><strong>data</strong> (<em>tuple</em><em>[</em><em>tf.Tensor</em><em>]</em>) – tuple of labels, preds, losses, and sample_weight.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>dict[str, float]</strong> – all metrics results.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -157,10 +160,10 @@ But you will need to implement a custom layer that <code class="docutils literal
 <dd><p>Returns list of metrics classes.</p>
 <p>This function is decorated by <code class="docutils literal notranslate"><span class="pre">&#64;override</span></code> and <code class="docutils literal notranslate"><span class="pre">&#64;property</span></code>.</p>
 <ul class="simple">
-<li><p>When using <code class="docutils literal notranslate"><span class="pre">.fit()</span></code> or <code class="docutils literal notranslate"><span class="pre">.evaluate()</span></code>, Metrics must be run
-<code class="docutils literal notranslate"><span class="pre">.reset_state()</span></code> at the start of an epoch.
+<li><p>When using <code class="docutils literal notranslate"><span class="pre">.fit</span></code> or <code class="docutils literal notranslate"><span class="pre">.evaluate</span></code>, Metrics must be run
+<code class="docutils literal notranslate"><span class="pre">.reset_state</span></code> at the start of an epoch.
 By setting the return value of this method to a list of all metrics, it will
-automatically run <code class="docutils literal notranslate"><span class="pre">.reset_state()</span></code>.</p></li>
+automatically run <code class="docutils literal notranslate"><span class="pre">.reset_state</span></code>.</p></li>
 </ul>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -237,7 +240,7 @@ automatically run <code class="docutils literal notranslate"><span class="pre">.
 <p>Sets up the model layer.</p>
 <ul class="simple">
 <li><p>If you want to use some other settings, implement it as a method of this class.
-If you implemented, set the name as the <code class="docutils literal notranslate"><span class="pre">func</span></code> key in <code class="docutils literal notranslate"><span class="pre">__init__()</span></code> and the
+If you implemented, set the name as the <code class="docutils literal notranslate"><span class="pre">func</span></code> key in <code class="docutils literal notranslate"><span class="pre">__init__</span></code> and the
 method as the value.</p></li>
 </ul>
 <dl class="field-list simple">
@@ -273,7 +276,7 @@ method as the value.</p></li>
 <dd><p>Sets <code class="docutils literal notranslate"><span class="pre">keras.layers.Dense</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>Callable</strong> – <code class="docutils literal notranslate"><span class="pre">keras.layers.Dense</span></code> class.</p>
+<dd class="field-odd"><p><strong>Callable</strong> – model layer class.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -338,7 +341,7 @@ method as the value.</p></li>
 <p>Sets up model.</p>
 <ul class="simple">
 <li><p>If you want to use some other settings, implement it as a method of this class.
-If you implemented, set the name as the <code class="docutils literal notranslate"><span class="pre">func</span></code> key in <code class="docutils literal notranslate"><span class="pre">__init__()</span></code> and the
+If you implemented, set the name as the <code class="docutils literal notranslate"><span class="pre">func</span></code> key in <code class="docutils literal notranslate"><span class="pre">__init__</span></code> and the
 method as the value.</p></li>
 </ul>
 <dl class="field-list simple">
@@ -402,9 +405,9 @@ method as the value.</p></li>
 <div class="admonition attention">
 <p class="admonition-title">Attention</p>
 <p>Since the structure of a class-based model is not defined until input is given,
-<code class="docutils literal notranslate"><span class="pre">.summary()</span></code> cannot be used.
+<code class="docutils literal notranslate"><span class="pre">.summary</span></code> cannot be used.
 For the same reason, trained weights cannot be applied,
-so dummy data is input in <code class="docutils literal notranslate"><span class="pre">__init__()</span></code>.</p>
+so dummy data is input in <code class="docutils literal notranslate"><span class="pre">__init__</span></code>.</p>
 </div>
 <dl class="py method">
 <dt class="sig sig-object py" id="lib.model.simple.SimpleModel.call">

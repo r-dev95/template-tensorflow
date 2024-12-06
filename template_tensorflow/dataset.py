@@ -6,6 +6,7 @@ import os
 import shutil
 from collections.abc import Callable
 from concurrent.futures import ProcessPoolExecutor
+from dataclasses import dataclass
 from logging import getLogger
 from pathlib import Path
 from typing import Any
@@ -27,12 +28,23 @@ LOGGER = getLogger(PARAM_LOG.NAME)
 TMP_DPATH: str = '.keras/datasets'
 
 #: dict[str, Callable]: data loader
-LOADER = {
+LOADER: dict[str, Callable] = {
     'mnist': keras.datasets.mnist.load_data,
     'fashion_mnist': keras.datasets.fashion_mnist.load_data,
     'cifar10': keras.datasets.cifar10.load_data,
     'cifar100': keras.datasets.cifar100.load_data,
 }
+
+
+@dataclass
+class ParamDataset:
+    """Defines the parameters.
+    """
+    tmp_dpath: str
+    dpath: Path
+    loader: Callable
+    inputs: np.ndarray
+    labels: np.ndarray
 
 
 def feature_int64_list(value: list[int]) -> tf.train.Feature:
@@ -119,16 +131,15 @@ def serialize_example(data: list[list[float]]) -> tf.train.Example:
     return tf.train.Example(features=tf.train.Features(feature=feature))
 
 
-def write_exmaple(fpath: Path, inputs: np.ndarray, labels: np.ndarray) -> None:
+def write_exmaple(args: ParamDataset) -> None:
     """Writes TFRecord data.
 
     Args:
-        fpath (Path): file path.
-        inputs (np.ndarray): input.
-        labels (np.ndarray): label.
+        args (ParamDataset): parameters.
     """
-    inputs = np.squeeze(inputs)
-    labels = np.squeeze(labels)
+    fpath = args.dpath
+    inputs = np.squeeze(args.inputs)
+    labels = np.squeeze(args.labels)
 
     writer = tf.io.TFRecordWriter(fpath.as_posix())
     for i, (x, y) in enumerate(zip(inputs, labels)):
@@ -139,7 +150,7 @@ def write_exmaple(fpath: Path, inputs: np.ndarray, labels: np.ndarray) -> None:
     writer.close()
 
 
-def make_tfrecord(args: list[Callable, str]) -> None:
+def worker(args: ParamDataset) -> None:
     """Makes TFRecord data.
 
     *   Make TFRecord data loading data from the following function.
@@ -150,7 +161,7 @@ def make_tfrecord(args: list[Callable, str]) -> None:
         *   ``keras.datasets.cifar100.load_data``
 
     Args:
-        args (list[Callable, str]): keras's dataset loader and save directory path.
+        args (ParamDataset): parameters.
 
     .. code-block:: python
 
@@ -168,21 +179,24 @@ def make_tfrecord(args: list[Callable, str]) -> None:
         # x_test.shape  == (10000, 32, 32, 3)
         # y_test.shape  == (10000, 1)
     """
-    load_data, dpath = args
+    dpath = args.dpath
+    loader = args.loader
 
-    (x_train, y_train), (x_test, y_test) = load_data()
+    (x_train, y_train), (x_test, y_test) = loader()
 
-    # training data.
-    LOGGER.info('train data:')
-    fpath_train = Path(dpath, 'train', 'train.tfr')
-    fpath_train.parent.mkdir(parents=True, exist_ok=True)
-    write_exmaple(fpath=fpath_train, inputs=x_train, labels=y_train)
+    # training data
+    args.dpath = Path(dpath, 'train', 'train.tfr')
+    args.dpath.parent.mkdir(parents=True, exist_ok=True)
+    args.inputs = x_train
+    args.labels = y_train
+    write_exmaple(args=args)
 
-    # test data.
-    LOGGER.info('test data:')
-    fpath_test = Path(dpath, 'test', 'test.tfr')
-    fpath_test.parent.mkdir(parents=True, exist_ok=True)
-    write_exmaple(fpath=fpath_test, inputs=x_test, labels=y_test)
+    # test data
+    args.dpath = Path(dpath, 'test', 'test.tfr')
+    args.dpath.parent.mkdir(parents=True, exist_ok=True)
+    args.inputs = x_test
+    args.labels = y_test
+    write_exmaple(args=args)
 
 
 @process_time(print_func=LOGGER.info)
@@ -195,12 +209,23 @@ def main(params: dict[str, Any]) -> None:
     if 'all' in params[K.DATA]:
         params[K.DATA] = list(LOADER.keys())
 
-    args = [[LOADER[kind], Path(params[K.RESULT], kind)] for kind in params[K.DATA]]
-    with ProcessPoolExecutor(max_workers=params['max_workers']) as executer:
-        executer.map(make_tfrecord, args)
+    args = []
+    tmp_dpath = Path(os.environ['HOME'], TMP_DPATH)
+    for data_kind in params[K.DATA]:
+        dpath = Path(params[K.RESULT], data_kind)
+        _args = ParamDataset(
+            tmp_dpath=tmp_dpath,
+            dpath=dpath,
+            loader=LOADER[data_kind],
+            inputs=None,
+            labels=None,
+        )
+        args.append(_args)
 
-    tmp_data_dpath = Path(os.environ['HOME'], TMP_DPATH)
-    shutil.rmtree(tmp_data_dpath)
+    with ProcessPoolExecutor(max_workers=params['max_workers']) as executer:
+        executer.map(worker, args)
+
+    shutil.rmtree(tmp_dpath)
 
 
 def set_params() -> dict[str, Any]:

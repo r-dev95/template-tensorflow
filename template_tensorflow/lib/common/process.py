@@ -1,6 +1,5 @@
 """This is the module that defines the common process.
 """
-from collections.abc import Callable
 from logging import getLogger
 from pathlib import Path
 from typing import Any

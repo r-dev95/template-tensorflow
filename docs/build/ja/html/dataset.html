@@ -48,12 +48,22 @@
 <li class="toctree-l1"><a class="reference internal" href="train.html">train.py</a></li>
 <li class="toctree-l1"><a class="reference internal" href="eval.html">eval.py</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">dataset.py</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#dataset.TMP_DPATH"><code class="docutils literal notranslate"><span class="pre">TMP_DPATH</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dataset.LOADER"><code class="docutils literal notranslate"><span class="pre">LOADER</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dataset.ParamDataset"><code class="docutils literal notranslate"><span class="pre">ParamDataset</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#dataset.ParamDataset.tmp_dpath"><code class="docutils literal notranslate"><span class="pre">tmp_dpath</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dataset.ParamDataset.dpath"><code class="docutils literal notranslate"><span class="pre">dpath</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dataset.ParamDataset.loader"><code class="docutils literal notranslate"><span class="pre">loader</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dataset.ParamDataset.inputs"><code class="docutils literal notranslate"><span class="pre">inputs</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dataset.ParamDataset.labels"><code class="docutils literal notranslate"><span class="pre">labels</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#dataset.feature_int64_list"><code class="docutils literal notranslate"><span class="pre">feature_int64_list()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#dataset.feature_float_list"><code class="docutils literal notranslate"><span class="pre">feature_float_list()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#dataset.feature_bytes_list"><code class="docutils literal notranslate"><span class="pre">feature_bytes_list()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#dataset.serialize_example"><code class="docutils literal notranslate"><span class="pre">serialize_example()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#dataset.write_exmaple"><code class="docutils literal notranslate"><span class="pre">write_exmaple()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#dataset.make_tfrecord"><code class="docutils literal notranslate"><span class="pre">make_tfrecord()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dataset.worker"><code class="docutils literal notranslate"><span class="pre">worker()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#dataset.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#dataset.set_params"><code class="docutils literal notranslate"><span class="pre">set_params()</span></code></a></li>
 </ul>
@@ -87,6 +97,60 @@
   <section id="module-dataset">
 <span id="dataset-py"></span><h1>dataset.py<a class="headerlink" href="#module-dataset" title="Link to this heading"></a></h1>
 <p>TFRecordデータを作成するモジュール。</p>
+<dl class="py data">
+<dt class="sig sig-object py" id="dataset.TMP_DPATH">
+<span class="sig-name descname"><span class="pre">TMP_DPATH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'.keras/datasets'</span></em><a class="headerlink" href="#dataset.TMP_DPATH" title="Link to this definition"></a></dt>
+<dd><p>一時的なパス名</p>
+<dl class="field-list simple">
+<dt class="field-odd">型<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="dataset.LOADER">
+<span class="sig-name descname"><span class="pre">LOADER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'cifar10':</span> <span class="pre">&lt;function</span> <span class="pre">load_data&gt;,</span> <span class="pre">'cifar100':</span> <span class="pre">&lt;function</span> <span class="pre">load_data&gt;,</span> <span class="pre">'fashion_mnist':</span> <span class="pre">&lt;function</span> <span class="pre">load_data&gt;,</span> <span class="pre">'mnist':</span> <span class="pre">&lt;function</span> <span class="pre">load_data&gt;}</span></em><a class="headerlink" href="#dataset.LOADER" title="Link to this definition"></a></dt>
+<dd><p>データローダー</p>
+<dl class="field-list simple">
+<dt class="field-odd">型<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict[str, Callable]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dataset.ParamDataset">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ParamDataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tmp_dpath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dpath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loader</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dataset.html#ParamDataset"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#dataset.ParamDataset" title="Link to this definition"></a></dt>
+<dd><p>ベースクラス: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>パラメータを定義する。</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dataset.ParamDataset.tmp_dpath">
+<span class="sig-name descname"><span class="pre">tmp_dpath</span></span><a class="headerlink" href="#dataset.ParamDataset.tmp_dpath" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dataset.ParamDataset.dpath">
+<span class="sig-name descname"><span class="pre">dpath</span></span><a class="headerlink" href="#dataset.ParamDataset.dpath" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dataset.ParamDataset.loader">
+<span class="sig-name descname"><span class="pre">loader</span></span><a class="headerlink" href="#dataset.ParamDataset.loader" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dataset.ParamDataset.inputs">
+<span class="sig-name descname"><span class="pre">inputs</span></span><a class="headerlink" href="#dataset.ParamDataset.inputs" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dataset.ParamDataset.labels">
+<span class="sig-name descname"><span class="pre">labels</span></span><a class="headerlink" href="#dataset.ParamDataset.labels" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 <dl class="py function">
 <dt class="sig sig-object py" id="dataset.feature_int64_list">
 <span class="sig-name descname"><span class="pre">feature_int64_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dataset.html#feature_int64_list"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#dataset.feature_int64_list" title="Link to this definition"></a></dt>
@@ -174,27 +238,23 @@
 
 <dl class="py function">
 <dt class="sig sig-object py" id="dataset.write_exmaple">
-<span class="sig-name descname"><span class="pre">write_exmaple</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fpath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dataset.html#write_exmaple"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#dataset.write_exmaple" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">write_exmaple</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dataset.html#write_exmaple"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#dataset.write_exmaple" title="Link to this definition"></a></dt>
 <dd><p>TFRecordデータを書き込む。</p>
 <dl class="field-list simple">
 <dt class="field-odd">パラメータ<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>fpath</strong> (<em>Path</em>) -- ファイルパス</p></li>
-<li><p><strong>inputs</strong> (<em>np.ndarray</em>) -- 入力</p></li>
-<li><p><strong>labels</strong> (<em>np.ndarray</em>) -- ラベル</p></li>
-</ul>
+<dd class="field-odd"><p><strong>args</strong> (<a class="reference internal" href="#dataset.ParamDataset" title="dataset.ParamDataset"><em>ParamDataset</em></a>) -- パラメータ</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="dataset.make_tfrecord">
-<span class="sig-name descname"><span class="pre">make_tfrecord</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dataset.html#make_tfrecord"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#dataset.make_tfrecord" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="dataset.worker">
+<span class="sig-name descname"><span class="pre">worker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dataset.html#worker"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#dataset.worker" title="Link to this definition"></a></dt>
 <dd><p>TFRecordデータを作成する。</p>
 <ul class="simple">
 <li><p>次の関数からデータを読み込みTFRecordデータを作成する。</p>
 <ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">keras.datasets.mnist.load_data()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">keras.datasets.mnist.load_data</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">keras.datasets.fashion_mnist.load_data</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">keras.datasets.cifar10.load_data</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">keras.datasets.cifar100.load_data</span></code></p></li>
@@ -203,7 +263,7 @@
 </ul>
 <dl class="field-list simple">
 <dt class="field-odd">パラメータ<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>args</strong> (<em>list</em><em>[</em><em>Callable</em><em>, </em><em>str</em><em>]</em>) -- Kerasのデータローダーと保存ディレクトリパス。</p>
+<dd class="field-odd"><p><strong>args</strong> (<a class="reference internal" href="#dataset.ParamDataset" title="dataset.ParamDataset"><em>ParamDataset</em></a>) -- パラメータ</p>
 </dd>
 </dl>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">),</span> <span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">mnist</span><span class="o">.</span><span class="n">load_data</span><span class="p">()</span>

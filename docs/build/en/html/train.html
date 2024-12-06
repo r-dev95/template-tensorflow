@@ -48,6 +48,8 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">train.py</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#train.check_params"><code class="docutils literal notranslate"><span class="pre">check_params()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#train.Trainer"><code class="docutils literal notranslate"><span class="pre">Trainer</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#train.Trainer.train_data"><code class="docutils literal notranslate"><span class="pre">train_data</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#train.Trainer.valid_data"><code class="docutils literal notranslate"><span class="pre">valid_data</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#train.Trainer.classes"><code class="docutils literal notranslate"><span class="pre">classes</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#train.Trainer.model"><code class="docutils literal notranslate"><span class="pre">model</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#train.Trainer.callbacks"><code class="docutils literal notranslate"><span class="pre">callbacks</span></code></a></li>
@@ -146,6 +148,28 @@ If you want to use other configuration, implement them in the each functions.</p
 </dd>
 </dl>
 <dl class="py attribute">
+<dt class="sig sig-object py" id="train.Trainer.train_data">
+<span class="sig-name descname"><span class="pre">train_data</span></span><a class="headerlink" href="#train.Trainer.train_data" title="Link to this definition"></a></dt>
+<dd><p>data class (train)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="lib.data.html#lib.data.base.BaseLoadData" title="lib.data.base.BaseLoadData">BaseLoadData</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="train.Trainer.valid_data">
+<span class="sig-name descname"><span class="pre">valid_data</span></span><a class="headerlink" href="#train.Trainer.valid_data" title="Link to this definition"></a></dt>
+<dd><p>data class (valid)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="lib.data.html#lib.data.base.BaseLoadData" title="lib.data.base.BaseLoadData">BaseLoadData</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="train.Trainer.classes">
 <span class="sig-name descname"><span class="pre">classes</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#train.Trainer.classes" title="Link to this definition"></a></dt>
 <dd><p>class list</p>
@@ -167,7 +191,7 @@ If you want to use other configuration, implement them in the each functions.</p
 <dd><p>model class</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Callable</p>
+<dd class="field-odd"><p><a class="reference internal" href="lib.model.html#lib.model.base.BaseModel" title="lib.model.base.BaseModel">BaseModel</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -199,7 +223,7 @@ necessarily have to be loaded.</p></li>
 <dd><p>Sets up the training.</p>
 <ul class="simple">
 <li><p>Sets the optimizer method, loss function, model, metrics, and callbacks.</p></li>
-<li><p>Run <code class="docutils literal notranslate"><span class="pre">.summary()</span></code>.</p></li>
+<li><p>Run <code class="docutils literal notranslate"><span class="pre">.summary</span></code>.</p></li>
 </ul>
 </dd></dl>
 
@@ -208,7 +232,7 @@ necessarily have to be loaded.</p></li>
 <span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/train.html#Trainer.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#train.Trainer.run" title="Link to this definition"></a></dt>
 <dd><p>Runs training and validation.</p>
 <ul class="simple">
-<li><p>Run <code class="docutils literal notranslate"><span class="pre">.compile()</span></code> and <code class="docutils literal notranslate"><span class="pre">.fit()</span></code>.</p></li>
+<li><p>Run <code class="docutils literal notranslate"><span class="pre">.compile</span></code> and <code class="docutils literal notranslate"><span class="pre">.fit</span></code>.</p></li>
 </ul>
 </dd></dl>
 

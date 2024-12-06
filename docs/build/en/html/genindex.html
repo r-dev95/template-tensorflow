@@ -204,9 +204,13 @@
         <li><a href="dataset.html#module-dataset">module</a>
 </li>
       </ul></li>
+      <li><a href="lib.model.html#lib.model.layer.SetupLayer.dense">dense() (SetupLayer method)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="lib.model.html#lib.model.layer.SetupLayer.dense">dense() (SetupLayer method)</a>
+      <li><a href="dataset.html#dataset.ParamDataset.dpath">dpath (ParamDataset attribute)</a>
+</li>
+      <li><a href="lib.common.html#lib.common.define.ParamKey.DPATH">DPATH (ParamKey attribute)</a>
 </li>
       <li><a href="lib.common.html#lib.common.file.dump_json">dump_json() (in module lib.common.file)</a>
 </li>
@@ -235,6 +239,10 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="lib.common.html#lib.common.define.ParamKey.EVAL">EVAL (ParamKey attribute)</a>
 </li>
+      <li><a href="eval.html#eval.Evaluator.eval_data">eval_data (Evaluator attribute)</a>
+</li>
+      <li><a href="eval.html#eval.Evaluator.eval_step">eval_step() (Evaluator method)</a>
+</li>
       <li><a href="eval.html#eval.Evaluator">Evaluator (class in eval)</a>
 </li>
   </ul></td>
@@ -251,22 +259,18 @@
 </li>
       <li><a href="lib.common.html#lib.common.define.ParamLog.FH">FH (ParamLog attribute)</a>
 </li>
-      <li><a href="lib.common.html#lib.common.define.ParamKey.FILES">FILES (ParamKey attribute)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="lib.common.html#lib.common.define.ParamKey.FILE_PATTERN">FILE_PATTERN (ParamKey attribute)</a>
+</li>
       <li><a href="lib.common.html#lib.common.process.fix_random_seed">fix_random_seed() (in module lib.common.process)</a>
 </li>
       <li><a href="lib.model.html#lib.model.layer.SetupLayer.flatten">flatten() (SetupLayer method)</a>
 </li>
       <li><a href="lib.common.html#lib.common.log.SetLogging.format">format (SetLogging attribute)</a>
 </li>
-      <li><a href="lib.common.html#lib.common.define.ParamKey.FPATH">FPATH (ParamKey attribute)</a>
-
-      <ul>
-        <li><a href="lib.common.html#lib.common.define.ParamLog.FPATH">(ParamLog attribute)</a>
+      <li><a href="lib.common.html#lib.common.define.ParamLog.FPATH">FPATH (ParamLog attribute)</a>
 </li>
-      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -301,6 +305,8 @@
         <li><a href="lib.data.html#lib.data.mnist.Mnist.input_size">(Mnist attribute)</a>
 </li>
       </ul></li>
+      <li><a href="dataset.html#dataset.ParamDataset.inputs">inputs (ParamDataset attribute)</a>
+</li>
   </ul></td>
 </tr></table>
 
@@ -339,6 +345,8 @@
         <li><a href="lib.data.html#lib.data.mnist.Mnist.label_size">(Mnist attribute)</a>
 </li>
       </ul></li>
+      <li><a href="dataset.html#dataset.ParamDataset.labels">labels (ParamDataset attribute)</a>
+</li>
       <li><a href="lib.common.html#lib.common.define.ParamKey.LAYER">LAYER (ParamKey attribute)</a>
 </li>
       <li><a href="lib.common.html#lib.common.define.ParamKey.LEVEL">LEVEL (ParamKey attribute)</a>
@@ -431,8 +439,6 @@
         <li><a href="lib.data.html#module-lib.data.cifar">module</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     lib.data.mnist
 
@@ -440,6 +446,8 @@
         <li><a href="lib.data.html#module-lib.data.mnist">module</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     lib.data.processor
 
@@ -550,6 +558,10 @@
 </li>
       <li><a href="lib.common.html#lib.common.file.load_yaml">load_yaml() (in module lib.common.file)</a>
 </li>
+      <li><a href="dataset.html#dataset.LOADER">LOADER (in module dataset)</a>
+</li>
+      <li><a href="dataset.html#dataset.ParamDataset.loader">loader (ParamDataset attribute)</a>
+</li>
       <li><a href="lib.common.html#lib.common.define.ParamFileName.LOSS">LOSS (ParamFileName attribute)</a>
 
       <ul>
@@ -573,8 +585,6 @@
 </li>
       </ul></li>
       <li><a href="lib.data.html#lib.data.base.BaseLoadData.make_loader_example">make_loader_example() (BaseLoadData method)</a>
-</li>
-      <li><a href="dataset.html#dataset.make_tfrecord">make_tfrecord() (in module dataset)</a>
 </li>
       <li><a href="lib.model.html#lib.model.layer.SetupLayer.maxpool2d">maxpool2d() (SetupLayer method)</a>
 </li>
@@ -703,6 +713,8 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="lib.common.html#lib.common.define.ParamKey.PARAM">PARAM (ParamKey attribute)</a>
 </li>
+      <li><a href="dataset.html#dataset.ParamDataset">ParamDataset (class in dataset)</a>
+</li>
       <li><a href="lib.common.html#lib.common.define.ParamFileName">ParamFileName (class in lib.common.define)</a>
 </li>
       <li><a href="lib.common.html#lib.common.define.ParamKey">ParamKey (class in lib.common.define)</a>
@@ -713,9 +725,9 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="lib.data.html#lib.data.base.BaseLoadData.parse_example">parse_example() (BaseLoadData method)</a>
 </li>
-      <li><a href="lib.data.html#lib.data.base.BaseLoadData.preprocess">preprocess() (BaseLoadData method)</a>
-</li>
       <li><a href="lib.common.html#lib.common.define.ParamKey.PROCESS">PROCESS (ParamKey attribute)</a>
+</li>
+      <li><a href="lib.data.html#lib.data.base.BaseLoadData.process">process() (BaseLoadData method)</a>
 </li>
       <li><a href="lib.common.html#lib.common.decorator.process_time">process_time() (in module lib.common.decorator)</a>
 </li>
@@ -859,6 +871,10 @@
 </li>
       <li><a href="lib.html#lib.template.Tmp">Tmp (class in lib.template)</a>
 </li>
+      <li><a href="dataset.html#dataset.TMP_DPATH">TMP_DPATH (in module dataset)</a>
+</li>
+      <li><a href="dataset.html#dataset.ParamDataset.tmp_dpath">tmp_dpath (ParamDataset attribute)</a>
+</li>
       <li><a href="lib.html#lib.template.Tmp.tmp_method">tmp_method() (Tmp method)</a>
 </li>
       <li><a href="lib.html#lib.template.Tmp.tmp_val">tmp_val (Tmp attribute)</a>
@@ -873,6 +889,8 @@
 </li>
       </ul></li>
       <li><a href="lib.common.html#lib.common.define.ParamKey.TRAIN">TRAIN (ParamKey attribute)</a>
+</li>
+      <li><a href="train.html#train.Trainer.train_data">train_data (Trainer attribute)</a>
 </li>
       <li><a href="lib.model.html#lib.model.base.BaseModel.train_step">train_step() (BaseModel method)</a>
 </li>
@@ -895,6 +913,10 @@
       <li><a href="lib.common.html#lib.common.define.ParamKey.VALID">VALID (ParamKey attribute)</a>
 </li>
   </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="train.html#train.Trainer.valid_data">valid_data (Trainer attribute)</a>
+</li>
+  </ul></td>
 </tr></table>
 
 <h2 id="W">W</h2>
@@ -904,6 +926,8 @@
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="dataset.html#dataset.worker">worker() (in module dataset)</a>
+</li>
       <li><a href="dataset.html#dataset.write_exmaple">write_exmaple() (in module dataset)</a>
 </li>
   </ul></td>

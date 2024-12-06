@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: template-tensorflow \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-23 15:36+0900\n"
+"POT-Creation-Date: 2024-12-06 21:46+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -55,7 +55,7 @@ msgid "Sets up optimizer method."
 msgstr ""
 
 #: ../../../template_tensorflow/lib/optimizer/setup.py:docstring of lib.optimizer.setup.SetupOpt:3
-msgid "If you want to use some other settings, implement it as a method of this class. If you implemented, set the name as the ``func`` key in ``__init__()`` and the method as the value."
+msgid "If you want to use some other settings, implement it as a method of this class. If you implemented, set the name as the ``func`` key in ``__init__`` and the method as the value."
 msgstr ""
 
 #: ../../../template_tensorflow/lib/optimizer/setup.py:docstring of lib.optimizer.setup.SetupOpt.adam:0

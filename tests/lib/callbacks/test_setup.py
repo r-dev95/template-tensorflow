@@ -11,41 +11,43 @@ sys.path.append('../template_tensorflow/')
 from template_tensorflow.lib.callbacks import setup
 from template_tensorflow.lib.common.define import ParamKey, ParamLog
 
+sys.path.append('../tests/')
+from define import CB
+
 K = ParamKey()
 PARAM_LOG = ParamLog()
 LOGGER = getLogger(name=PARAM_LOG.NAME)
 
 
-MCP = {
-    'monitor': 'val_loss',
-    'verbose': 0,
-    'save_best_only': False,
-    'save_weights_only': True,
-    'mode': 'auto',
-    'save_freq': 'epoch',
-    'initial_value_threshold': None,
-}
-CSV = {
-    'separator': ',',
-    'append': False,
-}
-
-
 class TestSetupCallbacks:
     """Tests :class:`setup.SetupCallbacks`.
     """
+    kinds = ['mcp', 'csv']
     params = {
         K.RESULT: '.',
         K.CB: {
-            K.KIND: ['mcp', 'csv'],
-            'mcp': MCP,
-            'csv': CSV,
+            K.KIND: kinds,
+            kinds[0]: CB.MCP,
+            kinds[1]: CB.CSV,
         },
     }
+    params_raise = {
+        K.CB: {
+            K.KIND: [''],
+            '': {},
+        },
+    }
+
     labels = [
         "<class 'keras.src.callbacks.model_checkpoint.ModelCheckpoint'>",
         "<class 'keras.src.callbacks.csv_logger.CSVLogger'>",
     ]
+    all_log = [
+        ('main', ERROR, f'SetupCallbacks class does not have a method "{params_raise[K.CB][K.KIND][0]}" that sets the callbacks.'),
+        ('main', ERROR, f'The available callbacks are:'),
+    ]
+    for key in setup.SetupCallbacks(params=params).func:
+        all_log.append(('main', ERROR, f'{key=}'))
 
     def test(self):
         """Tests that no errors are raised.
@@ -62,22 +64,7 @@ class TestSetupCallbacks:
 
         *   The log output is correct.
         """
-        params = {
-            K.CB: {
-                K.KIND: [''],
-                '': {},
-            },
-        }
         with pytest.raises(ValueError):
-            setup.SetupCallbacks(params=params).setup()
+            setup.SetupCallbacks(params=self.params_raise).setup()
 
-        all_log = [
-            ('main', ERROR, f'SetupCallbacks class does not have a method "{params[K.CB][K.KIND][0]}" that sets the callbacks.'),
-            ('main', ERROR, f'The available callbacks are:'),
-        ]
-        func = setup.SetupCallbacks(params=self.params).func
-        print(f'{func=}')
-        for key in func:
-            all_log.append(('main', ERROR, f'{key=}'))
-
-        assert caplog.record_tuples == all_log
+        assert caplog.record_tuples == self.all_log

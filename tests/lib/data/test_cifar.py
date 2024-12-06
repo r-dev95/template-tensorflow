@@ -30,26 +30,22 @@ class TestCifar:
         K.REPEAT: 1,
     }
 
+    def _func(self, kind: str, phase: str):
+        self.params[K.DATA] = {K.KIND: kind}
+        self.params[K.DPATH] = Path(self.params[K.RESULT], kind, phase)
+        data = cifar.Cifar(params=self.params)
+        loader = data.make_loader_example()
+        for inputs, labels in loader:
+            print(f'\r{kind}-{phase}: {inputs.numpy().shape=}, {labels.numpy().shape=}')
+
     def test(self):
         """Tests that no errors are raised.
 
         *   Data can load correctly. (cifar10, cifar100)
         """
-
-        def _func(kind: str):
-            self.params[K.DATA] = {K.KIND: kind}
-            self.params[K.DPATH] = Path(self.params[K.RESULT], kind, 'train')
-            data = cifar.Cifar(params=self.params)
-            loader = data.make_loader_example()
-            for inputs, labels in loader:
-                print(f'\r{kind}-train: {inputs.numpy().shape=}, {labels.numpy().shape=}')
-            self.params[K.DPATH] = Path(self.params[K.RESULT], kind, 'test')
-            data = cifar.Cifar(params=self.params)
-            loader = data.make_loader_example()
-            for inputs, labels in loader:
-                print(f'\r{kind}-test: {inputs.numpy().shape=}, {labels.numpy().shape=}')
-
         # cifar10
-        _func(kind='cifar10')
+        self._func(kind='cifar10', phase='train')
+        self._func(kind='cifar10', phase='test')
         # cifar100
-        _func(kind='cifar100')
+        self._func(kind='cifar100', phase='train')
+        self._func(kind='cifar100', phase='test')

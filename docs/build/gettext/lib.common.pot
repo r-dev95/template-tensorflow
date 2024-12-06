@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: template-tensorflow \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-23 16:24+0900\n"
+"POT-Creation-Date: 2024-12-06 21:46+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -37,7 +37,7 @@ msgid "Parameters"
 msgstr ""
 
 #: ../../../template_tensorflow/lib/common/decorator.py:docstring of lib.common.decorator.process_time:3
-msgid "standard output function.  ``print()`` or logging (``.debug``, ``.info``, ... ) etc..."
+msgid "standard output function.  ``print`` or logging (``.debug``, ``.info``, ... ) etc..."
 msgstr ""
 
 #: ../../../template_tensorflow/lib/common/decorator.py:docstring of lib.common.decorator.process_time:3
@@ -45,7 +45,7 @@ msgid "standard output function."
 msgstr ""
 
 #: ../../../template_tensorflow/lib/common/decorator.py:docstring of lib.common.decorator.process_time:5
-msgid "``print()`` or logging (``.debug``, ``.info``, ... ) etc..."
+msgid "``print`` or logging (``.debug``, ``.info``, ... ) etc..."
 msgstr ""
 
 #: ../../../template_tensorflow/lib/common/decorator.py:docstring of lib.common.decorator.process_time:0
@@ -278,7 +278,7 @@ msgid "Sets the log level."
 msgstr ""
 
 #: ../../../template_tensorflow/lib/common/log.py:docstring of lib.common.log.SetLogging.set_level:3
-msgid "Run ``logging.Logger.setLevel()``."
+msgid "Run ``logging.Logger.setLevel``."
 msgstr ""
 
 #: ../../../template_tensorflow/lib/common/log.py:docstring of lib.common.log.SetLogging.set_stream_handler:1
@@ -286,16 +286,16 @@ msgid "Sets the stream handler configuration."
 msgstr ""
 
 #: ../../../template_tensorflow/lib/common/log.py:docstring of lib.common.log.SetLogging.set_stream_handler:3
-msgid "Set the log level. (``logging.StreamHandler.setLevel()``)"
+msgid "Set the log level. (``logging.StreamHandler.setLevel``)"
 msgstr ""
 
 #: ../../../template_tensorflow/lib/common/log.py:docstring of lib.common.log.SetLogging.set_stream_handler:5
-msgid "Set the log format. (``logging.StreamHandler.setFormatter()``)"
+msgid "Set the log format. (``logging.StreamHandler.setFormatter``)"
 msgstr ""
 
 #: ../../../template_tensorflow/lib/common/log.py:docstring of lib.common.log.SetLogging.set_file_handler:9
 #: ../../../template_tensorflow/lib/common/log.py:docstring of lib.common.log.SetLogging.set_stream_handler:7
-msgid "Add the handler. (``logging.Logger.addHandler()``)"
+msgid "Add the handler. (``logging.Logger.addHandler``)"
 msgstr ""
 
 #: ../../../template_tensorflow/lib/common/log.py:docstring of lib.common.log.SetLogging.set_file_handler:1
@@ -307,11 +307,11 @@ msgid "Set the file path, size, and number. (``logging.RotatingFileHandler``)"
 msgstr ""
 
 #: ../../../template_tensorflow/lib/common/log.py:docstring of lib.common.log.SetLogging.set_file_handler:5
-msgid "Set the log level. (``logging.RotatingFileHandler.setLevel()``)"
+msgid "Set the log level. (``logging.RotatingFileHandler.setLevel``)"
 msgstr ""
 
 #: ../../../template_tensorflow/lib/common/log.py:docstring of lib.common.log.SetLogging.set_file_handler:7
-msgid "Set the log format. (``logging.RotatingFileHandler.setFormatter()``)"
+msgid "Set the log format. (``logging.RotatingFileHandler.setFormatter``)"
 msgstr ""
 
 #: ../../source/lib.common.rst:43
@@ -343,7 +343,7 @@ msgid "model class."
 msgstr ""
 
 #: ../../../template_tensorflow/lib/common/process.py:docstring of lib.common.process.set_weight:8
-msgid "**Callable** -- weighted model class."
+msgid "**keras.models.Model** -- weighted model class."
 msgstr ""
 
 #: ../../../template_tensorflow/lib/common/process.py:docstring of lib.common.process.recursive_replace:1

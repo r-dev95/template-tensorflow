@@ -11,72 +11,35 @@ sys.path.append('../template_tensorflow/')
 from template_tensorflow.lib.common.define import ParamKey, ParamLog
 from template_tensorflow.lib.model import layer
 
+sys.path.append('../tests')
+from define import Layer
+
 K = ParamKey()
 PARAM_LOG = ParamLog()
 LOGGER = getLogger(name=PARAM_LOG.NAME)
 
 
-FLATTEN = {
-    'data_format': 'channels_last',
-}
-DENSE = {
-    'units': None,
-    'activation': None,
-    'use_bias': True,
-    'kernel_initializer': 'glorot_uniform',
-    'bias_initializer': 'zeros',
-    'kernel_regularizer': None,
-    'bias_regularizer': None,
-    'activity_regularizer': None,
-    'kernel_constraint': None,
-    'bias_constraint': None,
-    'lora_rank': None,
-}
-CONV2D = {
-    'filters': 8,
-    'kernel_size': [3, 3],
-    'strides': [1, 1],
-    'padding': 'valid',
-    'data_format': None,
-    'dilation_rate': [1, 1],
-    'groups': 1,
-    'activation': None,
-    'use_bias': True,
-    'kernel_initializer': 'glorot_uniform',
-    'bias_initializer': 'zeros',
-    'kernel_regularizer': None,
-    'bias_regularizer': None,
-    'activity_regularizer': None,
-    'kernel_constraint': None,
-    'bias_constraint': None,
-}
-MAXPOOL2D = {
-    'pool_size': [2, 2],
-    'strides': None,
-    'padding': 'valid',
-    'data_format': None,
-    'name': None,
-}
-RELU = {
-    'max_value': None,
-    'negative_slope': 0,
-    'threshold': 0,
-}
-
-
 class TestSetupLayer:
     """Tests :class:`layer.SetupLayer`.
     """
+    kinds = ['flatten', 'dense', 'conv2d', 'maxpool2d', 'relu']
     params = {
         K.LAYER: {
-            K.KIND: ['flatten', 'dense', 'conv2d', 'maxpool2d', 'relu'],
-            'flatten': FLATTEN,
-            'dense': DENSE,
-            'conv2d': CONV2D,
-            'maxpool2d': MAXPOOL2D,
-            'relu': RELU,
+            K.KIND: kinds,
+            kinds[0]: Layer.FLATTEN,
+            kinds[1]: Layer.DENSE_1,
+            kinds[2]: Layer.CONV2D,
+            kinds[3]: Layer.MAXPOOL2D,
+            kinds[4]: Layer.RELU,
         },
     }
+    params_raise = {
+        K.LAYER: {
+            K.KIND: [''],
+            '': {},
+        },
+    }
+
     labels = [
         "<class 'keras.src.layers.reshaping.flatten.Flatten'>",
         "<class 'keras.src.layers.core.dense.Dense'>",
@@ -84,6 +47,12 @@ class TestSetupLayer:
         "<class 'keras.src.layers.pooling.max_pooling2d.MaxPooling2D'>",
         "<class 'keras.src.layers.activations.relu.ReLU'>",
     ]
+    all_log = [
+        ('main', ERROR, f'SetupLayer class does not have a method "{params_raise[K.LAYER][K.KIND][0]}" that sets the model layer.'),
+        ('main', ERROR, f'The available model layer are:'),
+    ]
+    for key in layer.SetupLayer(params=params).func:
+        all_log.append(('main', ERROR, f'{key=}'))
 
     def test(self):
         """Tests that no errors are raised.
@@ -100,22 +69,7 @@ class TestSetupLayer:
 
         *   The log output is correct.
         """
-        params = {
-            K.LAYER: {
-                K.KIND: [''],
-                '': {},
-            },
-        }
         with pytest.raises(ValueError):
-            layer.SetupLayer(params=params).setup()
+            layer.SetupLayer(params=self.params_raise).setup()
 
-        all_log = [
-            ('main', ERROR, f'SetupLayer class does not have a method "{params[K.LAYER][K.KIND][0]}" that sets the model layer.'),
-            ('main', ERROR, f'The available model layer are:'),
-        ]
-        func = layer.SetupLayer(params=self.params).func
-        print(f'{func=}')
-        for key in func:
-            all_log.append(('main', ERROR, f'{key=}'))
-
-        assert caplog.record_tuples == all_log
+        assert caplog.record_tuples == self.all_log

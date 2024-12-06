@@ -25,8 +25,11 @@ class TestCheckParams:
         K.SHUFFLE: None,
         K.REPEAT: 1,
     }
-
     params_raise = {}
+
+    all_log = []
+    for key in [K.FILE_PATTERN, K.BATCH, K.SHUFFLE, K.REPEAT]:
+        all_log.append(('main', ERROR  , f'The key "{key}" for variable "params" is missing.'))
 
     def test(self):
         """Tests that no errors are raised.
@@ -44,12 +47,7 @@ class TestCheckParams:
         with pytest.raises(ValueError):
             base.check_params(params=self.params_raise)
 
-        all_log = []
-        keys = [K.FILE_PATTERN, K.BATCH, K.SHUFFLE, K.REPEAT]
-        for key in keys:
-            all_log.append(('main', ERROR  , f'The key "{key}" for variable "params" is missing.'))
-
-        assert caplog.record_tuples == all_log
+        assert caplog.record_tuples == self.all_log
 
 
 class TestBaseLoadData:

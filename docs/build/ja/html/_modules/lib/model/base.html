@@ -114,11 +114,11 @@
 <span class="k">class</span> <span class="nc">BaseModel</span><span class="p">(</span><span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Defines the base model.</span>
 
-<span class="sd">    *   You can customize :meth:`train_step` and :meth:`test_step` using ``.fit()``.</span>
-<span class="sd">    *   In eager mode, you can output calculation results using ``print()`` or logging</span>
-<span class="sd">        in :meth:`train_step`, :meth:`test_step`, or ``.call()`` of class-form models.</span>
+<span class="sd">    *   You can customize :meth:`train_step` and :meth:`test_step` using ``.fit``.</span>
+<span class="sd">    *   In eager mode, you can output calculation results using ``print`` or logging</span>
+<span class="sd">        in :meth:`train_step`, :meth:`test_step`, or ``.call`` of class-form models.</span>
 <span class="sd">    *   In graph mode, you can output too.</span>
-<span class="sd">        But you will need to implement a custom layer that ``tf.print()`` the input.</span>
+<span class="sd">        But you will need to implement a custom layer that ``tf.print`` the input.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        classes (dict[str, Callable]): class list.</span>
@@ -131,18 +131,23 @@
 
 <div class="viewcode-block" id="BaseModel.update_metrics">
 <a class="viewcode-back" href="../../../lib.model.html#lib.model.base.BaseModel.update_metrics">[ドキュメント]</a>
-    <span class="k">def</span> <span class="nf">update_metrics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">update_metrics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Updates metrics.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            data (tuple[tf.Tensor]): tuple of labels, preds, loss, and sample_weight.</span>
+<span class="sd">            data (tuple[tf.Tensor]): tuple of labels, preds, losses, and sample_weight.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict[str, float]: all metrics results.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">labels</span><span class="p">,</span> <span class="n">preds</span><span class="p">,</span> <span class="n">loss</span><span class="p">,</span> <span class="n">sample_weight</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="n">labels</span><span class="p">,</span> <span class="n">preds</span><span class="p">,</span> <span class="n">losses</span><span class="p">,</span> <span class="n">sample_weight</span> <span class="o">=</span> <span class="n">data</span>
         <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">classes</span><span class="p">[</span><span class="n">K</span><span class="o">.</span><span class="n">METRICS</span><span class="p">]:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">keras</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">MeanMetricWrapper</span><span class="p">):</span>
-                <span class="n">m</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="n">sample_weight</span><span class="o">=</span><span class="n">sample_weight</span><span class="p">)</span>
+                <span class="n">m</span><span class="p">(</span><span class="n">losses</span><span class="p">,</span> <span class="n">sample_weight</span><span class="o">=</span><span class="n">sample_weight</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">m</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">preds</span><span class="p">,</span> <span class="n">sample_weight</span><span class="o">=</span><span class="n">sample_weight</span><span class="p">)</span></div>
+                <span class="n">m</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">preds</span><span class="p">,</span> <span class="n">sample_weight</span><span class="o">=</span><span class="n">sample_weight</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">{</span><span class="n">m</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">m</span><span class="o">.</span><span class="n">result</span><span class="p">()</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">classes</span><span class="p">[</span><span class="n">K</span><span class="o">.</span><span class="n">METRICS</span><span class="p">]}</span></div>
 
 
     <span class="nd">@override</span> <span class="c1"># type: ignore  # noqa: PGH003</span>
@@ -152,10 +157,10 @@
 
 <span class="sd">        This function is decorated by ``@override`` and ``@property``.</span>
 
-<span class="sd">        *   When using ``.fit()`` or ``.evaluate()``, Metrics must be run</span>
-<span class="sd">            ``.reset_state()`` at the start of an epoch.</span>
+<span class="sd">        *   When using ``.fit`` or ``.evaluate``, Metrics must be run</span>
+<span class="sd">            ``.reset_state`` at the start of an epoch.</span>
 <span class="sd">            By setting the return value of this method to a list of all metrics, it will</span>
-<span class="sd">            automatically run ``.reset_state()``.</span>
+<span class="sd">            automatically run ``.reset_state``.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            list[Callable]: list of metrics classes.</span>
@@ -186,20 +191,20 @@
 
         <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">GradientTape</span><span class="p">()</span> <span class="k">as</span> <span class="n">tape</span><span class="p">:</span>
             <span class="n">preds</span> <span class="o">=</span> <span class="bp">self</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">inputs</span><span class="p">,</span> <span class="n">training</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-            <span class="n">loss</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">classes</span><span class="p">[</span><span class="n">K</span><span class="o">.</span><span class="n">LOSS</span><span class="p">](</span>
+            <span class="n">losses</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">classes</span><span class="p">[</span><span class="n">K</span><span class="o">.</span><span class="n">LOSS</span><span class="p">](</span>
                 <span class="n">y_true</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span>
                 <span class="n">y_pred</span><span class="o">=</span><span class="n">preds</span><span class="p">,</span>
                 <span class="n">sample_weight</span><span class="o">=</span><span class="n">sample_weight</span><span class="p">,</span>
             <span class="p">)</span>
         <span class="n">grads</span> <span class="o">=</span> <span class="n">tape</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span>
-            <span class="n">target</span><span class="o">=</span><span class="n">loss</span><span class="p">,</span>
+            <span class="n">target</span><span class="o">=</span><span class="n">losses</span><span class="p">,</span>
             <span class="n">sources</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">trainable_variables</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">classes</span><span class="p">[</span><span class="n">K</span><span class="o">.</span><span class="n">OPT</span><span class="p">]</span><span class="o">.</span><span class="n">apply_gradients</span><span class="p">(</span>
             <span class="nb">zip</span><span class="p">(</span><span class="n">grads</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">trainable_variables</span><span class="p">),</span>
         <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">update_metrics</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">preds</span><span class="p">,</span> <span class="n">loss</span><span class="p">,</span> <span class="n">sample_weight</span><span class="p">))</span>
-        <span class="k">return</span> <span class="p">{</span><span class="n">m</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">m</span><span class="o">.</span><span class="n">result</span><span class="p">()</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">classes</span><span class="p">[</span><span class="n">K</span><span class="o">.</span><span class="n">METRICS</span><span class="p">]}</span></div>
+        <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_metrics</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">preds</span><span class="p">,</span> <span class="n">losses</span><span class="p">,</span> <span class="n">sample_weight</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">res</span></div>
 
 
 <div class="viewcode-block" id="BaseModel.test_step">
@@ -223,13 +228,13 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">inputs</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">sample_weight</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">unpack_x_y_sample_weight</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
         <span class="n">preds</span> <span class="o">=</span> <span class="bp">self</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">inputs</span><span class="p">,</span> <span class="n">training</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-        <span class="n">loss</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">classes</span><span class="p">[</span><span class="n">K</span><span class="o">.</span><span class="n">LOSS</span><span class="p">](</span>
+        <span class="n">losses</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">classes</span><span class="p">[</span><span class="n">K</span><span class="o">.</span><span class="n">LOSS</span><span class="p">](</span>
             <span class="n">y_true</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span>
             <span class="n">y_pred</span><span class="o">=</span><span class="n">preds</span><span class="p">,</span>
             <span class="n">sample_weight</span><span class="o">=</span><span class="n">sample_weight</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">update_metrics</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">preds</span><span class="p">,</span> <span class="n">loss</span><span class="p">,</span> <span class="n">sample_weight</span><span class="p">))</span>
-        <span class="k">return</span> <span class="p">{</span><span class="n">m</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">m</span><span class="o">.</span><span class="n">result</span><span class="p">()</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">classes</span><span class="p">[</span><span class="n">K</span><span class="o">.</span><span class="n">METRICS</span><span class="p">]}</span></div>
+        <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_metrics</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">preds</span><span class="p">,</span> <span class="n">losses</span><span class="p">,</span> <span class="n">sample_weight</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">res</span></div>
 </div>
 
 </pre></div>

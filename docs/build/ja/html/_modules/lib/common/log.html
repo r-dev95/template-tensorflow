@@ -112,7 +112,7 @@
     <span class="k">def</span> <span class="nf">set_level</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Sets the log level.</span>
 
-<span class="sd">        *   Run ``logging.Logger.setLevel()``.</span>
+<span class="sd">        *   Run ``logging.Logger.setLevel``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">param</span><span class="o">.</span><span class="n">LEVEL</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">param</span><span class="o">.</span><span class="n">SH</span><span class="p">])</span></div>
 
@@ -123,11 +123,11 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Sets the stream handler configuration.</span>
 
 <span class="sd">        *   Set the log level.</span>
-<span class="sd">            (``logging.StreamHandler.setLevel()``)</span>
+<span class="sd">            (``logging.StreamHandler.setLevel``)</span>
 <span class="sd">        *   Set the log format.</span>
-<span class="sd">            (``logging.StreamHandler.setFormatter()``)</span>
+<span class="sd">            (``logging.StreamHandler.setFormatter``)</span>
 <span class="sd">        *   Add the handler.</span>
-<span class="sd">            (``logging.Logger.addHandler()``)</span>
+<span class="sd">            (``logging.Logger.addHandler``)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">sh</span> <span class="o">=</span> <span class="n">StreamHandler</span><span class="p">()</span>
         <span class="n">sh</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">param</span><span class="o">.</span><span class="n">LEVEL</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">param</span><span class="o">.</span><span class="n">SH</span><span class="p">])</span>
@@ -143,11 +143,11 @@
 <span class="sd">        *   Set the file path, size, and number.</span>
 <span class="sd">            (``logging.RotatingFileHandler``)</span>
 <span class="sd">        *   Set the log level.</span>
-<span class="sd">            (``logging.RotatingFileHandler.setLevel()``)</span>
+<span class="sd">            (``logging.RotatingFileHandler.setLevel``)</span>
 <span class="sd">        *   Set the log format.</span>
-<span class="sd">            (``logging.RotatingFileHandler.setFormatter()``)</span>
+<span class="sd">            (``logging.RotatingFileHandler.setFormatter``)</span>
 <span class="sd">        *   Add the handler.</span>
-<span class="sd">            (``logging.Logger.addHandler()``)</span>
+<span class="sd">            (``logging.Logger.addHandler``)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">fh</span> <span class="o">=</span> <span class="n">RotatingFileHandler</span><span class="p">(</span>
             <span class="n">filename</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">param</span><span class="o">.</span><span class="n">FPATH</span><span class="p">,</span>

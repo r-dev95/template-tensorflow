@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: template-tensorflow \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-23 15:36+0900\n"
+"POT-Creation-Date: 2024-12-06 21:46+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -61,9 +61,10 @@ msgstr "コールバックを設定する。"
 msgid ""
 "If you want to use some other settings, implement it as a method of this "
 "class. If you implemented, set the name as the ``func`` key in "
-"``__init__()`` and the method as the value."
-msgstr "他の設定を使用したい場合、このクラスのメソッドとして実装する。"
-"実装した場合、``__init__()`` の ``func`` のキーに名前を、値にメソッドを実装すること。"
+"``__init__`` and the method as the value."
+msgstr ""
+"他の設定を使用したい場合、このクラスのメソッドとして実装する。実装した場合、``__init__`` の ``func`` "
+"のキーに名前を、値にメソッドを実装すること。"
 
 #: lib.callbacks.setup.SetupCallbacks.csv
 #: lib.callbacks.setup.SetupCallbacks.mcp
@@ -84,3 +85,4 @@ msgstr "``keras.callbacks.ModelCheckpoint`` を設定する。"
 #: lib.callbacks.setup.SetupCallbacks.csv:1 of
 msgid "Sets ``keras.callbacks.CSVLogger``."
 msgstr "``keras.callbacks.CSVLogger`` を設定する。"
+

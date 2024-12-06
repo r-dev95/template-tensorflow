@@ -78,10 +78,13 @@ class TestWriteExmaple:
             K.KIND: [],
         },
         K.BATCH: 1,
-        K.FILE_PATTERN: ['result/tests.tfr'],
         K.SHUFFLE: None,
+        K.FILE_PATTERN: 'result/tests.tfr',
         K.REPEAT: 1,
     }
+
+    inputs = [[1., 2.], [3., 4.]]
+    labels = [0., 1.]
 
     @pytest.fixture(scope='class')
     def proc(self):
@@ -91,11 +94,16 @@ class TestWriteExmaple:
         base.BaseLoadData.input_shape = [2]
         base.BaseLoadData.label_shape = [1]
 
-        fpath = Path(self.params[K.FILE_PATTERN][0])
+        fpath = Path(self.params[K.FILE_PATTERN])
         fpath.parent.mkdir(parents=True, exist_ok=True)
-        inputs = [[1., 2.], [3., 4.]]
-        labels = [0., 1.]
-        yield fpath, inputs, labels
+        args = dataset.ParamDataset(
+            tmp_dpath=None,
+            dpath=Path(fpath.parent, 'tests.tfr'),
+            loader=None,
+            inputs=self.inputs,
+            labels=self.labels,
+        )
+        yield args
         shutil.rmtree(fpath.parent)
 
     def test(self, proc, mocker: MockerFixture):
@@ -105,14 +113,13 @@ class TestWriteExmaple:
         *   The :class:`base.BaseLoadData` is also being tested simultaneously in
             loading tests.
         """
-        fpath, inputs, labels = proc
-        dataset.write_exmaple(fpath=fpath, inputs=inputs, labels=labels)
+        dataset.write_exmaple(args=proc)
 
         mocker.patch.object(base.BaseLoadData, 'set_model_il_shape', return_value=None)
         loader = base.BaseLoadData(params=self.params).make_loader_example()
         for i, (x, y) in enumerate(loader):
-            assert (inputs[i] == x.numpy()).all()
-            assert (labels[i] == y.numpy()).all()
+            assert (self.inputs[i] == x.numpy()).all()
+            assert (self.labels[i] == y.numpy()).all()
 
 
 class TestDataset:
@@ -129,34 +136,14 @@ class TestDataset:
         """
         dataset.main(params=self.params)
 
-        # mnist
-        fpath = Path(self.params[K.RESULT], 'mnist', 'train', 'train.tfr')
-        assert fpath.is_file()
-        assert fpath.stat().st_size > 0
-        fpath = Path(self.params[K.RESULT], 'mnist', 'test', 'test.tfr')
-        assert fpath.is_file()
-        assert fpath.stat().st_size > 0
+        kinds = ['mnist', 'fashion_mnist', 'cifar10', 'cifar100']
+        for kind in kinds:
+            # training data
+            fpath = Path(self.params[K.RESULT], kind, 'train', 'train.tfr')
+            assert fpath.is_file()
+            assert fpath.stat().st_size > 0
 
-        # fashion_mnist
-        fpath = Path(self.params[K.RESULT], 'fashion_mnist', 'train', 'train.tfr')
-        assert fpath.is_file()
-        assert fpath.stat().st_size > 0
-        fpath = Path(self.params[K.RESULT], 'fashion_mnist', 'test', 'test.tfr')
-        assert fpath.is_file()
-        assert fpath.stat().st_size > 0
-
-        # cifar10
-        fpath = Path(self.params[K.RESULT], 'cifar10', 'train', 'train.tfr')
-        assert fpath.is_file()
-        assert fpath.stat().st_size > 0
-        fpath = Path(self.params[K.RESULT], 'cifar10', 'test', 'test.tfr')
-        assert fpath.is_file()
-        assert fpath.stat().st_size > 0
-
-        # cifar100
-        fpath = Path(self.params[K.RESULT], 'cifar100', 'train', 'train.tfr')
-        assert fpath.is_file()
-        assert fpath.stat().st_size > 0
-        fpath = Path(self.params[K.RESULT], 'cifar100', 'test', 'test.tfr')
-        assert fpath.is_file()
-        assert fpath.stat().st_size > 0
+            # test data
+            fpath = Path(self.params[K.RESULT], kind, 'test', 'test.tfr')
+            assert fpath.is_file()
+            assert fpath.stat().st_size > 0

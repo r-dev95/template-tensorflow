@@ -130,9 +130,9 @@
 <dd><p>ベースクラス: <code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></p>
 <p>ベースモデルを定義する。</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">.fit()</span></code> を使用しつつ、<a class="reference internal" href="#lib.model.base.BaseModel.train_step" title="lib.model.base.BaseModel.train_step"><code class="xref py py-meth docutils literal notranslate"><span class="pre">train_step()</span></code></a> と <a class="reference internal" href="#lib.model.base.BaseModel.test_step" title="lib.model.base.BaseModel.test_step"><code class="xref py py-meth docutils literal notranslate"><span class="pre">test_step()</span></code></a> をカスタマイズできる。</p></li>
-<li><p>eagerモードの際、<a class="reference internal" href="#lib.model.base.BaseModel.train_step" title="lib.model.base.BaseModel.train_step"><code class="xref py py-meth docutils literal notranslate"><span class="pre">train_step()</span></code></a> や <a class="reference internal" href="#lib.model.base.BaseModel.test_step" title="lib.model.base.BaseModel.test_step"><code class="xref py py-meth docutils literal notranslate"><span class="pre">test_step()</span></code></a>、クラス形式のモデルの <code class="docutils literal notranslate"><span class="pre">.call()</span></code> 内で <code class="docutils literal notranslate"><span class="pre">print()</span></code> やlogging機能を使用して、計算結果を出力できる。</p></li>
-<li><p>graphモードでも出力できるが、入力を <code class="docutils literal notranslate"><span class="pre">tf.print()</span></code> するようなカスタムレイヤーを実装するなど工夫が必要である。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">.fit</span></code> を使用しつつ、<a class="reference internal" href="#lib.model.base.BaseModel.train_step" title="lib.model.base.BaseModel.train_step"><code class="xref py py-meth docutils literal notranslate"><span class="pre">train_step()</span></code></a> と <a class="reference internal" href="#lib.model.base.BaseModel.test_step" title="lib.model.base.BaseModel.test_step"><code class="xref py py-meth docutils literal notranslate"><span class="pre">test_step()</span></code></a> をカスタマイズできる。</p></li>
+<li><p>eagerモードの際、<a class="reference internal" href="#lib.model.base.BaseModel.train_step" title="lib.model.base.BaseModel.train_step"><code class="xref py py-meth docutils literal notranslate"><span class="pre">train_step()</span></code></a> や <a class="reference internal" href="#lib.model.base.BaseModel.test_step" title="lib.model.base.BaseModel.test_step"><code class="xref py py-meth docutils literal notranslate"><span class="pre">test_step()</span></code></a>、クラス形式のモデルの <code class="docutils literal notranslate"><span class="pre">.call</span></code> 内で <code class="docutils literal notranslate"><span class="pre">print</span></code> やlogging機能を使用して、計算結果を出力できる。</p></li>
+<li><p>graphモードでも出力できるが、入力を <code class="docutils literal notranslate"><span class="pre">tf.print</span></code> するようなカスタムレイヤーを実装するなど工夫が必要である。</p></li>
 </ul>
 <dl class="field-list simple">
 <dt class="field-odd">パラメータ<span class="colon">:</span></dt>
@@ -147,6 +147,9 @@
 <dt class="field-odd">パラメータ<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>data</strong> (<em>tuple</em><em>[</em><em>tf.Tensor</em><em>]</em>) -- ラベルと予測、誤差、入力ごとの重みのタプル。</p>
 </dd>
+<dt class="field-even">戻り値<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>dict[str, float]</strong> -- すべてのメトリクスの結果</p>
+</dd>
 </dl>
 </dd></dl>
 
@@ -156,7 +159,7 @@
 <dd><p>メトリクスクラスのリストを返す。</p>
 <p><code class="docutils literal notranslate"><span class="pre">&#64;override</span></code> と <code class="docutils literal notranslate"><span class="pre">&#64;property</span></code> でデコレートされている。</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">.fit()</span></code> や <code class="docutils literal notranslate"><span class="pre">.evaluate()</span></code> を使用する際、エポックの開始時にメトリクスは <code class="docutils literal notranslate"><span class="pre">.reset_state()</span></code> を実行しなければならない。本メソッドの戻り値にすべてのメトリクスのリストを設定することで自動で <code class="docutils literal notranslate"><span class="pre">.reset_state()</span></code> が実行される。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">.fit</span></code> や <code class="docutils literal notranslate"><span class="pre">.evaluate</span></code> を使用する際、エポックの開始時にメトリクスは <code class="docutils literal notranslate"><span class="pre">.reset_state</span></code> を実行しなければならない。本メソッドの戻り値にすべてのメトリクスのリストを設定することで自動で <code class="docutils literal notranslate"><span class="pre">.reset_state</span></code> が実行される。</p></li>
 </ul>
 <dl class="field-list simple">
 <dt class="field-odd">戻り値<span class="colon">:</span></dt>
@@ -232,7 +235,7 @@
 <dd><p>ベースクラス: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>モデルレイヤーを設定する。</p>
 <ul class="simple">
-<li><p>他の設定を使用したい場合、このクラスのメソッドとして実装する。実装した場合、<code class="docutils literal notranslate"><span class="pre">__init__()</span></code> の <code class="docutils literal notranslate"><span class="pre">func</span></code> のキーに名前を、値にメソッドを実装すること。</p></li>
+<li><p>他の設定を使用したい場合、このクラスのメソッドとして実装する。実装した場合、<code class="docutils literal notranslate"><span class="pre">__init__</span></code> の <code class="docutils literal notranslate"><span class="pre">func</span></code> のキーに名前を、値にメソッドを実装すること。</p></li>
 </ul>
 <dl class="field-list simple">
 <dt class="field-odd">パラメータ<span class="colon">:</span></dt>
@@ -267,7 +270,7 @@
 <dd><p><code class="docutils literal notranslate"><span class="pre">keras.layers.Dense</span></code> を設定する。</p>
 <dl class="field-list simple">
 <dt class="field-odd">戻り値<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>Callable</strong> -- <code class="docutils literal notranslate"><span class="pre">keras.layers.Dense</span></code> クラス</p>
+<dd class="field-odd"><p><strong>Callable</strong> -- モデルレイヤークラス</p>
 </dd>
 </dl>
 </dd></dl>
@@ -331,7 +334,7 @@
 <dd><p>ベースクラス: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>モデルを設定する。</p>
 <ul class="simple">
-<li><p>他の設定を使用したい場合、このクラスのメソッドとして実装する。実装した場合、<code class="docutils literal notranslate"><span class="pre">__init__()</span></code> の <code class="docutils literal notranslate"><span class="pre">func</span></code> のキーに名前を、値にメソッドを実装すること。</p></li>
+<li><p>他の設定を使用したい場合、このクラスのメソッドとして実装する。実装した場合、<code class="docutils literal notranslate"><span class="pre">__init__</span></code> の <code class="docutils literal notranslate"><span class="pre">func</span></code> のキーに名前を、値にメソッドを実装すること。</p></li>
 </ul>
 <dl class="field-list simple">
 <dt class="field-odd">パラメータ<span class="colon">:</span></dt>
@@ -393,7 +396,7 @@
 </dl>
 <div class="admonition attention">
 <p class="admonition-title">注意</p>
-<p>クラス形式モデルの構造は入力が与えられるまで定義されないため、<code class="docutils literal notranslate"><span class="pre">.summary()</span></code> が使用できない。同様に学習した重みを適用することができないため、<code class="docutils literal notranslate"><span class="pre">__init__()</span></code> でダミーデータを与える。</p>
+<p>クラス形式モデルの構造は入力が与えられるまで定義されないため、<code class="docutils literal notranslate"><span class="pre">.summary</span></code> が使用できない。同様に学習した重みを適用することができないため、<code class="docutils literal notranslate"><span class="pre">__init__</span></code> でダミーデータを与える。</p>
 </div>
 <dl class="py method">
 <dt class="sig sig-object py" id="lib.model.simple.SimpleModel.call">

@@ -21,7 +21,6 @@ class TestJson:
     """Tests :func:`file.dump_json` and :func:`file.load_json`.
     """
     params = {
-        K.EAGER: False,
         K.SEED: 0,
         K.RESULT: 'result',
         K.TRAIN: None,
@@ -62,7 +61,6 @@ class TestYaml:
     """Tests :func:`file.dump_yaml` and :func:`file.load_yaml`.
     """
     params = {
-        K.EAGER: False,
         K.SEED: 0,
         K.RESULT: 'result',
         K.TRAIN: None,
@@ -103,7 +101,6 @@ class TestToml:
     """Tests :func:`file.dump_toml` and :func:`file.load_toml`.
     """
     params = {
-        K.EAGER: False,
         K.SEED: 0,
         K.RESULT: 'result',
         K.TRAIN: None,

@@ -130,7 +130,7 @@
 <dd><p>処理時間を表示する。</p>
 <dl class="field-list simple">
 <dt class="field-odd">パラメータ<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>print_func</strong> (<em>Callable</em>) -- 標準出力の関数。<code class="docutils literal notranslate"><span class="pre">print()</span></code> やlogging機能(<code class="docutils literal notranslate"><span class="pre">.debug</span></code>, <code class="docutils literal notranslate"><span class="pre">.info</span></code>, ... )など</p>
+<dd class="field-odd"><p><strong>print_func</strong> (<em>Callable</em>) -- 標準出力の関数。<code class="docutils literal notranslate"><span class="pre">print</span></code> やlogging機能(<code class="docutils literal notranslate"><span class="pre">.debug</span></code>, <code class="docutils literal notranslate"><span class="pre">.info</span></code>, ... )など</p>
 </dd>
 <dt class="field-even">戻り値<span class="colon">:</span></dt>
 <dd class="field-even"><p><strong>Callable</strong> -- 本関数内の <code class="docutils literal notranslate"><span class="pre">_process_time</span></code> 関数</p>
@@ -227,7 +227,7 @@
 
 <dl class="py class">
 <dt class="sig sig-object py" id="lib.common.define.ParamKey">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ParamKey</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">LEVEL</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'level'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">EAGER</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'eager'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">SEED</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'seed'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">PARAM</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'param'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">TRAIN</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'train'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">VALID</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'valid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">EVAL</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'eval'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">RESULT</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'result'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">EPOCHS</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'epochs'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">FPATH</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'fpath'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">FILES</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'files'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">BATCH</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'batch'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">BATCH_TRAIN</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'batch_train'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">BATCH_VALID</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'batch_valid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">SHUFFLE</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'shuffle'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">REPEAT</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'repeat'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">DATA</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'data'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">MODEL</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'model'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">LAYER</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'layer'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">OPT</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'opt'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">LOSS</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'loss'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">METRICS</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'metrics'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">CB</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cb'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">PROCESS</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'process'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">KIND</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'kind'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">CLASSES</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'classes'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">INPUT_SHAPE</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'input_shape'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lib/common/define.html#ParamKey"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#lib.common.define.ParamKey" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ParamKey</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">LEVEL</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'level'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">EAGER</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'eager'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">SEED</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'seed'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">PARAM</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'param'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">RESULT</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'result'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">TRAIN</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'train'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">VALID</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'valid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">EVAL</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'eval'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">BATCH</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'batch'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">BATCH_TRAIN</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'batch_train'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">BATCH_VALID</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'batch_valid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">SHUFFLE</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'shuffle'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">REPEAT</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'repeat'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">EPOCHS</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'epochs'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">DATA</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'data'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">PROCESS</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'process'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">MODEL</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'model'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">LAYER</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'layer'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">OPT</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'opt'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">LOSS</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'loss'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">METRICS</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'metrics'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">CB</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cb'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">KIND</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'kind'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">DPATH</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'dpath'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">FILE_PATTERN</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'file_pattern'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">CLASSES</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'classes'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">INPUT_SHAPE</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'input_shape'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lib/common/define.html#ParamKey"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#lib.common.define.ParamKey" title="Link to this definition"></a></dt>
 <dd><p>ベースクラス: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>主要パラメータの辞書キーを定義する。</p>
 <dl class="py attribute">
@@ -251,6 +251,11 @@
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="lib.common.define.ParamKey.RESULT">
+<span class="sig-name descname"><span class="pre">RESULT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'result'</span></em><a class="headerlink" href="#lib.common.define.ParamKey.RESULT" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="lib.common.define.ParamKey.TRAIN">
 <span class="sig-name descname"><span class="pre">TRAIN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'train'</span></em><a class="headerlink" href="#lib.common.define.ParamKey.TRAIN" title="Link to this definition"></a></dt>
 <dd></dd></dl>
@@ -263,26 +268,6 @@
 <dl class="py attribute">
 <dt class="sig sig-object py" id="lib.common.define.ParamKey.EVAL">
 <span class="sig-name descname"><span class="pre">EVAL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'eval'</span></em><a class="headerlink" href="#lib.common.define.ParamKey.EVAL" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="lib.common.define.ParamKey.RESULT">
-<span class="sig-name descname"><span class="pre">RESULT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'result'</span></em><a class="headerlink" href="#lib.common.define.ParamKey.RESULT" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="lib.common.define.ParamKey.EPOCHS">
-<span class="sig-name descname"><span class="pre">EPOCHS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'epochs'</span></em><a class="headerlink" href="#lib.common.define.ParamKey.EPOCHS" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="lib.common.define.ParamKey.FPATH">
-<span class="sig-name descname"><span class="pre">FPATH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'fpath'</span></em><a class="headerlink" href="#lib.common.define.ParamKey.FPATH" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="lib.common.define.ParamKey.FILES">
-<span class="sig-name descname"><span class="pre">FILES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'files'</span></em><a class="headerlink" href="#lib.common.define.ParamKey.FILES" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -311,8 +296,18 @@
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="lib.common.define.ParamKey.EPOCHS">
+<span class="sig-name descname"><span class="pre">EPOCHS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'epochs'</span></em><a class="headerlink" href="#lib.common.define.ParamKey.EPOCHS" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="lib.common.define.ParamKey.DATA">
 <span class="sig-name descname"><span class="pre">DATA</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'data'</span></em><a class="headerlink" href="#lib.common.define.ParamKey.DATA" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="lib.common.define.ParamKey.PROCESS">
+<span class="sig-name descname"><span class="pre">PROCESS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'process'</span></em><a class="headerlink" href="#lib.common.define.ParamKey.PROCESS" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -346,13 +341,18 @@
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="lib.common.define.ParamKey.PROCESS">
-<span class="sig-name descname"><span class="pre">PROCESS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'process'</span></em><a class="headerlink" href="#lib.common.define.ParamKey.PROCESS" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="lib.common.define.ParamKey.KIND">
+<span class="sig-name descname"><span class="pre">KIND</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'kind'</span></em><a class="headerlink" href="#lib.common.define.ParamKey.KIND" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="lib.common.define.ParamKey.KIND">
-<span class="sig-name descname"><span class="pre">KIND</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'kind'</span></em><a class="headerlink" href="#lib.common.define.ParamKey.KIND" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="lib.common.define.ParamKey.DPATH">
+<span class="sig-name descname"><span class="pre">DPATH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'dpath'</span></em><a class="headerlink" href="#lib.common.define.ParamKey.DPATH" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="lib.common.define.ParamKey.FILE_PATTERN">
+<span class="sig-name descname"><span class="pre">FILE_PATTERN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'file_pattern'</span></em><a class="headerlink" href="#lib.common.define.ParamKey.FILE_PATTERN" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -581,7 +581,7 @@
 <span class="sig-name descname"><span class="pre">set_level</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/lib/common/log.html#SetLogging.set_level"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#lib.common.log.SetLogging.set_level" title="Link to this definition"></a></dt>
 <dd><p>ログレベルを設定する。</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">logging.Logger.setLevel()</span></code> を実行する。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">logging.Logger.setLevel</span></code> を実行する。</p></li>
 </ul>
 </dd></dl>
 
@@ -590,9 +590,9 @@
 <span class="sig-name descname"><span class="pre">set_stream_handler</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/lib/common/log.html#SetLogging.set_stream_handler"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#lib.common.log.SetLogging.set_stream_handler" title="Link to this definition"></a></dt>
 <dd><p>ストリームハンドラの設定を行う。</p>
 <ul class="simple">
-<li><p>ログレベルを設定する。(<code class="docutils literal notranslate"><span class="pre">logging.StreamHandler.setLevel()</span></code>)</p></li>
-<li><p>ログフォーマットを設定する。(<code class="docutils literal notranslate"><span class="pre">logging.StreamHandler.setFormatter()</span></code>)</p></li>
-<li><p>ハンドラを追加する。(<code class="docutils literal notranslate"><span class="pre">logging.Logger.addHandler()</span></code>)</p></li>
+<li><p>ログレベルを設定する。(<code class="docutils literal notranslate"><span class="pre">logging.StreamHandler.setLevel</span></code>)</p></li>
+<li><p>ログフォーマットを設定する。(<code class="docutils literal notranslate"><span class="pre">logging.StreamHandler.setFormatter</span></code>)</p></li>
+<li><p>ハンドラを追加する。(<code class="docutils literal notranslate"><span class="pre">logging.Logger.addHandler</span></code>)</p></li>
 </ul>
 </dd></dl>
 
@@ -602,9 +602,9 @@
 <dd><p>ファイルハンドラの設定を行う。</p>
 <ul class="simple">
 <li><p>ファイルパスとファイルサイズ、ファイル数を設定する。(<code class="docutils literal notranslate"><span class="pre">logging.RotatingFileHandler</span></code>)</p></li>
-<li><p>ログレベルを設定する。(<code class="docutils literal notranslate"><span class="pre">logging.RotatingFileHandler.setLevel()</span></code>)</p></li>
-<li><p>ログフォーマットを設定する。(<code class="docutils literal notranslate"><span class="pre">logging.RotatingFileHandler.setFormatter()</span></code>)</p></li>
-<li><p>ハンドラを追加する。(<code class="docutils literal notranslate"><span class="pre">logging.Logger.addHandler()</span></code>)</p></li>
+<li><p>ログレベルを設定する。(<code class="docutils literal notranslate"><span class="pre">logging.RotatingFileHandler.setLevel</span></code>)</p></li>
+<li><p>ログフォーマットを設定する。(<code class="docutils literal notranslate"><span class="pre">logging.RotatingFileHandler.setFormatter</span></code>)</p></li>
+<li><p>ハンドラを追加する。(<code class="docutils literal notranslate"><span class="pre">logging.Logger.addHandler</span></code>)</p></li>
 </ul>
 </dd></dl>
 
@@ -633,11 +633,11 @@
 <dt class="field-odd">パラメータ<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>params</strong> (<em>dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) -- パラメータ</p></li>
-<li><p><strong>model</strong> (<em>Callable</em>) -- モデルクラス</p></li>
+<li><p><strong>model</strong> (<em>keras.models.Model</em>) -- モデルクラス</p></li>
 </ul>
 </dd>
 <dt class="field-even">戻り値<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>Callable</strong> -- 重みを適用したモデルクラス</p>
+<dd class="field-even"><p><strong>keras.models.Model</strong> -- 重みを適用したモデルクラス</p>
 </dd>
 </dl>
 </dd></dl>

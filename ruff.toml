@@ -99,6 +99,7 @@ convention = "google"
     "E221",
     "E501",
     "F541",
+    "I001",
     "INP001",
     "N806",
     "NPY002",
@@ -108,4 +109,8 @@ convention = "google"
     "RUF012",
     "S101",
     "S311",
+]
+"tests/define.py" = [
+    "E302",
+    "E305",
 ]

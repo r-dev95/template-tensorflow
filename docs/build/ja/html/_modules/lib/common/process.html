@@ -75,15 +75,12 @@
   <h1>lib.common.process のソースコード</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;This is the module that defines the common process.</span>
 <span class="sd">&quot;&quot;&quot;</span>
-
-<span class="kn">import</span> <span class="nn">csv</span>
-<span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Callable</span>
 <span class="kn">from</span> <span class="nn">logging</span> <span class="kn">import</span> <span class="n">getLogger</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
 
 <span class="kn">import</span> <span class="nn">keras</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 
 <span class="kn">from</span> <span class="nn">lib.common.define</span> <span class="kn">import</span> <span class="n">ParamFileName</span><span class="p">,</span> <span class="n">ParamKey</span><span class="p">,</span> <span class="n">ParamLog</span>
@@ -109,24 +106,22 @@
 
 <div class="viewcode-block" id="set_weight">
 <a class="viewcode-back" href="../../../lib.common.html#lib.common.process.set_weight">[ドキュメント]</a>
-<span class="k">def</span> <span class="nf">set_weight</span><span class="p">(</span><span class="n">params</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">model</span><span class="p">:</span> <span class="n">Callable</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">:</span>
+<span class="k">def</span> <span class="nf">set_weight</span><span class="p">(</span><span class="n">params</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">model</span><span class="p">:</span> <span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Sets the model weight.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        params (dict[str, Any]): parameters.</span>
-<span class="sd">        model (Callable): model class.</span>
+<span class="sd">        model (keras.models.Model): model class.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        Callable: weighted model class.</span>
+<span class="sd">        keras.models.Model: weighted model class.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">fpath</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="n">K</span><span class="o">.</span><span class="n">RESULT</span><span class="p">],</span> <span class="n">PARAM_FILE_NAME</span><span class="o">.</span><span class="n">LOSS</span><span class="p">)</span>
-    <span class="k">with</span> <span class="n">fpath</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">reader</span><span class="p">)</span>
-    <span class="n">val_loss</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)[:,</span> <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s1">&#39;val_loss&#39;</span><span class="p">)]</span>
-    <span class="n">idx_min</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">val_loss</span><span class="p">)</span>
-    <span class="n">fpath</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="n">K</span><span class="o">.</span><span class="n">RESULT</span><span class="p">])</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;*.weights.h5&#39;</span><span class="p">))[</span><span class="n">idx_min</span><span class="p">]</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">fpath</span><span class="p">)</span>
+    <span class="n">idx_min</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;val_loss&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">argmin</span><span class="p">())</span>
+    <span class="n">idx_min</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx_min</span><span class="p">][</span><span class="s1">&#39;epoch&#39;</span><span class="p">])</span>
 
+    <span class="n">fpath</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="n">K</span><span class="o">.</span><span class="n">RESULT</span><span class="p">])</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;*.weights.h5&#39;</span><span class="p">))[</span><span class="n">idx_min</span><span class="p">]</span>
     <span class="n">model</span><span class="o">.</span><span class="n">load_weights</span><span class="p">(</span><span class="n">fpath</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">model</span></div>
 

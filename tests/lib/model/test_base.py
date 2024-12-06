@@ -24,8 +24,11 @@ class TestCheckParams:
         K.LOSS: '',
         K.METRICS: '',
     }
-
     classes_raise = {}
+
+    all_log = []
+    for key in [K.OPT, K.LOSS, K.METRICS]:
+        all_log.append(('main', ERROR  , f'The key "{key}" for variable "classes" is missing.'))
 
     def test(self):
         """Tests that no errors are raised.
@@ -41,12 +44,7 @@ class TestCheckParams:
         with pytest.raises(ValueError):
             base.check_params(classes=self.classes_raise)
 
-        all_log = []
-        keys = [K.OPT, K.LOSS, K.METRICS]
-        for key in keys:
-            all_log.append(('main', ERROR  , f'The key "{key}" for variable "classes" is missing.'))
-
-        assert caplog.record_tuples == all_log
+        assert caplog.record_tuples == self.all_log
 
 
 class TestBaseModel:

@@ -121,7 +121,7 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Sets up the model layer.</span>
 
 <span class="sd">    *   If you want to use some other settings, implement it as a method of this class.</span>
-<span class="sd">        If you implemented, set the name as the ``func`` key in ``__init__()`` and the</span>
+<span class="sd">        If you implemented, set the name as the ``func`` key in ``__init__`` and the</span>
 <span class="sd">        method as the value.</span>
 
 <span class="sd">    Args:</span>
@@ -174,7 +174,7 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Sets ``keras.layers.Dense``.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            Callable: ``keras.layers.Dense`` class.</span>
+<span class="sd">            Callable: model layer class.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">layer</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span>
             <span class="n">units</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_params</span><span class="p">[</span><span class="s1">&#39;units&#39;</span><span class="p">],</span>

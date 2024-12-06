@@ -72,7 +72,7 @@
            <div itemprop="articleBody">
              
   <h1>Source code for lib.data.base</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;This is the module load and write data.</span>
+<span></span><span class="sd">&quot;&quot;&quot;This is the module load data.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Callable</span>
@@ -97,8 +97,14 @@
 <span class="sd">    Args:</span>
 <span class="sd">        params (dict[str, Any]): parameters.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">params</span><span class="p">[</span><span class="n">K</span><span class="o">.</span><span class="n">REPEAT</span><span class="p">]</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">EPOCHS</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-    <span class="n">params</span><span class="p">[</span><span class="n">K</span><span class="o">.</span><span class="n">SHUFFLE</span><span class="p">]</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">SHUFFLE</span><span class="p">)</span></div>
+    <span class="n">error</span> <span class="o">=</span> <span class="kc">False</span> <span class="c1"># error: True</span>
+    <span class="n">keys</span> <span class="o">=</span> <span class="p">[</span><span class="n">K</span><span class="o">.</span><span class="n">FILE_PATTERN</span><span class="p">,</span> <span class="n">K</span><span class="o">.</span><span class="n">BATCH</span><span class="p">,</span> <span class="n">K</span><span class="o">.</span><span class="n">SHUFFLE</span><span class="p">,</span> <span class="n">K</span><span class="o">.</span><span class="n">REPEAT</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">params</span><span class="p">:</span>
+            <span class="n">error</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">LOGGER</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The key &quot;</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s1">&quot; for variable &quot;params&quot; is missing.&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">error</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span></div>
 
 
 
@@ -114,8 +120,8 @@
 
 <span class="sd">    .. attention::</span>
 
-<span class="sd">        Child classes that inherit this class must set the list of file paths to</span>
-<span class="sd">        ``params[K.FILES]`` before running ``super().__init__(params=params)``.</span>
+<span class="sd">        Child classes that inherit this class must set the pattern of file paths to</span>
+<span class="sd">        ``params[K.FILE_PATTERN]`` before running ``super().__init__(params=params)``.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1">#: int: all number of data.</span>
     <span class="n">n_data</span><span class="p">:</span> <span class="nb">int</span>
@@ -151,20 +157,20 @@
         <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
 
 
-<div class="viewcode-block" id="BaseLoadData.preprocess">
-<a class="viewcode-back" href="../../../lib.data.html#lib.data.base.BaseLoadData.preprocess">[docs]</a>
-    <span class="k">def</span> <span class="nf">preprocess</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Runs preprocess.</span>
+<div class="viewcode-block" id="BaseLoadData.process">
+<a class="viewcode-back" href="../../../lib.data.html#lib.data.base.BaseLoadData.process">[docs]</a>
+    <span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Runs process data.</span>
 
 <span class="sd">        *   Run :meth:`lib.data.processor.Processor.run`.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            x (tf.Tensor): input. (before preprocess)</span>
-<span class="sd">            y (tf.Tensor): label. (before preprocess)</span>
+<span class="sd">            x (tf.Tensor): input. (before process)</span>
+<span class="sd">            y (tf.Tensor): label. (before process)</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            tf.Tensor: input. (after preprocess)</span>
-<span class="sd">            tf.Tensor: label. (after preprocess)</span>
+<span class="sd">            tf.Tensor: input. (after process)</span>
+<span class="sd">            tf.Tensor: label. (after process)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="n">K</span><span class="o">.</span><span class="n">PROCESS</span><span class="p">][</span><span class="n">K</span><span class="o">.</span><span class="n">KIND</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Processor</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
@@ -179,10 +185,10 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Parses one example from a TFRecord data.</span>
 
 <span class="sd">        #.  Set the parsing configuration according to the format in which the data was</span>
-<span class="sd">            written. (``tf.io.parse_single_example()``)</span>
+<span class="sd">            written. (``tf.io.parse_single_example``)</span>
 <span class="sd">        #.  When writing TFRecord data, we make the elements one-dimensional, so we</span>
 <span class="sd">            restore the shape.</span>
-<span class="sd">        #.  Run preprocess. (:meth:`preprocess`)</span>
+<span class="sd">        #.  Run :meth:`process`.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            example_proto (tf.Tensor): protocol massage.</span>
@@ -201,7 +207,7 @@
         <span class="p">)</span>
         <span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">example</span><span class="p">[</span><span class="s1">&#39;input&#39;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_shape</span><span class="p">)</span>
         <span class="n">y</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">example</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">label_shape</span><span class="p">)</span>
-        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">preprocess</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span></div>
 
 
@@ -210,20 +216,20 @@
     <span class="k">def</span> <span class="nf">make_loader_example</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Makes data loader.</span>
 
-<span class="sd">        #.  Set the list of data file pathes.</span>
-<span class="sd">            (``tf.data.Dataset.list_files()``)</span>
+<span class="sd">        #.  Set the file path pattern.</span>
+<span class="sd">            (``tf.data.Dataset.list_files``)</span>
 <span class="sd">        #.  Set the interleave configuration.</span>
-<span class="sd">            (``tf.data.Dataset.interleave()``)</span>
+<span class="sd">            (``tf.data.Dataset.interleave``)</span>
 <span class="sd">        #.  Set the function to parse one example from a TFRecord data.</span>
-<span class="sd">            (``tf.data.Dataset.map()``)</span>
+<span class="sd">            (``tf.data.Dataset.map``)</span>
 <span class="sd">        #.  Set the shuffle configuration.</span>
-<span class="sd">            (``tf.data.Dataset.shuffle()``)</span>
+<span class="sd">            (``tf.data.Dataset.shuffle``)</span>
 <span class="sd">        #.  Set the batch configuration.</span>
-<span class="sd">            (``tf.data.Dataset.batch()``)</span>
+<span class="sd">            (``tf.data.Dataset.batch``)</span>
 <span class="sd">        #.  Set the prefetch configuration.</span>
-<span class="sd">            (``tf.data.Dataset.prefetch()``)</span>
+<span class="sd">            (``tf.data.Dataset.prefetch``)</span>
 <span class="sd">        #.  Set the repeat configuration.</span>
-<span class="sd">            (``tf.data.Dataset.repeat()``)</span>
+<span class="sd">            (``tf.data.Dataset.repeat``)</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            seed (int): random seed.</span>
@@ -231,7 +237,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            Callable: data pipeline. (``tf.data``)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">dataset</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Dataset</span><span class="o">.</span><span class="n">list_files</span><span class="p">(</span><span class="n">file_pattern</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="n">K</span><span class="o">.</span><span class="n">FILES</span><span class="p">])</span>
+        <span class="n">dataset</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Dataset</span><span class="o">.</span><span class="n">list_files</span><span class="p">(</span><span class="n">file_pattern</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="n">K</span><span class="o">.</span><span class="n">FILE_PATTERN</span><span class="p">])</span>
         <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">interleave</span><span class="p">(</span>
             <span class="n">map_func</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">TFRecordDataset</span><span class="p">,</span>
             <span class="n">num_parallel_calls</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">AUTOTUNE</span><span class="p">,</span>

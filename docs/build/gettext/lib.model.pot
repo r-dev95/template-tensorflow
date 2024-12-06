@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: template-tensorflow \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-23 15:36+0900\n"
+"POT-Creation-Date: 2024-12-06 21:46+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -50,15 +50,15 @@ msgid "Defines the base model."
 msgstr ""
 
 #: ../../../template_tensorflow/lib/model/base.py:docstring of lib.model.base.BaseModel:3
-msgid "You can customize :meth:`train_step` and :meth:`test_step` using ``.fit()``."
+msgid "You can customize :meth:`train_step` and :meth:`test_step` using ``.fit``."
 msgstr ""
 
 #: ../../../template_tensorflow/lib/model/base.py:docstring of lib.model.base.BaseModel:4
-msgid "In eager mode, you can output calculation results using ``print()`` or logging in :meth:`train_step`, :meth:`test_step`, or ``.call()`` of class-form models."
+msgid "In eager mode, you can output calculation results using ``print`` or logging in :meth:`train_step`, :meth:`test_step`, or ``.call`` of class-form models."
 msgstr ""
 
 #: ../../../template_tensorflow/lib/model/base.py:docstring of lib.model.base.BaseModel:6
-msgid "In graph mode, you can output too. But you will need to implement a custom layer that ``tf.print()`` the input."
+msgid "In graph mode, you can output too. But you will need to implement a custom layer that ``tf.print`` the input."
 msgstr ""
 
 #: ../../../template_tensorflow/lib/model/base.py:docstring of lib.model.base.BaseModel.update_metrics:1
@@ -66,7 +66,29 @@ msgid "Updates metrics."
 msgstr ""
 
 #: ../../../template_tensorflow/lib/model/base.py:docstring of lib.model.base.BaseModel.update_metrics:3
-msgid "tuple of labels, preds, loss, and sample_weight."
+msgid "tuple of labels, preds, losses, and sample_weight."
+msgstr ""
+
+#: ../../../template_tensorflow/lib/model/base.py:docstring of lib.model.base.BaseModel.metrics:0
+#: ../../../template_tensorflow/lib/model/base.py:docstring of lib.model.base.BaseModel.test_step:0
+#: ../../../template_tensorflow/lib/model/base.py:docstring of lib.model.base.BaseModel.train_step:0
+#: ../../../template_tensorflow/lib/model/base.py:docstring of lib.model.base.BaseModel.update_metrics:0
+#: ../../../template_tensorflow/lib/model/layer.py:docstring of lib.model.layer.SetupLayer.conv2d:0
+#: ../../../template_tensorflow/lib/model/layer.py:docstring of lib.model.layer.SetupLayer.dense:0
+#: ../../../template_tensorflow/lib/model/layer.py:docstring of lib.model.layer.SetupLayer.flatten:0
+#: ../../../template_tensorflow/lib/model/layer.py:docstring of lib.model.layer.SetupLayer.maxpool2d:0
+#: ../../../template_tensorflow/lib/model/layer.py:docstring of lib.model.layer.SetupLayer.relu:0
+#: ../../../template_tensorflow/lib/model/layer.py:docstring of lib.model.layer.SetupLayer.setup:0
+#: ../../../template_tensorflow/lib/model/setup.py:docstring of lib.model.setup.SetupModel.setup:0
+#: ../../../template_tensorflow/lib/model/setup.py:docstring of lib.model.setup.SetupModel.simple:0
+#: ../../../template_tensorflow/lib/model/simple.py:docstring of lib.model.simple.SimpleModel.call:0
+msgid "Returns"
+msgstr ""
+
+#: ../../../template_tensorflow/lib/model/base.py:docstring of lib.model.base.BaseModel.test_step:12
+#: ../../../template_tensorflow/lib/model/base.py:docstring of lib.model.base.BaseModel.train_step:13
+#: ../../../template_tensorflow/lib/model/base.py:docstring of lib.model.base.BaseModel.update_metrics:6
+msgid "**dict[str, float]** -- all metrics results."
 msgstr ""
 
 #: ../../../template_tensorflow/lib/model/base.py:docstring of lib.model.base.BaseModel.metrics:1
@@ -78,22 +100,7 @@ msgid "This function is decorated by ``@override`` and ``@property``."
 msgstr ""
 
 #: ../../../template_tensorflow/lib/model/base.py:docstring of lib.model.base.BaseModel.metrics:5
-msgid "When using ``.fit()`` or ``.evaluate()``, Metrics must be run ``.reset_state()`` at the start of an epoch. By setting the return value of this method to a list of all metrics, it will automatically run ``.reset_state()``."
-msgstr ""
-
-#: ../../../template_tensorflow/lib/model/base.py:docstring of lib.model.base.BaseModel.metrics:0
-#: ../../../template_tensorflow/lib/model/base.py:docstring of lib.model.base.BaseModel.test_step:0
-#: ../../../template_tensorflow/lib/model/base.py:docstring of lib.model.base.BaseModel.train_step:0
-#: ../../../template_tensorflow/lib/model/layer.py:docstring of lib.model.layer.SetupLayer.conv2d:0
-#: ../../../template_tensorflow/lib/model/layer.py:docstring of lib.model.layer.SetupLayer.dense:0
-#: ../../../template_tensorflow/lib/model/layer.py:docstring of lib.model.layer.SetupLayer.flatten:0
-#: ../../../template_tensorflow/lib/model/layer.py:docstring of lib.model.layer.SetupLayer.maxpool2d:0
-#: ../../../template_tensorflow/lib/model/layer.py:docstring of lib.model.layer.SetupLayer.relu:0
-#: ../../../template_tensorflow/lib/model/layer.py:docstring of lib.model.layer.SetupLayer.setup:0
-#: ../../../template_tensorflow/lib/model/setup.py:docstring of lib.model.setup.SetupModel.setup:0
-#: ../../../template_tensorflow/lib/model/setup.py:docstring of lib.model.setup.SetupModel.simple:0
-#: ../../../template_tensorflow/lib/model/simple.py:docstring of lib.model.simple.SimpleModel.call:0
-msgid "Returns"
+msgid "When using ``.fit`` or ``.evaluate``, Metrics must be run ``.reset_state`` at the start of an epoch. By setting the return value of this method to a list of all metrics, it will automatically run ``.reset_state``."
 msgstr ""
 
 #: ../../../template_tensorflow/lib/model/base.py:docstring of lib.model.base.BaseModel.metrics:10
@@ -131,11 +138,6 @@ msgstr ""
 #: ../../../template_tensorflow/lib/model/base.py:docstring of lib.model.base.BaseModel.test_step:9
 #: ../../../template_tensorflow/lib/model/base.py:docstring of lib.model.base.BaseModel.train_step:10
 msgid "tuple of inputs and labels (and weights for each input)."
-msgstr ""
-
-#: ../../../template_tensorflow/lib/model/base.py:docstring of lib.model.base.BaseModel.test_step:12
-#: ../../../template_tensorflow/lib/model/base.py:docstring of lib.model.base.BaseModel.train_step:13
-msgid "**dict[str, float]** -- all metrics results."
 msgstr ""
 
 #: ../../../template_tensorflow/lib/model/base.py:docstring of lib.model.base.BaseModel.test_step:1
@@ -179,7 +181,7 @@ msgstr ""
 
 #: ../../../template_tensorflow/lib/model/layer.py:docstring of lib.model.layer.SetupLayer:3
 #: ../../../template_tensorflow/lib/model/setup.py:docstring of lib.model.setup.SetupModel:3
-msgid "If you want to use some other settings, implement it as a method of this class. If you implemented, set the name as the ``func`` key in ``__init__()`` and the method as the value."
+msgid "If you want to use some other settings, implement it as a method of this class. If you implemented, set the name as the ``func`` key in ``__init__`` and the method as the value."
 msgstr ""
 
 #: ../../../template_tensorflow/lib/model/layer.py:docstring of lib.model.layer.SetupLayer.setup:1
@@ -195,6 +197,7 @@ msgid "Sets ``keras.layers.Flatten``."
 msgstr ""
 
 #: ../../../template_tensorflow/lib/model/layer.py:docstring of lib.model.layer.SetupLayer.conv2d:3
+#: ../../../template_tensorflow/lib/model/layer.py:docstring of lib.model.layer.SetupLayer.dense:3
 #: ../../../template_tensorflow/lib/model/layer.py:docstring of lib.model.layer.SetupLayer.flatten:3
 #: ../../../template_tensorflow/lib/model/layer.py:docstring of lib.model.layer.SetupLayer.maxpool2d:3
 #: ../../../template_tensorflow/lib/model/layer.py:docstring of lib.model.layer.SetupLayer.relu:3
@@ -203,10 +206,6 @@ msgstr ""
 
 #: ../../../template_tensorflow/lib/model/layer.py:docstring of lib.model.layer.SetupLayer.dense:1
 msgid "Sets ``keras.layers.Dense``."
-msgstr ""
-
-#: ../../../template_tensorflow/lib/model/layer.py:docstring of lib.model.layer.SetupLayer.dense:3
-msgid "**Callable** -- ``keras.layers.Dense`` class."
 msgstr ""
 
 #: ../../../template_tensorflow/lib/model/layer.py:docstring of lib.model.layer.SetupLayer.conv2d:1
@@ -276,7 +275,7 @@ msgid "CNN (Convolutional Neural Network)"
 msgstr ""
 
 #: ../../../template_tensorflow/lib/model/simple.py:docstring of lib.model.simple.SimpleModel:11
-msgid "Since the structure of a class-based model is not defined until input is given, ``.summary()`` cannot be used. For the same reason, trained weights cannot be applied, so dummy data is input in ``__init__()``."
+msgid "Since the structure of a class-based model is not defined until input is given, ``.summary`` cannot be used. For the same reason, trained weights cannot be applied, so dummy data is input in ``__init__``."
 msgstr ""
 
 #: ../../../template_tensorflow/lib/model/simple.py:docstring of lib.model.simple.SimpleModel.call:1

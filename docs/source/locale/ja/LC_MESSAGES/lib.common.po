@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: template-tensorflow \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-23 16:24+0900\n"
+"POT-Creation-Date: 2024-12-06 21:46+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -42,17 +42,17 @@ msgstr "パラメータ"
 
 #: lib.common.decorator.process_time:3 of
 msgid ""
-"standard output function.  ``print()`` or logging (``.debug``, ``.info``,"
-" ... ) etc..."
-msgstr "標準出力の関数。``print()`` やlogging機能(``.debug``, ``.info``, ... )など"
+"standard output function.  ``print`` or logging (``.debug``, ``.info``, "
+"... ) etc..."
+msgstr "標準出力の関数。``print`` やlogging機能(``.debug``, ``.info``, ... )など"
 
 #: lib.common.decorator.process_time:3 of
 msgid "standard output function."
 msgstr "標準出力の関数"
 
 #: lib.common.decorator.process_time:5 of
-msgid "``print()`` or logging (``.debug``, ``.info``, ... ) etc..."
-msgstr "``print()`` やlogging機能(``.debug``, ``.info``, ... )など"
+msgid "``print`` or logging (``.debug``, ``.info``, ... ) etc..."
+msgstr "``print`` やlogging機能(``.debug``, ``.info``, ... )など"
 
 #: lib.common.decorator.process_time lib.common.decorator.save_params_log
 #: lib.common.file.load_json lib.common.file.load_toml
@@ -277,25 +277,25 @@ msgid "Sets the log level."
 msgstr "ログレベルを設定する。"
 
 #: lib.common.log.SetLogging.set_level:3 of
-msgid "Run ``logging.Logger.setLevel()``."
-msgstr "``logging.Logger.setLevel()`` を実行する。"
+msgid "Run ``logging.Logger.setLevel``."
+msgstr "``logging.Logger.setLevel`` を実行する。"
 
 #: lib.common.log.SetLogging.set_stream_handler:1 of
 msgid "Sets the stream handler configuration."
 msgstr "ストリームハンドラの設定を行う。"
 
 #: lib.common.log.SetLogging.set_stream_handler:3 of
-msgid "Set the log level. (``logging.StreamHandler.setLevel()``)"
-msgstr "ログレベルを設定する。(``logging.StreamHandler.setLevel()``)"
+msgid "Set the log level. (``logging.StreamHandler.setLevel``)"
+msgstr "ログレベルを設定する。(``logging.StreamHandler.setLevel``)"
 
 #: lib.common.log.SetLogging.set_stream_handler:5 of
-msgid "Set the log format. (``logging.StreamHandler.setFormatter()``)"
-msgstr "ログフォーマットを設定する。(``logging.StreamHandler.setFormatter()``)"
+msgid "Set the log format. (``logging.StreamHandler.setFormatter``)"
+msgstr "ログフォーマットを設定する。(``logging.StreamHandler.setFormatter``)"
 
 #: lib.common.log.SetLogging.set_file_handler:9
 #: lib.common.log.SetLogging.set_stream_handler:7 of
-msgid "Add the handler. (``logging.Logger.addHandler()``)"
-msgstr "ハンドラを追加する。(``logging.Logger.addHandler()``)"
+msgid "Add the handler. (``logging.Logger.addHandler``)"
+msgstr "ハンドラを追加する。(``logging.Logger.addHandler``)"
 
 #: lib.common.log.SetLogging.set_file_handler:1 of
 msgid "Sets the file handler configuration."
@@ -306,12 +306,12 @@ msgid "Set the file path, size, and number. (``logging.RotatingFileHandler``)"
 msgstr "ファイルパスとファイルサイズ、ファイル数を設定する。(``logging.RotatingFileHandler``)"
 
 #: lib.common.log.SetLogging.set_file_handler:5 of
-msgid "Set the log level. (``logging.RotatingFileHandler.setLevel()``)"
-msgstr "ログレベルを設定する。(``logging.RotatingFileHandler.setLevel()``)"
+msgid "Set the log level. (``logging.RotatingFileHandler.setLevel``)"
+msgstr "ログレベルを設定する。(``logging.RotatingFileHandler.setLevel``)"
 
 #: lib.common.log.SetLogging.set_file_handler:7 of
-msgid "Set the log format. (``logging.RotatingFileHandler.setFormatter()``)"
-msgstr "ログフォーマットを設定する。(``logging.RotatingFileHandler.setFormatter()``)"
+msgid "Set the log format. (``logging.RotatingFileHandler.setFormatter``)"
+msgstr "ログフォーマットを設定する。(``logging.RotatingFileHandler.setFormatter``)"
 
 #: ../../source/lib.common.rst:43
 msgid "process.py"
@@ -342,8 +342,8 @@ msgid "model class."
 msgstr "モデルクラス"
 
 #: lib.common.process.set_weight:8 of
-msgid "**Callable** -- weighted model class."
-msgstr "**Callable** -- 重みを適用したモデルクラス"
+msgid "**keras.models.Model** -- weighted model class."
+msgstr "**keras.models.Model** -- 重みを適用したモデルクラス"
 
 #: lib.common.process.recursive_replace:1 of
 msgid "Performs a recursive replacement."

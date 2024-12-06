@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: template-tensorflow \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-23 17:03+0900\n"
+"POT-Creation-Date: 2024-12-06 21:46+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -48,6 +48,19 @@ msgstr ""
 msgid "Evaluates the model."
 msgstr "モデルの評価を行う。"
 
+#: ../../docstring eval.Evaluator.eval_data:1 of
+msgid "data class (evaluate)"
+msgstr "データクラス (評価)"
+
+#: ../../docstring eval.Evaluator.callbacks eval.Evaluator.classes
+#: eval.Evaluator.eval_data eval.Evaluator.model of
+msgid "type"
+msgstr "型"
+
+#: ../../docstring eval.Evaluator.eval_data:3 of
+msgid "BaseLoadData"
+msgstr ""
+
 #: ../../docstring eval.Evaluator.classes:1 of
 msgid "class list"
 msgstr "クラスの一覧"
@@ -64,11 +77,6 @@ msgstr "key=loss: 誤差関数クラス"
 msgid "key=metrics: list of metrics classes"
 msgstr "key=metrics: メトリクスクラスのリスト"
 
-#: ../../docstring eval.Evaluator.callbacks eval.Evaluator.classes
-#: eval.Evaluator.model of
-msgid "type"
-msgstr "型"
-
 #: ../../docstring eval.Evaluator.classes:7 of
 msgid "ClassVar[dict[str, Any]]"
 msgstr ""
@@ -78,7 +86,7 @@ msgid "model class"
 msgstr "モデルクラス"
 
 #: ../../docstring eval.Evaluator.model:3 of
-msgid "Callable"
+msgid "BaseModel"
 msgstr ""
 
 #: ../../docstring eval.Evaluator.callbacks:1 of
@@ -106,20 +114,32 @@ msgid "Set the model weights."
 msgstr "モデルの重みを設定する。"
 
 #: eval.Evaluator.setup:5 of
-msgid "Run ``.summary()``."
-msgstr "``.summary()`` を実行する。"
+msgid "Run ``.summary``."
+msgstr "``.summary`` を実行する。"
+
+#: eval.Evaluator.eval_step:1 of
+msgid "Evaluations the model."
+msgstr "モデルを評価する。"
+
+#: eval.Evaluator.eval_step:3 eval.Evaluator.run:4 of
+msgid "Customize the evaluation of your trained models."
+msgstr "学習済みモデルの評価をカスタマイズする。"
+
+#: eval.Evaluator.eval_step eval.main eval.set_params of
+msgid "Returns"
+msgstr "戻り値"
+
+#: eval.Evaluator.eval_step:5 of
+msgid "**dict[str, Any]** -- evaluate results."
+msgstr "**dict[str, Any]** -- 評価結果"
 
 #: eval.Evaluator.run:1 of
 msgid "Runs evaluation."
 msgstr "評価を実行する。"
 
 #: eval.Evaluator.run:3 of
-msgid "Run ``.compile()``."
-msgstr "``.compile()`` を実行する。"
-
-#: eval.Evaluator.run:4 of
-msgid "Customize the evaluation of your trained models."
-msgstr "学習済みモデルの評価をカスタマイズする。"
+msgid "Run ``.compile``."
+msgstr "``.compile`` を実行する。"
 
 #: eval.main:1 of
 msgid "main."
@@ -128,10 +148,6 @@ msgstr ""
 #: eval.main:3 of
 msgid "This function is decorated by ``@save_params_log`` and ``@process_time``."
 msgstr "``@save_params_log`` と ``@process_time`` でデコレートされている。"
-
-#: eval.main eval.set_params of
-msgid "Returns"
-msgstr "戻り値"
 
 #: eval.main:8 eval.set_params:7 of
 msgid "**dict[str, Any]** -- parameters."
@@ -159,4 +175,3 @@ msgid ""
 " if you want to set everything using file parameters, you don't "
 "necessarily need to use command line arguments."
 msgstr "コマンドライン引数はファイルパラメータで上書きされる。つまり、ファイルパラメータですべて設定する場合、必ずしもコマンドライン引数を使用する必要はない。"
-

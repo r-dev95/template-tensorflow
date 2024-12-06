@@ -61,6 +61,7 @@ nitpick_ignore_regex = [
     (r'py:class', r'tensorflow.python.framework.tensor.Tensor'),
     (r'py:class', r'tensorflow.core.example.feature_pb2.Feature'),
     (r'py:class', r'tensorflow.core.example.example_pb2.Example'),
+    (r'py:class', r'keras.models.Model'),
     (r'py:class', r'keras.src.models.model.Model'),
 ]
 
