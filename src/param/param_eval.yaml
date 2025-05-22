@@ -1,0 +1,227 @@
+# -------------------------------------------------------------------
+# parameter file (eval)
+#
+# Note:
+#   - Do not use '~/' in the path.
+#   - A list must be specified in list format even if it has only one element.
+# -------------------------------------------------------------------
+# -----------------------------------------------
+# Overwrite command line arguments.
+# -----------------------------------------------
+# log level (idx=0: stream handler, idx=1: file handler)
+# (DEBUG: 10, INFO: 20, WARNING: 30, ERROR: 40, CRITICAL: 50)
+level: [10, 10]
+# flag (eager mode: true, graph mode: false)
+eager: false
+# random seed
+seed: 0
+# directory path (data save)
+result: result
+
+# directory path (evaluation data)
+eval: /mnt/c/Users/ruima/work/archive/tensorflow/data/mnist/test
+# batch size (evaluation data)
+batch: 1000
+
+# -----------------------------------------------
+# Set non-command line arguments.
+# -----------------------------------------------
+# -------------------------------------
+# data
+# -------------------------------------
+data:
+  kind: mnist
+
+# -------------------------------------
+# data process
+# -------------------------------------
+process:
+  kind: [catencode, rescale]
+
+  # CategoryEncoding
+  catencode:
+    num_tokens: &num_classes 10               # Any | None = None
+    output_mode: one_hot                      # str = "multi_hot"
+    sparse: false                             # bool = False
+
+  # Rescaling
+  rescale:
+    scale: 0.00392156862745098                # Any
+    offset: 0                                 # float = 0
+
+# -------------------------------------
+# model
+# -------------------------------------
+model:
+  kind: simple
+
+# -------------------------------------
+# model layer
+# -------------------------------------
+layer:
+  kind: [flatten, dense_1, relu, dense_2]
+  # - conv2d_1
+  # - relu
+  # - conv2d_1
+  # - relu
+  # - maxpool2d
+  # - conv2d_2
+  # - relu
+  # - conv2d_2
+  # - relu
+  # - maxpool2d
+  # - conv2d_3
+  # - relu
+  # - conv2d_3
+  # - relu
+  # - conv2d_3
+  # - relu
+  # - maxpool2d
+  # - flatten
+  # - dense_1
+  # - relu
+  # - dense_2
+
+  # Flatten
+  flatten:
+    data_format: channels_last                # Any | None = None
+
+  # Dense
+  DENSE: &DENSE
+    units: null                               # Any
+    activation: null                          # Any | None = None
+    use_bias: true                            # bool = True
+    kernel_initializer: glorot_uniform        # str = "glorot_uniform"
+    bias_initializer: zeros                   # str = "zeros"
+    kernel_regularizer: null                  # Any | None = None
+    bias_regularizer: null                    # Any | None = None
+    activity_regularizer: null                # Any | None = None
+    kernel_constraint: null                   # Any | None = None
+    bias_constraint: null                     # Any | None = None
+    lora_rank: null                           # Any | None = None
+  dense_1:
+    <<: *DENSE
+    units: 100
+  dense_2:
+    <<: *DENSE
+    units: *num_classes
+
+  # Conv2D
+  CONV2D: &CONV2D
+    filters:                                  # Any
+    kernel_size:                              # Any
+    strides: [1, 1]                           # Any = (1, 1)
+    padding: valid                            # str = "valid"
+    data_format: null                         # Any | None = None
+    dilation_rate: [1, 1]                     # Any = (1, 1)
+    groups: 1                                 # int = 1
+    activation: null                          # Any | None = None
+    use_bias: true                            # bool = True
+    kernel_initializer: glorot_uniform        # str = "glorot_uniform"
+    bias_initializer: zeros                   # str = "zeros"
+    kernel_regularizer: null                  # Any | None = None
+    bias_regularizer: null                    # Any | None = None
+    activity_regularizer: null                # Any | None = None
+    kernel_constraint: null                   # Any | None = None
+    bias_constraint: null                     # Any | None = None
+  conv2d_1:
+    <<: *CONV2D
+    filters: 8
+    kernel_size: [3, 3]
+    padding: same
+  conv2d_2:
+    <<: *CONV2D
+    filters: 16
+    kernel_size: [3, 3]
+    padding: same
+  conv2d_3:
+    <<: *CONV2D
+    filters: 32
+    kernel_size: [3, 3]
+    padding: same
+
+  # MaxPool2D
+  MAXPOOL2D: &MAXPOOL2D
+    pool_size: [2, 2]                         # Any = (2, 2),
+    strides: null                             # Any | None = None,
+    padding: valid                            # str = "valid",
+    data_format: null                         # Any | None = None,
+    name: null                                # Any | None = None,
+  maxpool2d:
+    <<: *MAXPOOL2D
+    strides: [2, 2]
+
+  # SimpleRNN
+  SIMPLERNN: &SIMPLERNN
+    units:                                    # Any,
+    activation:                               # str = "tanh",
+    use_bias:                                 # bool = True,
+    kernel_initializer:                       # str = "glorot_uniform",
+    recurrent_initializer:                    # str = "orthogonal",
+    bias_initializer:                         # str = "zeros",
+    kernel_regularizer:                       # Any | None = None,
+    recurrent_regularizer:                    # Any | None = None,
+    bias_regularizer:                         # Any | None = None,
+    activity_regularizer:                     # Any | None = None,
+    kernel_constraint:                        # Any | None = None,
+    recurrent_constraint:                     # Any | None = None,
+    bias_constraint:                          # Any | None = None,
+    dropout:                                  # float = 0,
+    recurrent_dropout:                        # float = 0,
+    return_sequences:                         # bool = False,
+    return_state:                             # bool = False,
+    go_backwards:                             # bool = False,
+    stateful:                                 # bool = False,
+    unroll:                                   # bool = False,
+    seed:                                     # Any | None = None,
+
+  # ReLU
+  relu:
+    max_value: null                           # Any | None = None
+    negative_slope: 0                         # float = 0
+    threshold: 0                              # float = 0
+
+# -------------------------------------
+# loss function
+# -------------------------------------
+loss:
+  kind: cce
+
+  # MeanSquaredError
+  mse:
+    reduction: sum_over_batch_size            # str = "sum_over_batch_size"
+    name: mean_squared_error                  # str = "mean_squared_error"
+    # dtype: null                               # Any | None = None
+
+  # CategoricalCrossentropy
+  cce:
+    from_logits: true                         # bool = False
+    label_smoothing: 0                        # float = 0
+    axis: -1                                  # int = -1
+    reduction: sum_over_batch_size            # str = "sum_over_batch_size"
+    name: categorical_crossentropy            # str = "categorical_crossentropy"
+    # dtype: null                               # Any | None = None
+
+# -------------------------------------
+# metrics
+# -------------------------------------
+metrics:
+  kind: [mse]
+
+  # MeanSquaredError
+  mse:
+    name: mean_squared_error                  # str = "mean_squared_error"
+    # dtype: null                               # Any | None = None
+
+  # CategoricalCrossentropy
+  cce:
+    name: categorical_crossentropy            # str = "categorical_crossentropy"
+    # dtype: null                               # Any | None = None
+    from_logits: false                        # bool = False
+    label_smoothing: 0                        # int = 0
+    axis: -1                                  # int = -1
+
+  # CategoricalAccuracy
+  cacc:
+    name: categorical_accuracy                # str = "categorical_accuracy"
+    # dtype: null                               # Any | None = None

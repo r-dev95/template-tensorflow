@@ -5,11 +5,13 @@ line-length = 88
 preview = true
 show-fixes = true
 src = [
-    "template_tensorflow",
+    "src",
     "tests",
 ]
 exclude = [
     ".git",
+    ".venv",
+    ".vscode",
     ".ruff_cache",
     ".mypy_cache",
     "docs",
