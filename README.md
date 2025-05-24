@@ -47,19 +47,19 @@ git clone https://github.com/r-dev95/template-tensorflow.git
 
 ### 2. Building a virtual environment
 
-We assume that `poetry` is installed.
+We assume that `uv` is installed.
 
 If you do not yet have a Python development environment, please see [here](#building-a-development-environment).
 
 ``` bash
-cd template-tensorflow/template_tensorflow
-poetry install
+cd template-tensorflow/src
+uv sync --dev --group docs
 ```
 
 ### 3. Download data and make tfrecord-form data
 
 ``` bash
-poetry shell
+source .venv/bin/activate
 python dataset.py --result dataset --data mnist
 ```
 
