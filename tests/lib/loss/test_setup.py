@@ -7,14 +7,13 @@ from logging import ERROR, getLogger
 import pytest
 from _pytest.logging import LogCaptureFixture
 
-sys.path.append('../template_tensorflow/')
-from template_tensorflow.lib.common.define import ParamKey, ParamLog
-from template_tensorflow.lib.loss import setup
+from lib.common.types import ParamKey as K
+from lib.common.types import ParamLog
+from lib.loss import setup
 
 sys.path.append('../tests')
 from define import Loss
 
-K = ParamKey()
 PARAM_LOG = ParamLog()
 LOGGER = getLogger(name=PARAM_LOG.NAME)
 

@@ -1,14 +1,14 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) 2024, r-dev95
-# This file is distributed under the same license as the template-tensorflow package.
+# This file is distributed under the same license as the tensorflow-template package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: template-tensorflow \n"
+"Project-Id-Version: tensorflow-template \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-06 21:46+0900\n"
+"POT-Creation-Date: 2025-06-18 16:00+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,11 +24,11 @@ msgstr ""
 msgid "setup.py"
 msgstr ""
 
-#: ../../../template_tensorflow/lib/callbacks/setup.py:docstring of lib.callbacks.setup:1
+#: ../../../src/lib/callbacks/setup.py:docstring of lib.callbacks.setup:1
 msgid "This is the module that sets up callbacks."
 msgstr ""
 
-#: ../../../template_tensorflow/lib/callbacks/setup.py:docstring of lib.callbacks.setup.check_params:1
+#: ../../../src/lib/callbacks/setup.py:docstring of lib.callbacks.setup.check_params:1
 msgid "Checks the :class:`SetupCallbacks` parameters."
 msgstr ""
 
@@ -36,44 +36,44 @@ msgstr ""
 msgid "Parameters"
 msgstr ""
 
-#: ../../../template_tensorflow/lib/callbacks/setup.py:docstring of lib.callbacks.setup.SetupCallbacks:7
-#: ../../../template_tensorflow/lib/callbacks/setup.py:docstring of lib.callbacks.setup.check_params:3
+#: ../../../src/lib/callbacks/setup.py:docstring of lib.callbacks.setup.SetupCallbacks:7
+#: ../../../src/lib/callbacks/setup.py:docstring of lib.callbacks.setup.check_params:3
 msgid "parameters."
 msgstr ""
 
-#: ../../../template_tensorflow/lib/callbacks/setup.py:docstring of lib.callbacks.setup.check_params:5
+#: ../../../src/lib/callbacks/setup.py:docstring of lib.callbacks.setup.check_params:5
 msgid "Class variables whose values are available methods."
 msgstr ""
 
-#: ../../../template_tensorflow/lib/callbacks/setup.py:docstring of lib.callbacks.setup.SetupCallbacks:1
+#: ../../../src/lib/callbacks/setup.py:docstring of lib.callbacks.setup.SetupCallbacks:1
 msgid "Bases: :py:class:`object`"
 msgstr ""
 
-#: ../../../template_tensorflow/lib/callbacks/setup.py:docstring of lib.callbacks.setup.SetupCallbacks:1
-#: ../../../template_tensorflow/lib/callbacks/setup.py:docstring of lib.callbacks.setup.SetupCallbacks.setup:1
+#: ../../../src/lib/callbacks/setup.py:docstring of lib.callbacks.setup.SetupCallbacks:1
+#: ../../../src/lib/callbacks/setup.py:docstring of lib.callbacks.setup.SetupCallbacks.setup:1
 msgid "Sets up callbacks."
 msgstr ""
 
-#: ../../../template_tensorflow/lib/callbacks/setup.py:docstring of lib.callbacks.setup.SetupCallbacks:3
+#: ../../../src/lib/callbacks/setup.py:docstring of lib.callbacks.setup.SetupCallbacks:3
 msgid "If you want to use some other settings, implement it as a method of this class. If you implemented, set the name as the ``func`` key in ``__init__`` and the method as the value."
 msgstr ""
 
-#: ../../../template_tensorflow/lib/callbacks/setup.py:docstring of lib.callbacks.setup.SetupCallbacks.csv:0
-#: ../../../template_tensorflow/lib/callbacks/setup.py:docstring of lib.callbacks.setup.SetupCallbacks.mcp:0
-#: ../../../template_tensorflow/lib/callbacks/setup.py:docstring of lib.callbacks.setup.SetupCallbacks.setup:0
+#: ../../../src/lib/callbacks/setup.py:docstring of lib.callbacks.setup.SetupCallbacks.csv:0
+#: ../../../src/lib/callbacks/setup.py:docstring of lib.callbacks.setup.SetupCallbacks.mcp:0
+#: ../../../src/lib/callbacks/setup.py:docstring of lib.callbacks.setup.SetupCallbacks.setup:0
 msgid "Returns"
 msgstr ""
 
-#: ../../../template_tensorflow/lib/callbacks/setup.py:docstring of lib.callbacks.setup.SetupCallbacks.csv:3
-#: ../../../template_tensorflow/lib/callbacks/setup.py:docstring of lib.callbacks.setup.SetupCallbacks.mcp:3
-#: ../../../template_tensorflow/lib/callbacks/setup.py:docstring of lib.callbacks.setup.SetupCallbacks.setup:3
+#: ../../../src/lib/callbacks/setup.py:docstring of lib.callbacks.setup.SetupCallbacks.csv:3
+#: ../../../src/lib/callbacks/setup.py:docstring of lib.callbacks.setup.SetupCallbacks.mcp:3
+#: ../../../src/lib/callbacks/setup.py:docstring of lib.callbacks.setup.SetupCallbacks.setup:3
 msgid "**Callable** -- callbacks class."
 msgstr ""
 
-#: ../../../template_tensorflow/lib/callbacks/setup.py:docstring of lib.callbacks.setup.SetupCallbacks.mcp:1
+#: ../../../src/lib/callbacks/setup.py:docstring of lib.callbacks.setup.SetupCallbacks.mcp:1
 msgid "Sets ``keras.callbacks.ModelCheckpoint``."
 msgstr ""
 
-#: ../../../template_tensorflow/lib/callbacks/setup.py:docstring of lib.callbacks.setup.SetupCallbacks.csv:1
+#: ../../../src/lib/callbacks/setup.py:docstring of lib.callbacks.setup.SetupCallbacks.csv:1
 msgid "Sets ``keras.callbacks.CSVLogger``."
 msgstr ""

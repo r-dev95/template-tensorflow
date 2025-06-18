@@ -8,6 +8,10 @@
 # -----------------------------------------------
 # Overwrite command line arguments.
 # -----------------------------------------------
+# log handler (idx=0: stream handler, idx=1: file handler)
+# (True: set handler, False: not set handler)
+# type: list[bool, bool]
+handler: [True, True]
 # log level (idx=0: stream handler, idx=1: file handler)
 # (DEBUG: 10, INFO: 20, WARNING: 30, ERROR: 40, CRITICAL: 50)
 # type: list[int, int]
@@ -61,14 +65,14 @@ process:
 
   # CategoryEncoding
   catencode:
-    num_tokens: &num_classes 10               # Any | None = None
-    output_mode: one_hot                      # str = "multi_hot"
-    sparse: false                             # bool = False
+    num_tokens: &num_classes 10 # Any | None = None
+    output_mode: one_hot # str = "multi_hot"
+    sparse: false # bool = False
 
   # Rescaling
   rescale:
-    scale: 0.00392156862745098                # Any
-    offset: 0                                 # float = 0
+    scale: 0.00392156862745098 # Any
+    offset: 0 # float = 0
 
 # -------------------------------------
 # model
@@ -83,20 +87,20 @@ layer:
   kind: [flatten, dense_1, relu, dense_2]
 
   flatten:
-    data_format: channels_last                # Any | None = None
+    data_format: channels_last # Any | None = None
 
   DENSE: &DENSE
-    units: null                               # Any
-    activation: null                          # Any | None = None
-    use_bias: true                            # bool = True
-    kernel_initializer: glorot_uniform        # str = "glorot_uniform"
-    bias_initializer: zeros                   # str = "zeros"
-    kernel_regularizer: null                  # Any | None = None
-    bias_regularizer: null                    # Any | None = None
-    activity_regularizer: null                # Any | None = None
-    kernel_constraint: null                   # Any | None = None
-    bias_constraint: null                     # Any | None = None
-    lora_rank: null                           # Any | None = None
+    units: null # Any
+    activation: null # Any | None = None
+    use_bias: true # bool = True
+    kernel_initializer: glorot_uniform # str = "glorot_uniform"
+    bias_initializer: zeros # str = "zeros"
+    kernel_regularizer: null # Any | None = None
+    bias_regularizer: null # Any | None = None
+    activity_regularizer: null # Any | None = None
+    kernel_constraint: null # Any | None = None
+    bias_constraint: null # Any | None = None
+    lora_rank: null # Any | None = None
   dense_1:
     <<: *DENSE
     units: 100
@@ -105,9 +109,9 @@ layer:
     units: *num_classes
 
   relu:
-    max_value: null                           # Any | None = None
-    negative_slope: 0                         # float = 0
-    threshold: 0                              # float = 0
+    max_value: null # Any | None = None
+    negative_slope: 0 # float = 0
+    threshold: 0 # float = 0
 
 # -------------------------------------
 # optimizer method
@@ -116,21 +120,21 @@ opt:
   kind: adam
 
   adam:
-    learning_rate: 0.001                      # float = 0.001
-    beta_1: 0.9                               # float = 0.9
-    beta_2: 0.999                             # float = 0.999
-    epsilon: 0.0000001                        # float = 1e-7
-    amsgrad: false                            # bool = False
-    weight_decay: null                        # Any | None = None
-    clipnorm: null                            # Any | None = None
-    clipvalue: null                           # Any | None = None
-    global_clipnorm: null                     # Any | None = None
-    use_ema: false                            # bool = False
-    ema_momentum: 0.99                        # float = 0.99
-    ema_overwrite_frequency: null             # Any | None = None
-    loss_scale_factor: null                   # Any | None = None
-    gradient_accumulation_steps: null         # Any | None = None
-    name: adam                                # str = "adam"
+    learning_rate: 0.001 # float = 0.001
+    beta_1: 0.9 # float = 0.9
+    beta_2: 0.999 # float = 0.999
+    epsilon: 0.0000001 # float = 1e-7
+    amsgrad: false # bool = False
+    weight_decay: null # Any | None = None
+    clipnorm: null # Any | None = None
+    clipvalue: null # Any | None = None
+    global_clipnorm: null # Any | None = None
+    use_ema: false # bool = False
+    ema_momentum: 0.99 # float = 0.99
+    ema_overwrite_frequency: null # Any | None = None
+    loss_scale_factor: null # Any | None = None
+    gradient_accumulation_steps: null # Any | None = None
+    name: adam # str = "adam"
 
 # -------------------------------------
 # loss function
@@ -139,11 +143,11 @@ loss:
   kind: cce
 
   cce:
-    from_logits: true                         # bool = False
-    label_smoothing: 0                        # float = 0
-    axis: -1                                  # int = -1
-    reduction: sum_over_batch_size            # str = "sum_over_batch_size"
-    name: categorical_crossentropy            # str = "categorical_crossentropy"
+    from_logits: true # bool = False
+    label_smoothing: 0 # float = 0
+    axis: -1 # int = -1
+    reduction: sum_over_batch_size # str = "sum_over_batch_size"
+    name: categorical_crossentropy # str = "categorical_crossentropy"
     # dtype: null                               # Any | None = None
 
 # -------------------------------------
@@ -153,11 +157,11 @@ metrics:
   kind: [mse, cacc]
 
   mse:
-    name: mean_squared_error                  # str = "mean_squared_error"
+    name: mean_squared_error # str = "mean_squared_error"
     # dtype: null                               # Any | None = None
 
   cacc:
-    name: categorical_accuracy                # str = "categorical_accuracy"
+    name: categorical_accuracy # str = "categorical_accuracy"
     # dtype: null                               # Any | None = None
 
 # -------------------------------------
@@ -168,15 +172,15 @@ cb:
 
   mcp: # The "filepath" is fixed in the code.
     # filepath: epoch{epoch:03d}_loss{loss:.3f}_{val_loss:.3f}.weights.h5 # Path
-    monitor: val_loss                         # str = "val_loss"
-    verbose: 0                                # int = 0
-    save_best_only: false                     # bool = False
-    save_weights_only: true                   # bool = False
-    mode: auto                                # str = "auto"
-    save_freq: epoch                          # str = "epoch"
-    initial_value_threshold: null             # Any | None = None
+    monitor: val_loss # str = "val_loss"
+    verbose: 0 # int = 0
+    save_best_only: false # bool = False
+    save_weights_only: true # bool = False
+    mode: auto # str = "auto"
+    save_freq: epoch # str = "epoch"
+    initial_value_threshold: null # Any | None = None
 
   csv: # The "filename" is fixed in the code.
     # filename: log_loss.csv                    # Path
-    separator: ","                            # str = ","
-    append: false                             # bool = False
+    separator: "," # str = ","
+    append: false # bool = False

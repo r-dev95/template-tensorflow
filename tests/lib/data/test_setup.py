@@ -8,11 +8,10 @@ from logging import ERROR, getLogger
 import pytest
 from _pytest.logging import LogCaptureFixture
 
-sys.path.append('../template_tensorflow/')
-from template_tensorflow.lib.common.define import ParamKey, ParamLog
-from template_tensorflow.lib.data import setup
+from lib.common.types import ParamKey as K
+from lib.common.types import ParamLog
+from lib.data import setup
 
-K = ParamKey()
 PARAM_LOG = ParamLog()
 LOGGER = getLogger(name=PARAM_LOG.NAME)
 

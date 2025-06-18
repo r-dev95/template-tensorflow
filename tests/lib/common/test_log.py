@@ -2,17 +2,15 @@
 """
 
 import shutil
-import sys
 from logging import getLogger
 from pathlib import Path
 
 import pytest
 
-sys.path.append('../template_tensorflow/')
-from template_tensorflow.lib.common import log
-from template_tensorflow.lib.common.define import ParamKey, ParamLog
+from lib.common import log
+from lib.common.types import ParamKey as K
+from lib.common.types import ParamLog
 
-K = ParamKey()
 PARAM_LOG = ParamLog()
 LOGGER = getLogger(name=PARAM_LOG.NAME)
 

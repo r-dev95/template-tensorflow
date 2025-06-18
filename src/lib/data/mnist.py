@@ -5,10 +5,10 @@ from logging import getLogger
 from pathlib import Path
 from typing import Any, ClassVar, override
 
-from lib.common.define import ParamKey, ParamLog
+from lib.common.types import ParamKey as K
+from lib.common.types import ParamLog
 from lib.data.base import BaseLoadData
 
-K = ParamKey()
 PARAM_LOG = ParamLog()
 LOGGER = getLogger(PARAM_LOG.NAME)
 
