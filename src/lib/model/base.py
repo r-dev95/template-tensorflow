@@ -8,9 +8,9 @@ from typing import override
 import keras
 import tensorflow as tf
 
-from lib.common.define import ParamKey, ParamLog
+from lib.common.types import ParamKey as K
+from lib.common.types import ParamLog
 
-K = ParamKey()
 PARAM_LOG = ParamLog()
 LOGGER = getLogger(PARAM_LOG.NAME)
 
@@ -44,7 +44,7 @@ class BaseModel(keras.models.Model):
         classes (dict[str, Callable]): class list.
     """
 
-    def __init__(self, classes: dict[str, Callable]) -> None:  # noqa: ANN401
+    def __init__(self, classes: dict[str, Callable]) -> None:
         self.classes = classes
         check_params(classes=classes)
         super().__init__()

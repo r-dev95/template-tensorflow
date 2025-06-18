@@ -1,9 +1,9 @@
-.. template-tensorflow documentation master file, created by
+.. tensorflow-template documentation master file, created by
    sphinx-quickstart on Sun Oct 20 19:58:36 2024.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-template-tensorflow documentation
+tensorflow-template documentation
 =================================
 
 .. toctree::

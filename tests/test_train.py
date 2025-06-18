@@ -9,14 +9,13 @@ from pathlib import Path
 import pytest
 from _pytest.logging import LogCaptureFixture
 
-sys.path.append('../template_tensorflow/')
-from template_tensorflow import train
-from template_tensorflow.lib.common.define import ParamKey, ParamLog
+import train
+from lib.common.types import ParamKey as K
+from lib.common.types import ParamLog
 
 sys.path.append('../tests')
 from define import CB, DATA_PARENT_DPATH, Layer, Loss, Metrics, Opt, Proc
 
-K = ParamKey()
 PARAM_LOG = ParamLog()
 LOGGER = getLogger(name=PARAM_LOG.NAME)
 

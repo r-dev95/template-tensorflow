@@ -1,13 +1,13 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) 2024, r-dev95
-# This file is distributed under the same license as the template-tensorflow
+# This file is distributed under the same license as the tensorflow-template
 # package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: template-tensorflow \n"
+"Project-Id-Version: tensorflow-template \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-11-12 13:18+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
@@ -25,7 +25,7 @@ msgid "Contents:"
 msgstr ""
 
 #: ../../source/index.rst:7
-msgid "template-tensorflow documentation"
+msgid "tensorflow-template documentation"
 msgstr ""
 
 #: ../../source/index.rst:17

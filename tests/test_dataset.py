@@ -9,18 +9,14 @@ from pathlib import Path
 import pytest
 from pytest_mock import MockerFixture
 
-sys.path.append('../template_tensorflow/')
-from template_tensorflow import dataset
-from template_tensorflow.lib.common.define import ParamKey
-from template_tensorflow.lib.data import base
-
-sys.path.append('../template_tensorflow/')
-from template_tensorflow.lib.common.define import ParamLog
+import dataset
+from lib.common.types import ParamKey as K
+from lib.common.types import ParamLog
+from lib.data import base
 
 sys.path.append('../tests')
 from define import DATA_PARENT_DPATH
 
-K = ParamKey()
 PARAM_LOG = ParamLog()
 LOGGER = getLogger(name=PARAM_LOG.NAME)
 

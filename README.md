@@ -6,7 +6,7 @@
 
 [![English](https://img.shields.io/badge/English-018EF5.svg?labelColor=d3d3d3&logo=readme)](./README.md)
 [![Japanese](https://img.shields.io/badge/Japanese-018EF5.svg?labelColor=d3d3d3&logo=readme)](./README_JA.md)
-[![license](https://img.shields.io/github/license/r-dev95/template-tensorflow)](./LICENSE)
+[![license](https://img.shields.io/github/license/r-dev95/tensorflow-template)](./LICENSE)
 [![Checked with mypy](https://www.mypy-lang.org/static/mypy_badge.svg)](https://mypy-lang.org/)
 
 [![Python](https://img.shields.io/badge/Python-3776AB.svg?labelColor=d3d3d3&logo=python)](https://github.com/python)
@@ -23,26 +23,37 @@ This repository defines tensorflow templates.
 By using a parameter file to set the following items, you can train and evaluate in various combinations.
 You can also easily use other settings by implementing them in your own settings classes.
 
-* data (and data preprocess)
-* model (and model layer)
-* optimizer method
-* loss function
-* metrics
-* callbacks
+- data (and data preprocess)
+- model (and model layer)
+- optimizer method
+- loss function
+- metrics
+- callbacks
 
 We use Sphinx to create documentation for the implementation sources.
 
 Please clone this repository and check it locally.
 
-* English: `template-tensorflow/docs/build/en/html/index.html`
-* Japanese: `template-tensorflow/docs/build/ja/html/index.html`
+- English:
+
+  ```bash
+  cd tensorflow-templete/docs
+  make html -e SPHINXOPTS='-a -E -D language="en"'
+  ```
+
+- Japanese:
+
+  ```bash
+  cd tensorflow-templete/docs
+  make html -e SPHINXOPTS='-a -E -D language="ja"'
+  ```
 
 ## Getting started
 
 ### 1. To start, you will install it through github
 
-``` bash
-git clone https://github.com/r-dev95/template-tensorflow.git
+```bash
+git clone https://github.com/r-dev95/tensorflow-template.git
 ```
 
 ### 2. Building a virtual environment
@@ -51,27 +62,27 @@ We assume that `uv` is installed.
 
 If you do not yet have a Python development environment, please see [here](#building-a-development-environment).
 
-``` bash
-cd template-tensorflow/src
+```bash
+cd tensorflow-template/src
 uv sync --dev --group docs
 ```
 
 ### 3. Download data and make tfrecord-form data
 
-``` bash
+```bash
 source .venv/bin/activate
 python dataset.py --result dataset --data mnist
 ```
 
 ### 4. Training the model
 
-``` bash
+```bash
 python train.py --param param/tutorial/param_train.yaml
 ```
 
 ### 5. Evaluate the model
 
-``` bash
+```bash
 python eval.py --param param/tutorial/param_eval.yaml
 ```
 
@@ -82,8 +93,8 @@ This section describes how to use parameter files (`.yaml`).
 The parameter file is used in the following source code.
 The following source code can use some command line arguments, but they can be overwritten in the parameter file, so it is assumed that all parameters are set in the parameter file.
 
-* train.py
-* eval.py
+- train.py
+- eval.py
 
 Some of the settings can not be set using parameter file. In particular, detailed settings for tensorflow (keras) must be implemented by referring to the official tensorflow (keras) website.
 
@@ -91,11 +102,15 @@ Some of the settings can not be set using parameter file. In particular, detaile
 
 Main parameters that are also implemented as command line arguments are set with zero indentation.
 
-* The main parameters include `param`, but this is not set as it only works as a command line argument.
+- The main parameters include `param`, but this is not set as it only works as a command line argument.
 
 `train.py` and `eval.py` common settings example:
 
-``` yaml
+```yaml
+# log handler (idx=0: stream handler, idx=1: file handler)
+# (True: set handler, False: not set handler)
+# type: list[bool, bool]
+handler: [True, True]
 # log level (idx=0: stream handler, idx=1: file handler)
 # (DEBUG: 10, INFO: 20, WARNING: 30, ERROR: 40, CRITICAL: 50)
 # type: list[int, int]
@@ -113,7 +128,7 @@ result: result
 
 only `train.py` settings example:
 
-``` yaml
+```yaml
 # directory path (training data)
 # type: str
 train: data/mnist/train
@@ -136,7 +151,7 @@ epochs: 2
 
 only `eval.py` settings example:
 
-``` yaml
+```yaml
 # directory path (evaluation data)
 # type: str
 eval: data/mnist/test
@@ -147,25 +162,25 @@ batch: 1000
 
 ### Set the `data` and `data preprocess` parameters
 
-For currently available `data`, see the variable `func`'s key of the `SetupData` class [here](template_tensorflow/lib/data/setup.py).
+For currently available `data`, see the variable `func`'s key of the `SetupData` class [here](tensorflow_template/lib/data/setup.py).
 
 `data` settings example:
 
-``` yaml
+```yaml
 data:
   kind: mnist
 ```
 
-For currently available `data preprocess`, see the variable `func`'s key of the `Processor` class [here](template_tensorflow/lib/data/processor.py).
+For currently available `data preprocess`, see the variable `func`'s key of the `Processor` class [here](tensorflow_template/lib/data/processor.py).
 
-* The `kind` of `data preprocess` is set as a list.
+- The `kind` of `data preprocess` is set as a list.
 
-* If you set `catencode` to `kind`, set `catencode` setting as shown in the following example.
-The same applies to the subsequent parameters.
+- If you set `catencode` to `kind`, set `catencode` setting as shown in the following example.
+  The same applies to the subsequent parameters.
 
 `data preprocess` settings example:
 
-``` yaml
+```yaml
 process:
   kind: [catencode, rescale]
 
@@ -181,24 +196,24 @@ process:
 
 ### Set the `model` and `model layer` parameters
 
-For currently available `model`, see the variable `func`'s key of the `SetupModel` class [here](template_tensorflow/lib/model/setup.py).
+For currently available `model`, see the variable `func`'s key of the `SetupModel` class [here](tensorflow_template/lib/model/setup.py).
 
 `model` settings example:
 
-``` yaml
+```yaml
 model:
   kind: simple
 ```
 
-For currently available `model layer`, see the variable `func`'s key of the `SetupLayer` class [here](template_tensorflow/lib/model/layer.py).
+For currently available `model layer`, see the variable `func`'s key of the `SetupLayer` class [here](tensorflow_template/lib/model/layer.py).
 
-* The `kind` of `model layer` is set as a list.
+- The `kind` of `model layer` is set as a list.
 
-* The value of `kind` can have "\_" + alphanumeric characters at the end.
+- The value of `kind` can have "\_" + alphanumeric characters at the end.
 
 `model layer` settings example:
 
-``` yaml
+```yaml
 layer:
   kind: [flatten, dense_1, relu, dense_2]
 
@@ -232,13 +247,13 @@ layer:
 
 ### Set the `optimizer method` parameters
 
-For currently available `optimizer method`, see the variable `func`'s key of the `SetupOpt` class [here](template_tensorflow/lib/optimizer/setup.py).
+For currently available `optimizer method`, see the variable `func`'s key of the `SetupOpt` class [here](tensorflow_template/lib/optimizer/setup.py).
 
-* The `optimizer method` parameter is only used in `train.py`.
+- The `optimizer method` parameter is only used in `train.py`.
 
 `optimizer method` settings example:
 
-``` yaml
+```yaml
 opt:
   kind: adam
 
@@ -262,11 +277,11 @@ opt:
 
 ### Set the `loss function` parameters
 
-For currently available `loss function`, see the variable `func`'s key of the `SetupLoss` class [here](template_tensorflow/lib/loss/setup.py).
+For currently available `loss function`, see the variable `func`'s key of the `SetupLoss` class [here](tensorflow_template/lib/loss/setup.py).
 
 `loss function` settings example:
 
-``` yaml
+```yaml
 loss:
   kind: cce
 
@@ -281,36 +296,36 @@ loss:
 
 ### Set the `metrics` parameters
 
-For currently available `metrics`, see the variable `func`'s key of the `SetupMetrics` class [here](template_tensorflow/lib/metrics/setup.py).
+For currently available `metrics`, see the variable `func`'s key of the `SetupMetrics` class [here](tensorflow_template/lib/metrics/setup.py).
 
-* The `kind` of `metrics` is set as a list.
+- The `kind` of `metrics` is set as a list.
 
 `metrics` settings example:
 
-``` yaml
+```yaml
 metrics:
-    kind: [mse, cacc]
+  kind: [mse, cacc]
 
-    mse:
-        name: mean_squared_error
-        # dtype: null
+  mse:
+    name: mean_squared_error
+    # dtype: null
 
-    cacc:
-        name: categorical_accuracy
-        # dtype: null
+  cacc:
+    name: categorical_accuracy
+    # dtype: null
 ```
 
 ### Set the `callbacks` parameters
 
-For currently available `callbacks`, see the variable `func`'s key of the `SetupCallbacks` class [here](template_tensorflow/lib/callbacks/setup.py).
+For currently available `callbacks`, see the variable `func`'s key of the `SetupCallbacks` class [here](tensorflow_template/lib/callbacks/setup.py).
 
-* The `callbacks` parameter is only used in `train.py`.
+- The `callbacks` parameter is only used in `train.py`.
 
-* The `kind` of `callbacks` is set as a list.
+- The `kind` of `callbacks` is set as a list.
 
 `callbacks` settings example:
 
-``` yaml
+```yaml
 cb:
   kind: [mcp, csv]
 
@@ -334,7 +349,7 @@ cb:
 
 If you do not yet have a Python development environment, please see below.
 
-* [How to build development environment.](https://github.com/r-dev95/env-python) (Japanese only)
+- [How to build development environment.](https://github.com/r-dev95/env-python) (Japanese only)
 
 For information on building the Sphinx documentation, see [here](docs/sphinx_docs.md). (Japanese only)
 

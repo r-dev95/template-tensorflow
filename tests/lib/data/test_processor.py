@@ -8,14 +8,13 @@ import numpy as np
 import pytest
 from _pytest.logging import LogCaptureFixture
 
-sys.path.append('../template_tensorflow/')
-from template_tensorflow.lib.common.define import ParamKey, ParamLog
-from template_tensorflow.lib.data import processor
+from lib.common.types import ParamKey as K
+from lib.common.types import ParamLog
+from lib.data import processor
 
 sys.path.append('../tests')
 from define import Proc
 
-K = ParamKey()
 PARAM_LOG = ParamLog()
 LOGGER = getLogger(name=PARAM_LOG.NAME)
 
