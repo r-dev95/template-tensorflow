@@ -4,7 +4,6 @@
 import enum
 import logging
 import zoneinfo
-from typing import Any, ClassVar
 
 from pydantic import BaseModel, ConfigDict, Field
 
@@ -63,16 +62,20 @@ class ParamLog(BaseModel):
     FH: str = Field(default='fh', frozen=True)
     #: str: The name to pass to ``logging.getLogger``.
     NAME: str = Field(default='main')
-    #: ClassVar[dict[str, bool]]: The handler flag to use.
-    HANDLER: ClassVar[dict[str, bool]] = {
-        'sh': True,
-        'fh': True,
-    }
-    #: ClassVar[dict[str, int]]: The log level.
-    LEVEL: ClassVar[dict[str, int]] = {
-        'sh': logging.DEBUG,
-        'fh': logging.DEBUG,
-    }
+    #: dict[str, bool]: The handler flag to use.
+    HANDLER: dict[str, bool] = Field(
+        default={
+            'sh': True,
+            'fh': True,
+        },
+    )
+    #: dict[str, int]: The log level.
+    LEVEL: dict[str, int] = Field(
+        default={
+            'sh': logging.DEBUG,
+            'fh': logging.DEBUG,
+        },
+    )
     #: str: The file path.
     FPATH: str = Field(default='log/log.txt')
     #: int: The max file size.

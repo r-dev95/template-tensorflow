@@ -33,4 +33,10 @@ class TestSetLogging:
         """
         log.SetLogging(logger=LOGGER, param=PARAM_LOG)
 
+        # Addressed an issue in Windows where a log file was grabbed by a process and
+        # could not be deleted.
+        for handler in LOGGER.handlers[:]:
+            LOGGER.removeHandler(hdlr=handler)
+            handler.close()
+
         assert Path(PARAM_LOG.FPATH).is_file()
