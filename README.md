@@ -14,7 +14,11 @@
 [![Python](https://img.shields.io/badge/Python-3776AB.svg?labelColor=d3d3d3&logo=python)](https://github.com/python)
 [![Sphinx](https://img.shields.io/badge/Sphinx-000000.svg?labelColor=d3d3d3&logo=sphinx&logoColor=000000)](https://github.com/sphinx-doc/sphinx)
 [![Pytest](https://img.shields.io/badge/Pytest-0A9EDC.svg?labelColor=d3d3d3&logo=pytest)](https://github.com/pytest-dev/pytest)
+[![Pydantic](https://img.shields.io/badge/Pydantic-ff0055.svg?labelColor=d3d3d3&logo=pydantic&logoColor=ff0055)](https://github.com/pydantic/pydantic)
 [![Numpy](https://img.shields.io/badge/Numpy-blue.svg?labelColor=d3d3d3&logo=numpy&logoColor=blue)](https://github.com/numpy/numpy)
+[![Pandas](https://img.shields.io/badge/Pandas-150458.svg?labelColor=d3d3d3&logo=pandas&logoColor=150458)](https://github.com/pandas-dev/pandas)
+[![Scipy](https://img.shields.io/badge/Scipy-0054a6.svg?labelColor=d3d3d3&logo=scipy&logoColor=0054a6)](https://github.com/scipy/scipy)
+[![scikit-learn](https://img.shields.io/badge/scikit--learn-F7931E.svg?labelColor=d3d3d3&logo=scikit-learn)](https://github.com/scikit-learn/scikit-learn)
 [![Keras](https://img.shields.io/badge/Keras-D00000.svg?labelColor=d3d3d3&logo=keras&logoColor=D00000)](https://github.com/keras-team/keras)
 [![TensorFlow](https://img.shields.io/badge/TensorFlow-FF6F00.svg?labelColor=d3d3d3&logo=tensorflow)](https://github.com/tensorflow/tensorflow)
 
