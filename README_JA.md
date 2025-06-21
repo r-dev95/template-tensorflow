@@ -38,53 +38,58 @@
 
 本リポジトリをクローンして、ローカルで確認してみてください。
 
+ビルドの詳細については[こちら](docs/sphinx_docs.md)。
+
 - 英語:
 
   ```bash
-  cd tensorflow-templete/docs
+  cd tensorflow-template/docs
   make html -e SPHINXOPTS='-a -E -D language="en"'
   ```
 
 - 日本語:
 
   ```bash
-  cd tensorflow-templete/docs
+  cd tensorflow-template/docs
   make html -e SPHINXOPTS='-a -E -D language="ja"'
   ```
 
 ## Getting started
 
-### 1. github からインストール
+### github からインストール
 
 ```bash
 git clone https://github.com/r-dev95/tensorflow-template.git
 ```
 
-### 2. 仮想環境の構築
+### 仮想環境の構築
 
-`poetry`がインストールされていることが前提です。
+`uv`がインストールされていることが前提です。
 
-python の開発環境がまだ整っていない方は、[こちら](#開発環境の構築)。
+python の開発環境がまだ整っていない方は、[こちら][python]。
+
+[python]: https://github.com/r-dev95/env-python
 
 ```bash
-cd tensorflow-template/tensorflow_template
-poetry install
+cd tensorflow-template
+uv sync
 ```
 
-### 3. データのダウンロードと tfrecord データの作成
+### データのダウンロードと tfrecord データの作成
 
 ```bash
-poetry shell
+source .venv/bin/activate
+cd src
 python dataset.py --result dataset --data mnist
 ```
 
-### 4. モデルの学習
+### モデルの学習
 
 ```bash
 python train.py --param param/tutorial/param_train.yaml
 ```
 
-### 5. モデルの評価
+### モデルの評価
 
 ```bash
 python eval.py --param param/tutorial/param_eval.yaml
@@ -348,14 +353,6 @@ cb:
     separator: ","
     append: false
 ```
-
-## 開発環境の構築
-
-python の開発環境がまだ整っていない方は、以下を参照してください。
-
-- [開発環境の構築手順](https://github.com/r-dev95/env-python)
-
-Sphinx ドキュメントのビルドについては、[こちら](docs/sphinx_docs.md)を参照してください。
 
 ## ライセンス
 
