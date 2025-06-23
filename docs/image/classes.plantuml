@@ -1,0 +1,87 @@
+@startuml classes
+!define MAIN_CLASS_COLOR #a8c9ea
+
+set namespaceSeparator none
+class "keras.src.models.model.Model" as keras.src.models.model.Model MAIN_CLASS_COLOR {
+  layers
+  predict_function : NoneType
+  test_function : NoneType
+  train_function : NoneType
+  build_from_config(config)
+  {abstract}call()
+  export(filepath, format, verbose, input_signature)
+  from_config(config, custom_objects)
+  get_layer(name, index)
+  get_state_tree(value_format)
+  load_weights(filepath, skip_mismatch)
+  quantize(mode)
+  save(filepath, overwrite, zipped)
+  save_weights(filepath, overwrite, max_shard_size)
+  set_state_tree(state_tree)
+  summary(line_length, positions, print_fn, expand_nested, show_trainable, layer_range)
+  to_json()
+}
+class "lib.data.base.BaseLoadData" as lib.data.base.BaseLoadData MAIN_CLASS_COLOR {
+  Processor
+  input_shape : ClassVar[list[int]]
+  input_shape_model : ClassVar[list[int]]
+  input_size : int
+  label_shape : ClassVar[list[int]]
+  label_shape_model : ClassVar[list[int]]
+  label_size : int
+  n_data : int
+  params : dict[str, Any]
+  steps_per_epoch : int
+  make_loader_example(seed: int) -> Callable
+  parse_example(example_proto: tf.Tensor) -> tuple[tf.Tensor, tf.Tensor]
+  process(x: tf.Tensor, y: tf.Tensor) -> tuple[tf.Tensor, tf.Tensor]
+  {abstract}set_model_il_shape() -> None
+}
+class "lib.data.cifar.Cifar" as lib.data.cifar.Cifar MAIN_CLASS_COLOR {
+  input_shape : ClassVar[list[int]]
+  input_shape_model : ClassVar[list[int]]
+  input_size : int
+  label_shape : ClassVar[list[int]]
+  label_shape_model : ClassVar[list[int]]
+  label_size : int
+  n_data : int
+  size : ClassVar[list[int]]
+  steps_per_epoch : int
+  {abstract}set_model_il_shape() -> None
+}
+class "lib.data.mnist.Mnist" as lib.data.mnist.Mnist MAIN_CLASS_COLOR {
+  input_shape : ClassVar[list[int]]
+  input_shape_model : ClassVar[list[int]]
+  input_size : int
+  label_shape : ClassVar[list[int]]
+  label_shape_model : ClassVar[list[int]]
+  label_size : int
+  n_data : int
+  size : ClassVar[list[int]]
+  steps_per_epoch : int
+  {abstract}set_model_il_shape() -> None
+}
+class "lib.data.processor.Processor" as lib.data.processor.Processor MAIN_CLASS_COLOR {
+  func : dict
+  params : dict[str, Any]
+  catencode(x: tf.Tensor, y: tf.Tensor) -> tuple[tf.Tensor, tf.Tensor]
+  rescale(x: tf.Tensor, y: tf.Tensor) -> tuple[tf.Tensor, tf.Tensor]
+  run(x: tf.Tensor, y: tf.Tensor) -> tuple[tf.Tensor, tf.Tensor]
+}
+class "lib.model.base.BaseModel" as lib.model.base.BaseModel MAIN_CLASS_COLOR {
+  classes : dict[str, Callable]
+  metrics
+  test_step(data: tuple[tf.Tensor]) -> dict[str, float]
+  train_step(data: tuple[tf.Tensor]) -> dict[str, float]
+  update_metrics(data: tuple[tf.Tensor]) -> dict[str, float]
+}
+class "lib.model.simple.SimpleModel" as lib.model.simple.SimpleModel MAIN_CLASS_COLOR {
+  model_layers : list
+  call(x: tf.Tensor) -> tf.Tensor
+}
+lib.data.cifar.Cifar --|> lib.data.base.BaseLoadData
+lib.data.mnist.Mnist --|> lib.data.base.BaseLoadData
+lib.model.base.BaseModel --|> keras.src.models.model.Model
+lib.model.simple.SimpleModel --|> lib.model.base.BaseModel
+lib.data.processor.Processor --* lib.data.base.BaseLoadData : Processor
+@enduml
