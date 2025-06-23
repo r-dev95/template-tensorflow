@@ -1,8 +1,19 @@
-<!--
-    README
- -->
+<!-- ============================================================
+  Project Image
+ ============================================================ -->
+<!-- <div align=center>
+  <img
+    src='docs/image/demo.gif'
+    alt='Project Image.'
+    width=500
+  />
+</div> -->
 
-# Tensorflow Template
+<!-- ============================================================
+  Overview
+ ============================================================ -->
+
+# :book:Overview
 
 [![English](https://img.shields.io/badge/English-018EF5.svg?labelColor=d3d3d3&logo=readme)](./README.md)
 [![Japanese](https://img.shields.io/badge/Japanese-018EF5.svg?labelColor=d3d3d3&logo=readme)](./README_JA.md)
@@ -40,29 +51,29 @@
 
 ビルドの詳細については[こちら](docs/sphinx_docs.md)。
 
-- 英語:
+```bash
+cd tensorflow-template/docs
+make html -e SPHINXOPTS='-a -E -D language="en"' # "en" or "ja"
+```
 
-  ```bash
-  cd tensorflow-template/docs
-  make html -e SPHINXOPTS='-a -E -D language="en"'
-  ```
+<!-- ============================================================
+  Features
+ ============================================================ -->
+<!-- ## :desktop_computer:Features -->
 
-- 日本語:
+<!-- ============================================================
+  Usage
+ ============================================================ -->
 
-  ```bash
-  cd tensorflow-template/docs
-  make html -e SPHINXOPTS='-a -E -D language="ja"'
-  ```
+## :keyboard:Usage
 
-## Getting started
-
-### github からインストール
+### Install
 
 ```bash
 git clone https://github.com/r-dev95/tensorflow-template.git
 ```
 
-### 仮想環境の構築
+### Build virtual environment
 
 `uv`がインストールされていることが前提です。
 
@@ -78,21 +89,20 @@ uv sync
 ### データのダウンロードと tfrecord データの作成
 
 ```bash
-source .venv/bin/activate
 cd src
-python dataset.py --result dataset --data mnist
+uv run python dataset.py --result dataset --data mnist
 ```
 
 ### モデルの学習
 
 ```bash
-python train.py --param param/tutorial/param_train.yaml
+uv run python train.py --param param/tutorial/param_train.yaml
 ```
 
 ### モデルの評価
 
 ```bash
-python eval.py --param param/tutorial/param_eval.yaml
+uv run python eval.py --param param/tutorial/param_eval.yaml
 ```
 
 ## パラメータファイルの使い方
@@ -354,6 +364,23 @@ cb:
     append: false
 ```
 
-## ライセンス
+<!-- ============================================================
+  Structure
+ ============================================================ -->
+
+## :bookmark_tabs:Structure
+
+<div align=center>
+  <img
+    src='docs/image/classes.svg'
+    alt='classes.'
+  />
+</div>
+
+<!-- ============================================================
+  License
+ ============================================================ -->
+
+## :key:License
 
 本リポジトリは、[Apache License 2.0](LICENSE)に基づいてライセンスされています。
